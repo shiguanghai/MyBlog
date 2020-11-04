@@ -404,7 +404,7 @@ Webpack中的资源加载器是用来去处理和加工打包过程遇到的资�
 
 例如在常见的就是babel-loader
 ```
-yarn add babel-loader @babel/core @babel/preset --dev
+yarn add babel-loader @babel/core @babel/preset-env --dev
 ```
 在配置文件当中为JS文件指定加载器为babel-loader
 ```js
@@ -756,7 +756,7 @@ module.exports = {
 ### Webpack 插件使用总结（copy-webpack-plugin）
 项目中还有一些不需要参加构建的静态文件，我们希望Webpack在打包时可以一并将它们复制到输出目录，对于这种需求可以借助于 copy-webpack-plugin 实现
 ```
-yarn add copy-webpack-plugin
+yarn add copy-webpack-plugin --dev
 ```
 ```js
 ...
