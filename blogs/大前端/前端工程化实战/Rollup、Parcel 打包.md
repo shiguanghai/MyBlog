@@ -14,7 +14,7 @@ isShowComments: false
 
 
 
-## Rollup 打包
+## 6.1Rollup 打包
 ### Rollup 概述
 Rollup 同样也是一款 ES Modules 的打包器，它也可以将项目当中的散落的细小模块打包为整块的代码，从而使得这些划分的模块可以更好地运行在浏览器环境或者NodeJS环境。
 
@@ -230,7 +230,7 @@ export default {
 - 大多数知名框架/库都在使用 Rollup
 - Webpack大而全，Rollup小而美
 
-## Parcel 打包
+## 6.2Parcel 打包
 
 - Parcel：零配置的前端应用打包器，[项目代码](https://gitee.com/shiguanghaitop/big-front-end-phase-5/tree/master/fed-e-task-02-02/code/02-02-03-02-parcel-demo) 
 

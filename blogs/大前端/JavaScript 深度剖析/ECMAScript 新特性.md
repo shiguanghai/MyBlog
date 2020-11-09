@@ -637,7 +637,7 @@ const personProxy = new Proxy(person, {
   get () {},
   // 监视属性设置
   set (target, property, value) { 代理的目标对象 写入的属性名 写入的属性值
-    if (property === 'age') { // 如果设置的指为age 值就必须是数字
+    if (property === 'age') { // 如果设置的值为age 值就必须是数字
       if (!Number.isInteger(value)) { // 否则报错
         throw new TypeError(`${value} is not an int`)
       }

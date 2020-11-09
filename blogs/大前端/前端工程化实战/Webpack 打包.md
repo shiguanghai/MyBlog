@@ -13,7 +13,7 @@ isShowComments: false
 ---
 
 
-## 模块打包工具的由来
+## 5.1模块打包工具的由来
 模块化确实很好地解决了复杂应用开发过程当中的代码组织问题，但是随着我们引入模块化，我们的应用又会产生许多新的问题：
 
 - ES Modules 存在环境兼容问题
@@ -29,7 +29,7 @@ isShowComments: false
 
 由此，前端模块打包工具就诞生了。
 
-## 模块打包工具概述
+## 5.2模块打包工具概述
 前端领域有一些工具就很好地解决了以上这几个问题，其中最主流的就是Webpack、Parcel和Rollup。
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201027200245962.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
@@ -44,7 +44,7 @@ isShowComments: false
 
 打包工具解决的是前端整体的模块化，并不是指JavaScript模块化。它就可以让我们在开发阶段更好的去享受模块化所带来的优势，同时又不必担心模块化对生产环境所产生的影响，这就是模块化工具的作用。
 
-## Webpack 基础
+## 5.3Webpack 基础
 ### Webpack 快速上手
 Webpack作为目前最主流的前端模块打包器，提供了一整套的前端项目模块化方案，而不仅仅是局限于只对JavaScript的模块化。通过Webpack提供的前端模块化方案就可以很轻松地对前端项目开发过程中涉及到的所有的资源进行模块化。
 
@@ -172,7 +172,7 @@ module中的exports应该是一个对象，因为ES Module里面默认导出它�
 
 我们可以看出来Webpack打包过后的代码并不会特别复杂，它只是说帮我们把所有的模块给放到了同一个文件当中。除此之外，它还提供了一些，让我们的模块与模块之间相互依赖的关系还可以保持原来的状态。
 
-## Webpack 模块加载器 Loader
+## 5.4Webpack 模块加载器 Loader
 
 ### Webpack 资源模块加载 (css-loader style-loader)
 Webpack 不仅仅是JavaScript模块化打包工具，它更应该算是整个前端项目或者叫前端工程的模块打包工具，这也就是说我们还可以通过Webpack引入我们在前端项目中的任意类型文件。
@@ -648,7 +648,7 @@ module.exports = {
 - Loader 负责资源文件从输入到输出的转换
 - 对于同一个资源可以依次使用多个Loader
 
-## Webpack 插件机制 Plugin
+## 5.5Webpack 插件机制 Plugin
 **插件机制**是Webpack当中另外一个核心特性，目的是**增强Webpack自动化能力**。我们知道，**Loader专注实现资源模块加载**，从而实现整体项目的打包。
 
 而**Plugin解决其他自动化工作**，例如Plugin可以帮我们去实现自动在打包之前**清除dist目录**、或是帮我们**拷贝静态文件至输出目录**，又或是帮我们**压缩输出代码**。
@@ -827,7 +827,7 @@ module.exports = {
 
 ```
 
-## Webpack 开发环境优化
+## 5.6Webpack 开发环境优化
 以下这种周而复始的方式过于原始
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201030211914226.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
@@ -981,7 +981,7 @@ yarn webpack-dev-server --hot
 - 2.没启动 HMR 的情况下，HMR API 报错（ 使用if(module.hot){...} ）
 - 3.代码中多了一些与业务无关的代码（打包后处理热替换的代码会被移除）
 
-## Webpack 生产环境优化
+## 5.7Webpack 生产环境优化
 ### Webpack 不同环境下的配置
 随着我们对开发阶段的优化，我们的打包结果会随之变得臃肿。Webpack为了实现这些特性，会自动往打包结果添加额外的代码：例如 Source Map 和 HMR。
 
