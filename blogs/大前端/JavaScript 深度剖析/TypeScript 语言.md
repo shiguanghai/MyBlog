@@ -14,7 +14,7 @@ isShowComments: false
 
 
 
-## 4.1类型系统
+## 4.1 类型系统
 ### 强类型与弱类型
 - 类型安全角度
 
@@ -127,7 +127,7 @@ function sum (a, b) {
 }
 ```
 
-## 4.2静态类型检查器 Flow
+## 4.2 静态类型检查器 Flow
 ### Flow概述
 - 可以弥补JavaScript弱类型所带来的弊端，为JavaScript提供了更完善的类型系统
 
@@ -390,7 +390,7 @@ passAny(100)
 const element: HTMLElement | null = document.getElementById('app')
 ```
 
-## 4.3TypeScript（JavaScript的超集）
+## 4.3 TypeScript（JavaScript的超集）
 ### TypeScript 概述
 - 拥有更强大的类型系统
 - 支持ES6+新特性

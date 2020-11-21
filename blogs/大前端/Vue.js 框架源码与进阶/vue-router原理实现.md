@@ -13,7 +13,7 @@ isShowComments: false
 
 
 
-## 1.1Vue-Router 使用步骤
+## 1.1 Vue-Router 使用步骤
 
 ```
 yarn add vue-router --dev
@@ -135,7 +135,7 @@ npm run serve
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201115213129860.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201115213144106.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
-## 1.2动态路由
+## 1.2 动态路由
 ```js
 // router/index.js
 
@@ -205,7 +205,7 @@ export default {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201115220906282.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
 
-## 1.3嵌套路由
+## 1.3 嵌套路由
 当多个路由的组件都有相同的内容，可以将这些相同内容提取到公共的组件当中
 ```js
 // components/Layout.vue
@@ -259,7 +259,7 @@ const routes = [
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201115220610835.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201115220718619.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
-## 1.4编程式导航
+## 1.4 编程式导航
 之前我们在页面之间的跳转使用的是 router-link 生成超链接，但是做登陆页面需要点击按钮跳转到首页，此时就需要使用编程式导航调用 $router.push() 方法
 
 ```js
@@ -342,7 +342,7 @@ export default {
 - replace 方法 不会记录本次历史 会替换历史记录
 - go 方法 会以0为基准跳转到相对页面
 
-## 1.5Hash 和 History 模式区别
+## 1.5 Hash 和 History 模式区别
 两种方式均为客户端路由的实现方式：当路径法发生变化，不会向服务器发送请求，使用js监视路径的变化根据不同的地址渲染不同的内容，如果需要服务器端的内容会发送Ajax请求来获取。
 
 **表现形式的区别**
@@ -467,7 +467,7 @@ http {
 }
 ```
 
-## 1.6Vue Router 实现原理
+## 1.6 Vue Router 实现原理
 Hash 模式
 
 - URL 中 # 后面的内容作为路径地址

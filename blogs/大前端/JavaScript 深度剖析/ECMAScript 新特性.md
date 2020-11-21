@@ -13,7 +13,7 @@ isShowComments: false
 ---
 
 
-## 3.1ECMAScript与javaScript
+## 3.1 ECMAScript与javaScript
 
 - 实际上javaScript是ECMAScript的扩展语言
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200928195859226.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
@@ -24,7 +24,7 @@ isShowComments: false
 - 全新的对象、全新的方法、全新的功能
 - 全新的数据类型和数据结构
 
-## 3.2ECMAScript2015新特性
+## 3.2 ECMAScript2015新特性
 ### let 与块级作用域
 作用域——某个成员能够起作用的范围， 在ES6之前之前有**全局作用域**和**函数作用域**两种作用域，ECMAScript2015新增了块级作用域，块指的是{}包裹的内容，以前块是没有单独的作用域的，就导致块中定义的成员外部也可以访问到
 ```js
@@ -1428,7 +1428,7 @@ for (const item of todos) {
 }
 ```
 
-## 3.3ECMAScript2016
+## 3.3 ECMAScript2016
 与ES2015相比，ES2016只是一个小版本，仅包含两个小功能
 
 ###  Array.prototype.includes
@@ -1460,7 +1460,7 @@ console.log(arr.includes(NaN))
 console.log(2 ** 10)
 ```
 
-## 3.4ECMAScript2017
+## 3.4 ECMAScript2017
 同样只是一个小版本，但它带来了非常有用的新功能
 
 ### Object.values

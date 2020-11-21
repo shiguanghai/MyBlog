@@ -14,7 +14,7 @@ isShowComments: false
 
 
 
-## 5.1性能优化介绍
+## 5.1 性能优化介绍
 - 性能优化是不可避免的
 - 任何一种可以提高运行效率，降低运行开销的行为都可以看做是一种优化操作
 - 无处不在的前端性能优化
@@ -23,7 +23,8 @@ isShowComments: false
 	* 开发过程中使用到的框架
 
 **本章探索的核心为JavaScript语言的优化**
-## 5.2JavaScript 内存管理(Memory Management)
+
+## 5.2 JavaScript 内存管理(Memory Management)
 - 内存：由可读写单元组成，表示一片可操作空间
 - 管理：人为的去操作一片空间的申请、使用和释放
 - 内存管理：开发者主动申请空间、使用空间、释放空间
@@ -47,7 +48,7 @@ obj.name = 'lg'
 obj = null
 ```
 
-## 5.3垃圾回收与常见的GC算法
+## 5.3 垃圾回收与常见的GC算法
 ### JavaScript 中的垃圾回收
 **JavaScript 中的垃圾**
 
@@ -194,7 +195,7 @@ fn()
 - 标记整理算法缺点
 	* 不会立即回收垃圾对象
 
-## 5.4V8引擎的垃圾回收
+## 5.4 V8引擎的垃圾回收
 - V8 是一款主流的 JavaScript 执行引擎（Chrome、Node）
 - V8 采用即时编译（直接将源码翻译为机器码）
 - V8 内存设限（浏览器下足够使用，非增量标记最多需要1S）
@@ -272,7 +273,7 @@ fn()
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201009162641520.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 使用增量标记算法，可以把一个完整的垃圾回收任务拆分为很多小的任务，这些小的任务执行时间比较短，可以穿插在其他的 JavaScript 任务中间执行，这样当执行上述动画效果时，就不会让用户因为垃圾回收任务而感受到页面的卡顿了。
 
-## 5.5Performance工具
+## 5.5 Performance工具
 ### Performance工具介绍
 **为什么使用Performanc**
 
@@ -358,7 +359,7 @@ timeline是google的chrome浏览器中的一个开发者工具，它有助于前
 
 出现了这样的情况过后就需要去定位到相应的时间节点看一下我们具体做了什样的操作造成了这样现象的产生以便我们回到代码去处理。
 
-## 5.6代码优化
+## 5.6 代码优化
 ### 代码优化介绍
 **如何精准测试JavaScript性能**
 
