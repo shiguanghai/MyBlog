@@ -565,7 +565,7 @@ export default class VueRouter {
   }
 
   init () {
-    this.creatRouteMap()
+    this.createRouteMap()
     this.initComponents(_Vue)
     this.initEvent()
   }
@@ -627,6 +627,8 @@ export default class VueRouter {
 }
 ```
 
+[代码仓库](https://gitee.com/shiguanghaitop/big-front-end-phase-5/tree/master/fed-e-task-03-01/code/03-01-02-05-vue-router/01-vue-router-basic-usage)
+
 
 ### Vue Router - Constructor
 ```js
@@ -676,7 +678,7 @@ export default class VueRouter {
 使用 init 包装 createRouteMap () 和 initComponents (Vue) 以及 initEvent
 ```js
 init () {
-  this.creatRouteMap()
+  this.createRouteMap()
   this.initComponents(_Vue)
   this.initEvent()
 }
