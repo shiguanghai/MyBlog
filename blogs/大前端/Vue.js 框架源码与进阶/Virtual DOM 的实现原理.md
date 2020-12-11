@@ -5,8 +5,8 @@ sidebar: 'auto'
 tags:
  - Vue.js
  - Part3·Vue.js 框架源码与进阶
+ - 源码剖析 
  - Virtual DOM
- - Snabbdom
 categories:
  - 大前端
 publish: true 
