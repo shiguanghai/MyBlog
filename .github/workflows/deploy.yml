@@ -16,7 +16,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        command_timeout: 15m
+        command_timeout: ${{ secrets.CTIME }}
         script: |
           cd /tmp
           git clone https://github.com/shiguanghai/MyBlog.git
