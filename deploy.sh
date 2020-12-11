@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 安装依赖
-npm install
+# npm install
 # 打包 
 npm run build
 # 删除 ngnix 指向的文件夹下得文件
