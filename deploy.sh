@@ -5,7 +5,7 @@
 # 打包 
 # npm run build
 # 删除 ngnix 指向的文件夹下得文件
-# rm -rf /home/www/*
+rm -rf /usr/share/nginx/html
 
 # 将打包好的文件复制过去
 mv /tmp/MyBlog/dist/* /usr/share/nginx/html
