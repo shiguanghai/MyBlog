@@ -1,7 +1,7 @@
 name: Publish And Deploy Blog
 on:
   push:
-    branches:    
+    branches:
       - master
 
 jobs:
@@ -16,8 +16,8 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        debug: true
         command_timeout: ${{ secrets.CTIME }}
+        debug: true
         script: |
           cd /tmp
           git clone https://github.com/shiguanghai/MyBlog.git
