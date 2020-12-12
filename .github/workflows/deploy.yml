@@ -20,7 +20,7 @@ jobs:
         debug: true
         script: |
           cd /tmp
-          git clone https://github.com/shiguanghai/MyBlog.git
+          git clone git@github.com:shiguanghai/MyBlog.git
           cd /tmp/MyBlog
           chmod +x ./deploy.sh
           ./deploy.sh
