@@ -17,6 +17,7 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         debug: true
+        # command_timeout: ${{ secrets.CTIME }}
         script: |
           cd /tmp
           git clone https://github.com/shiguanghai/MyBlog.git
