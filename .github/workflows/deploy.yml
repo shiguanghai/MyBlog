@@ -6,8 +6,8 @@ on:
 
 jobs:
   build-and-deploy:
-    # runs-on: ubuntu-latest
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
+    # runs-on: ubuntu-18.04
     steps:
     # 部署到服务器
     - name: Deploy
