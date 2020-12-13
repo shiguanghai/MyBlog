@@ -666,4 +666,46 @@ export function mountComponent (
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201212232857198.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 - 进入dependArray函数，在这个函数中，去遍历数组中的每一个元素并把这个元素获取到，接下里判断当前这个元素是否存在，如果存在，还要判断当前这个元素是否有ob对象，如果是对象且有ob接下来调用这个ob对象的dep.depend。也就是数组中如果这个元素也是对象也要为这个对象收集依赖，当数组中这个元素是对象的时候，如果这个对象发生了变化也会去发送通知。最后判断当前数组中的元素是否是数组，如果是递归调用
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020121223300423.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
-- 到此为止数组对象收集依赖的过程也就结束了
+- 到此为止数组对象收集依赖的过程也就结束了，接下来来看一下**当数组数据变化时Watcher的执行过程**，结束调试来设置断点：当数组中的数据发生变化时会发送通知调用Dep.notify方法，所以把断点设置到`src/core/observer/dep.js`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213132115359.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 回到Console往数组增加成员`vm.arr.push(300)`之后回车进入断点
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213132253723.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 在notify方法中先调用this.subs这个subs数组中存储的就是watcher对象，当前只有一个watcher对象，调用slice返回数组中的指定部分（不加参数返回整个数组），即备份。接下来遍历subs数组中所有的watcher调用其update方法，进入
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213132400659.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 在这个方法中会先判断this.lazy和this.sync，默认这两个属性的值为false，所以会执行queueWatcher函数，进入
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213132845898.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 在queueWatcher里面先获取当前watcher的id，判断has数组中是否有这个元素，如果没有说明此watcher对象没有被处理过，于是处理watcher对象，接下来在has数组做标记，接下来flushing判断是否正在刷新queue（watcher队列），默认false，执行会把watcher对象放入队列中
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213133053779.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+接下来判断waiting此时值为false，然后将它标记为true表示正在刷新这个队列，接下来会调用nextTick并且把刷新队列的函数传递给nextTick，我们先不研究nextTick，先找到flushSchedulerQueue，F11进入找到flushSchedulerQueue执行的位置
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213133413782.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- F11进入cb.call
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2020121313402590.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- F10找到核心的位置，这个函数中首先把flushing置为true标记当前正在刷新watcher队列
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213134156104.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 再接下来，要去对队列进行排序，安装watcher的id从小到大的顺序排序，注释给出原因（中文翻译在我的源码中有给出）
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213134432431.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 下面遍历这个队列找到这个队列中的每一个watcher对象，判断watcher对象是否有before选项，有的话调用，before里面触发了beforeUpdate生命周期函数，也就是在watcher更新视图之前先去触发了beforeUpdate。接下来把当前watcher对象标记为null（已经处理过了），再往下执行watcher的run方法，进入
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213134626679.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 在run方法里先判断this.active，它的值默认是true，接下来调用get方法，进入
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213135722295.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 内部调用pushTarget，最终调用this.getter，getter里面存储的就是updateComponent更新组件，进入
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213140005469.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 先调用render生成虚拟DOM，再调用update更新虚拟DOM把其转化为真实DOM更新到视图
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213140339939.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 到此更新就完成了，完成后会进行一些首尾操作，会判断当前是否为深度监听（如果这个对象改变，还会监听对象下的属性，如果属性是对象会继续触发watcher），再往下清理当前依赖
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213140458998.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- run结束过后回到调用的位置（flushSchedulerQueue）
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213141137367.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 清理工作：先去备份两个数组，然后reset队列的状态，进入resetSchedulerState
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213141258114.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 会把当前的索引以及lehgth都置为0，把has对象置为空，不再记录watcher是否被处理，最后把waiting和flushing置为false
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213141404613.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 接下啦触发两个生命周期的钩子函数activated（组件相关）、updated（更新完毕）
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213141607920.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+- 到此，数组中的数据改变，watcher中执行的过程就调试结束了
+
+### 响应式处理过程总结
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213142853671.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213142313121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213143030628.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213142730966.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
