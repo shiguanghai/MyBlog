@@ -86,6 +86,10 @@ module.exports = {
           {
             "text": "电子书搜索",
             "link": "https://www.jiumodiary.com/"
+          },
+          {
+            "text": "免费在线作图",
+            "link": "https://www.processon.com/"
           }
         ]
       },
