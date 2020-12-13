@@ -88,7 +88,7 @@ module.exports = {
             "link": "https://www.jiumodiary.com/"
           },
           {
-            "text": "免费在线作图",
+            "text": "在线作图",
             "link": "https://www.processon.com/"
           }
         ]
