@@ -22,6 +22,7 @@ jobs:
         script: |
           cd /tmp
           rm -rf /tmp/*
+          git config --global http.postBuffer 524288000
           git clone https://github.com/shiguanghai/MyBlog.git
           cd /tmp/MyBlog
           chmod +x ./deploy.sh
