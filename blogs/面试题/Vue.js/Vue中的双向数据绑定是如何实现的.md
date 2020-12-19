@@ -5,7 +5,7 @@ sidebar: 'auto'
 tags:
  - Vue.js
  - 面试题
- - 响应式
+ - 响应式原理
 categories:
  - 面试题
 publish: true 

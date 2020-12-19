@@ -1,5 +1,5 @@
 ---
-title: 【面试题】阐述一下 VUE中 eventbus 的原理
+title: 【面试题】阐述一下VUE中 eventbus 的原理
 date: 2020-12-13 17:17:15
 sidebar: 'auto'
 tags:
