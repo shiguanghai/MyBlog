@@ -278,7 +278,7 @@ Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
 ### patch 函数初始化
 **功能**
 
-对比两个 VNode 的差异，把差异更新到真实 DOM。如果是首次渲染的话，会把真实 DOM 先转换成 VNode
+对比两个 VNode 的差异，把差异更新到真实 DOM。如果是首次渲染的话，会把 虚拟DOM 先转换成 真实DOM 挂载到页面
 
 **Snabbdom0.7.4 中 patch 函数的初始化**
 
@@ -313,7 +313,7 @@ export function vnode(sel: string | undefined,
 import { patch } from './patch'
 // install platform patch function
 // 设置平台相关的 __patch__ 方法 (虚拟DOM 转换成 真实DOM)
-// 判断是否是浏览器环境（是 - 直接返回， 非 - 空函数 noop
+// 判断是否是浏览器环境（是 - 直接返回， 非 - 空函数 noop）
 Vue.prototype.__patch__ = inBrowser ? patch : noop
 ```
 
