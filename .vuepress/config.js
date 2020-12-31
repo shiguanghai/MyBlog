@@ -163,7 +163,11 @@ module.exports = {
     "authorAvatar": "/avatar.png",
     "record": "豫ICP备19026848号",
     "recordLink": "https://beian.miit.gov.cn/",
-    "startYear": "2019"
+    "startYear": "2019",
+    // "algolia": { // Algolia 搜索
+    //   "apiKey": '<API_KEY>',
+    //   "indexName": '<INDEX_NAME>'
+    // }
   },
   "markdown": {
     // 代码行数是否显示

@@ -5,6 +5,7 @@ sidebar: 'auto'
 tags:
  - Vue.js
  - 面试题
+ - Virtual DOM 
 categories:
  - 面试题
 publish: true 

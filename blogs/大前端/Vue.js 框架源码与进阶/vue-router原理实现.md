@@ -5,6 +5,7 @@ sidebar: 'auto'
 tags:
  - Vue.js
  - Part3·Vue.js 框架源码与进阶
+ - VueRouter
 categories:
  - 大前端
 publish: true 
