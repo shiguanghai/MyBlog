@@ -165,8 +165,9 @@ module.exports = {
     "recordLink": "https://beian.miit.gov.cn/",
     "startYear": "2019",
     // "algolia": { // Algolia 搜索
-    //   "apiKey": '<API_KEY>',
-    //   "indexName": '<INDEX_NAME>'
+    //   // "applicationID": '8JDFTW75T7', // Application ID
+    //   "apiKey": '8577610c9b0b470adec8f9b37fa72276', // Search-Only API key
+    //   "indexName": 'MyBlog' // 创建的 index name
     // }
   },
   "markdown": {
