@@ -57,7 +57,6 @@ jobs:
         command_timeout: ${{ secrets.CTIME }}
         script: |
           cd /usr/share/nginx/html
+          rm -rf /usr/share/nginx/html/*
           wget https://github.com/shiguanghai/MyBlog/releases/latest/download/release.tgz -O release.tgz
           tar zxvf release.tgz
-          npm install
-          npm run build
