@@ -260,7 +260,7 @@ module.exports = {
             artist: 'SING女团',
             // url: '/123木头人.m4a',
             url: 'https://win-web-ri01-sycdn.kuwo.cn/c8e559d66470ce2a0f8505f77ef900d4/6007c3c6/resource/n3/60/65/4041534968.mp3'
-            cover: 'https://img4.kuwo.cn/star/albumcover/500/61/18/4148052688.jpg'
+            cover: 'https://y.gtimg.cn/music/photo_new/T002R300x300M000004PDknO0kg9Qk_1.jpg'
           }  
         ],
         "autoShrink":true,
