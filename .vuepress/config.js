@@ -237,29 +237,30 @@ module.exports = {
       '@vuepress-reco/vuepress-plugin-bgm-player', 
       {
         "audios":[
-          {
-            name: '源星球，远星球',
-            artist: '别方',
-            url: '/源星球，远星球.m4a',
-            cover: 'https://p2.music.126.net/8PepgHt0XXmxcZe5TcVedw==/17702137207431786.jpg?param=130y130'
-          },
-          {
-            name: '单向箭头',
-            artist: '双笙',
-            url: '/单向箭头.mp3',
-            cover: 'https://p2.music.126.net/4Gw5vGfeZ_7OZDiMmpvV9Q==/109951163860099587.jpg?param=130y130'
-          },
-          {
-            name: '愿你有故乡 - (Homeland)',
-            artist: '房东的猫',
-            url: '/愿你有故乡 - (Homeland).m4a',
-            cover: 'https://p1.music.126.net/KYb3H33YZxDWO8pm4EcIFQ==/109951164915642694.jpg'
-          },
+          // {
+          //   name: '源星球，远星球',
+          //   artist: '别方',
+          //   url: '/源星球，远星球.m4a',
+          //   cover: 'https://p2.music.126.net/8PepgHt0XXmxcZe5TcVedw==/17702137207431786.jpg?param=130y130'
+          // },
+          // {
+          //   name: '单向箭头',
+          //   artist: '双笙',
+          //   url: '/单向箭头.mp3',
+          //   cover: 'https://p2.music.126.net/4Gw5vGfeZ_7OZDiMmpvV9Q==/109951163860099587.jpg?param=130y130'
+          // },
+          // {
+          //   name: '愿你有故乡 - (Homeland)',
+          //   artist: '房东的猫',
+          //   url: '/愿你有故乡 - (Homeland).m4a',
+          //   cover: 'https://p1.music.126.net/KYb3H33YZxDWO8pm4EcIFQ==/109951164915642694.jpg'
+          // },
           {
             name: '123木头人',
             artist: 'SING女团',
-            url: '/123木头人.m4a',
-            cover: 'https://y.gtimg.cn/music/photo_new/T002R300x300M000004PDknO0kg9Qk_1.jpg'
+            // url: '/123木头人.m4a',
+            url: 'https://win-web-ri01-sycdn.kuwo.cn/c8e559d66470ce2a0f8505f77ef900d4/6007c3c6/resource/n3/60/65/4041534968.mp3'
+            cover: 'https://img4.kuwo.cn/star/albumcover/500/61/18/4148052688.jpg'
           }  
         ],
         "autoShrink":true,
