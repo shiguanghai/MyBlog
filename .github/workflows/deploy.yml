@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-node@master
     - run: npm install
     - run: npm run build
-    - run: tar -zcvf release.tgz .vuepress blogs README.md package.json package-lock.json
+    - run: tar -zcvf release.tgz blogs/*
 
     # 发布 Release
     - name: Create Release
@@ -57,6 +57,6 @@ jobs:
         command_timeout: ${{ secrets.CTIME }}
         script: |
           cd /usr/share/nginx/html
-          rm -rf /usr/share/nginx/html/*
+          rm -rf /usr/share/nginx/html/release.tgz
           wget https://github.com/shiguanghai/MyBlog/releases/latest/download/release.tgz -O release.tgz
           tar zxvf release.tgz
