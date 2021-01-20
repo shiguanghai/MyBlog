@@ -1,2 +1,5 @@
 node_modules/
+blogs/
+.github/workflows/deploy.yml.copy.txt
+deploy.sh.copy.txt
 debug.log
