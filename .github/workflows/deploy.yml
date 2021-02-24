@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-node@master
     - run: npm install
     - run: npm run build
-    - run: tar -zcvf release.tgz /dist/*
+    - run: tar -zcvf release.tgz dist
 
     # 发布 Release
     - name: Create Release
@@ -60,3 +60,5 @@ jobs:
           rm -rf /usr/share/nginx/html/release.tgz
           wget https://github.com/shiguanghai/MyBlog/releases/latest/download/release.tgz -O release.tgz
           tar zxvf release.tgz
+          mv /usr/share/nginx/html/dist/*  /usr/share/nginx/html
+          rm -rf /usr/share/nginx/html/dist

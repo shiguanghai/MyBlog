@@ -56,6 +56,11 @@ module.exports = {
         "icon": "reco-suggestion"
       },
       {
+        "text": "插件",
+        "link": "/blogs/other/coreplayer",
+        "icon": "reco-message"
+      },
+      {
         "text": "工具",
         "icon": "reco-message",
         "items": [
@@ -176,6 +181,12 @@ module.exports = {
   },
   plugins: [  // 插件
     [
+      'vuepress-plugin-core-video-player',
+      {
+        lang: 'zh-CN', // zh-CN/en/jp/other language json
+      }
+    ],
+    [
       "@vuepress-reco/vuepress-plugin-kan-ban-niang",
       {
         theme: ["z16"],
@@ -268,6 +279,7 @@ module.exports = {
 
       }
     ],
+    // '@vuepress-something/vuepress-plugin-dplayer'
     //#region 
     // [
     //   '@vuepress-reco/vuepress-plugin-comments',
