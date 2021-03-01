@@ -3,7 +3,7 @@ title: 【面试题】webpack 中 tree shaking 的用途和原理是什么？
 date: 2020-12-13 17:10:21
 sidebar: 'auto'
 tags:
- - JavaScript
+ - 前端工程化
  - 面试题
  - Webpack
 categories:
