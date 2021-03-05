@@ -1,6 +1,7 @@
 ---
 title: vuepress-plugin-core-video-player-demo
 isShowComments: false
+publish: false
 ---
 
 <corevideoplayer

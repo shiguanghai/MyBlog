@@ -55,11 +55,11 @@ module.exports = {
         "link": "/blogs/other/messageBoard",
         "icon": "reco-suggestion"
       },
-      {
-        "text": "插件",
-        "link": "/blogs/other/coreplayer",
-        "icon": "reco-message"
-      },
+      // {
+      //   "text": "插件",
+      //   "link": "/blogs/other/coreplayer",
+      //   "icon": "reco-message"
+      // },
       {
         "text": "工具",
         "icon": "reco-message",
@@ -180,12 +180,12 @@ module.exports = {
     "lineNumbers": true
   },
   plugins: [  // 插件
-    [
-      'vuepress-plugin-core-video-player',
-      {
-        lang: 'zh-CN', // zh-CN/en/jp/other language json
-      }
-    ],
+    // [
+    //   'vuepress-plugin-core-video-player',
+    //   {
+    //     lang: 'zh-CN', // zh-CN/en/jp/other language json
+    //   }
+    // ],
     [
       "@vuepress-reco/vuepress-plugin-kan-ban-niang",
       {
