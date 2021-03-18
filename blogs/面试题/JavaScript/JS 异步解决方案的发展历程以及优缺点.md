@@ -14,7 +14,6 @@ isShowComments: false
 
 ## JS 异步解决方案的发展历程以及优缺点
 
-
 ### 1)回调函数（callback）
 
 ```js
@@ -87,7 +86,7 @@ let result2 = it.next()
 let result3 = it.next()
 ```
 
-###  4)Async/await
+### 4)Async/await
 
 async、await 是异步的终极解决方案。
 

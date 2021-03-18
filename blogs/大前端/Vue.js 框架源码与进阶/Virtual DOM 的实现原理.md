@@ -15,7 +15,9 @@ isShowComments: false
 
 
 ## 3.1 Virtual DOM
+
 ### 什么是 Virtual DOM
+
 - **Virtual DOM(虚拟 DOM)**，是由普通的 JS 对象来描述 DOM 对象，因为不是真实的 DOM 对象，所以叫 Virtual DOM
 - 真实 DOM 成员非常多，所以创建一个 DOM 对象的成本是非常高的
 - 可以使用 Virtual DOM 来描述真实 DOM，创建一个虚拟 DOM 的属性很少，成本自然也小，示例
@@ -30,39 +32,43 @@ isShowComments: false
   key: undefined
 }
 ```
-### 为什么使用 Virtual DOM
-- 案例对比
-	* [jQuery-demo](https://codesandbox.io/s/jq-demo-5i7qp)
-	* [snabbdom-demo](https://codesandbox.io/s/snabbdom-demo-4hbyb)
 
+### 为什么使用 Virtual DOM
+
+- 案例对比
+  - [jQuery-demo](https://codesandbox.io/s/jq-demo-5i7qp)
+  - [snabbdom-demo](https://codesandbox.io/s/snabbdom-demo-4hbyb)
 
 - 手动操作 DOM 比较麻烦，还需要考虑浏览器兼容性问题，虽然有 jQuery 等库简化 DOM 操作，但是随着项目的复杂 DOM 操作复杂提升
 - 为了简化 DOM 的复杂操作于是出现了各种 MVVM 框架，MVVM 框架解决了视图和状态的同步问题
 - 为了简化视图的操作我们可以使用模板引擎，但是模板引擎没有解决跟踪状态变化的问题，于是 Virtual DOM 出现了
 - Virtual DOM 的好处是当状态改变时不需要立即更新 DOM，只需要创建一个虚拟树来描述 DOM， Virtual DOM 内部将弄清楚如何有效(diff)的更新 DOM
 - 参考 github 上 [virtual-dom](https://github.com/Matt-Esch/virtual-dom) 的描述
-	* 虚拟 DOM 可以维护程序的状态，跟踪上一次的状态
-	* 通过比较前后两次状态的差异更新真实 DOM
+  - 虚拟 DOM 可以维护程序的状态，跟踪上一次的状态
+  - 通过比较前后两次状态的差异更新真实 DOM
 
 ### Virtual DOM 的作用
+
 - 维护视图和状态的关系
 - 复杂视图情况下提升渲染性能
 - 除了渲染 DOM 以外，还可以实现 SSR(Nuxt.js/Next.js)、原生应用(Weex/React Native)、小程序(mpvue/uni-app)等
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121202536939.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
+
 ### Virtual DOM 库
+
 - [Snabbdom](https://github.com/snabbdom/snabbdom)
-	* Vue 2.x 内部使用的 Virtual DOM 就是改造的 Snabbdom
-	* 大约 200 SLOC（single line of code）
-	* 通过模块可扩展
-	* 源码使用 TypeScript 开发
-	* 最快的 Virtual DOM 之一
+  - Vue 2.x 内部使用的 Virtual DOM 就是改造的 Snabbdom
+  - 大约 200 SLOC（single line of code）
+  - 通过模块可扩展
+  - 源码使用 TypeScript 开发
+  - 最快的 Virtual DOM 之一
 - [virtual-dom](https://github.com/Matt-Esch/virtual-dom)
-	* 最早的 Virtual DOM 开源库
+  - 最早的 Virtual DOM 开源库
 
 ## 3.2 Snabbdom 基本使用
-### Snabbdom 创建项目
 
+### Snabbdom 创建项目
 
 - 打包工具为了方便使用 [parcel](https://parceljs.org/getting_started.html)
 - 创建项目，并安装 parcel
@@ -89,7 +95,7 @@ yarn add parcel-bundler
 
 - 创建目录结构
 
-```
+```json
 │ index.html
 │ package.json
 └─src
@@ -97,17 +103,18 @@ yarn add parcel-bundler
 ```
 
 ### 导入 Snabbdom
+
 - Snabbdom 文档
-	* [原文档](https://github.com/snabbdom/snabbdom)
-	* [中文翻译](https://github.com/coconilu/Blog/issues/152)
+  - [原文档](https://github.com/snabbdom/snabbdom)
+  - [中文翻译](https://github.com/coconilu/Blog/issues/152)
 
-**安装 Snabbdom** 
+**安装 Snabbdom**.
 
-```
+```shell
 yarn add snabbdom
 ```
 
-**导入 Snabbdom**
+**导入 Snabbdom**.
 
 - Snabbdom 的官网 demo 中导入使用的是 commonjs 模块化语法，我们使用更流行的 ES6 模块化的语法 `import`
 - 关于模块化的语法请参考阮一峰老师的 [Module 的语法](https://es6.ruanyifeng.com/#docs/module)
@@ -118,9 +125,9 @@ import { init, h, thunk } from 'snabbdom'
 ```
 
 - Snabbdom 的核心仅提供最基本的功能，只导出了三个函数 init()、h()、thunk()
-	* init() 是一个高阶函数，返回 patch()
-	* h() 返回虚拟节点 VNode，这个函数我们在使用 Vue.js 的时候见过
-	* thunk() 是一种优化策略，可以在处理不可变数据时使用
+  - init() 是一个高阶函数，返回 patch()
+  - h() 返回虚拟节点 VNode，这个函数我们在使用 Vue.js 的时候见过
+  - thunk() 是一种优化策略，可以在处理不可变数据时使用
 
 ```js
 new Vue({
@@ -131,12 +138,14 @@ new Vue({
 ```
 
 - **注意：**导入时候不能使用 `import snabbdom from 'snabbdom'`
-	* 原因：node_modules/src/snabbdom.ts 末尾导出使用的语法是 export 导出 API，没有使用 export default 导出默认输出
+  - 原因：node_modules/src/snabbdom.ts 末尾导出使用的语法是 export 导出 API，没有使用 export default 导出默认输出
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121210031479.png#pic_center)
+
 ### Snabbdom 使用
 
-**案例一**
+**案例一**:
+
 ```js
 import { h, init } from 'snabbdom'
 
@@ -171,7 +180,7 @@ vnode = h('div', 'Hello Snabbdom')
 patch(oldVnode, vnode)
 ```
 
-```
+```shell
 yarn dev
 ```
 
@@ -207,7 +216,7 @@ setTimeout(() => {
 }, 2000);
 ```
 
-```
+```shell
 yarn dev
 ```
 
@@ -217,35 +226,37 @@ yarn dev
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121212857807.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 两秒后清空的页面效果
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020112121300072.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
+
 ### Snabbdom 中的模块
+
 > Snabbdom 的核心库并不能处理元素的属性/样式/事件等，如果需要处理的话，可以使用模块
 
-**常用模块**
+**常用模块**:
 
 - 官方提供了 6 个模块
-	* attributes
-		+ 设置 DOM 元素的属性，使用 `setAttribute ()`
-		+ 处理布尔类型的属性
-	* props
-		+ 和 attributes 模块相似，设置 DOM 元素的属性 `element[attr] = value`
-		+ 不处理布尔类型的属性
-	* class
-		+ 切换类样式
-		+ 注意：给元素设置类样式是通过 `sel` 选择器
-	* dataset
-		+ 设置 `data-*` 的自定义属性
-	* eventlisteners
-		+ 注册和移除事件
-	* style
-		+ 设置行内样式，支持动画
-		+ delayed/remove/destroy
+  - attributes
+    - 设置 DOM 元素的属性，使用 `setAttribute ()`
+    - 处理布尔类型的属性
+  - props
+    - 和 attributes 模块相似，设置 DOM 元素的属性 `element[attr] = value`
+    - 不处理布尔类型的属性
+  - class
+    - 切换类样式
+    - 注意：给元素设置类样式是通过 `sel` 选择器
+  - dataset
+    - 设置 `data-*` 的自定义属性
+  - eventlisteners
+    - 注册和移除事件
+  - style
+    - 设置行内样式，支持动画
+    - delayed/remove/destroy
 
-**模块使用**
+**模块使用**:
 
 - 模块使用步骤：
-	* 导入需要的模块（类似插件，不在核心库中）
-	* init()中注册模块
-	* 使用 h() 函数创建 VNode 的时候，可以把第二个参数设置为对象，其他参数往后移
+  - 导入需要的模块（类似插件，不在核心库中）
+  - init()中注册模块
+  - 使用 h() 函数创建 VNode 的时候，可以把第二个参数设置为对象，其他参数往后移
 
 ```js
 import { init, h } from 'snabbdom'
@@ -278,13 +289,17 @@ let app = document.querySelector('#app')
 
 let oldVnode = patch(app, vnode)
 ```
-```
+
+```shell
 yarn dev
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121214956302.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
 ## 3.3 Snabbdom@0.7.4 源码解析
+
 ### 如何学习源码
+
 - 先宏观了解
 - 带着目标看源码
 - 看源码的过程要不求甚解
@@ -292,49 +307,53 @@ yarn dev
 - 参考资料
 
 ### Snabbdom 的核心
+
 - 使用 h() 函数创建 JavaScript 对象(VNode)描述真实 DOM
 - init() 设置模块，创建 patch()
 - patch() 比较新旧两个 VNode
 - 把变化的内容更新到真实 DOM 树上
 
-**Snabbdom**
+**Snabbdom**.
 
 源码地址：[https://github.com/snabbdom/snabbdom](https://github.com/snabbdom/snabbdom)
 
 src 目录结构：
 
-```
-│ 	h.ts 					h() 函数，用来创建 VNode
-│ 	hooks.ts 				所有钩子函数的定义
-│ 	htmldomapi.ts 			对 DOM API 的包装
-│ 	is.ts 					判断数组和原始值的函数
-│ 	jsx-global.d.ts 		jsx 的类型声明文件
-│ 	jsx.ts 					处理 jsx
-│ 	snabbdom.bundle.ts 		入口，已经注册了模块
-│ 	snabbdom.ts 			初始化，返回 init/h/thunk
-│ 	thunk.ts 				优化处理，对复杂视图不可变值得优化
-│	tovnode.ts 				DOM 转换成 VNode
-│ 	vnode.ts 				虚拟节点定义
+```json
+│  h.ts      h() 函数，用来创建 VNode
+│  hooks.ts     所有钩子函数的定义
+│  htmldomapi.ts    对 DOM API 的包装
+│  is.ts      判断数组和原始值的函数
+│  jsx-global.d.ts   jsx 的类型声明文件
+│  jsx.ts      处理 jsx
+│  snabbdom.bundle.ts   入口，已经注册了模块
+│  snabbdom.ts    初始化，返回 init/h/thunk
+│  thunk.ts     优化处理，对复杂视图不可变值得优化
+│ tovnode.ts     DOM 转换成 VNode
+│  vnode.ts     虚拟节点定义
 │
 ├─helpers
-│ 	attachto.ts 			定义了 vnode.ts 中 AttachData 的数据结构
+│  attachto.ts    定义了 vnode.ts 中 AttachData 的数据结构
 │
-└─modules 					所有模块定义
-	attributes.ts
-	class.ts
-	dataset.ts
-	eventlisteners.ts
-	hero.ts 				example 中使用到的自定义钩子
-	module.ts 				定义了模块中用到的钩子函数
-	props.ts
-	style.ts
+└─modules      所有模块定义
+ attributes.ts
+ class.ts
+ dataset.ts
+ eventlisteners.ts
+ hero.ts     example 中使用到的自定义钩子
+ module.ts     定义了模块中用到的钩子函数
+ props.ts
+ style.ts
 ```
+
 我们重点分析与核心流程相关的三个文件 **h.ts**、**snabbdom.ts**、**vnode.ts**
 
 ### h 函数
-**h() 函数介绍**
+
+**h() 函数介绍**:
 
 - 在使用 Vue 的时候见过 h() 函数，Vue中增强了 h 函数，实现了组件的机制
+
 ```js
 new Vue({
   router,
@@ -342,15 +361,16 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 ```
+
 - h() 函数最早见于 [hyperscript](https://github.com/hyperhype/hyperscript)，使用 JavaScript 创建超文本，也就是 html 字符串
 - Snabbdom 中的 h() 函数不是用来创建超文本，而是创建 VNode
 
-**函数重载**
+**函数重载**.
 
 - 概念
-	* **参数个数**或**类型**不同的函数
-	* JavaScript 中没有重载的概念
-	* TypeScript 中有重载，不过[重载的实现](https://shiguanghai.top/blogs/%E9%9D%A2%E8%AF%95%E9%A2%98/JavaScript/TypeScript%E6%98%AF%E5%90%A6%E6%94%AF%E6%8C%81%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD.html)还是通过代码调整参数
+  - **参数个数**或**类型**不同的函数
+  - JavaScript 中没有重载的概念
+  - TypeScript 中有重载，不过[重载的实现](https://shiguanghai.top/blogs/%E9%9D%A2%E8%AF%95%E9%A2%98/JavaScript/TypeScript%E6%98%AF%E5%90%A6%E6%94%AF%E6%8C%81%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD.html)还是通过代码调整参数
 - 重载的示意
 
 ```js
@@ -387,7 +407,7 @@ export function h(sel: any, b?: any, c?: any): VNode {
     else if (c && c.sel) { children = [c]; }
   } else if (b !== undefined) {
     // 处理两个参数的情况
-	// 如果 b 是数组
+ // 如果 b 是数组
     if (is.array(b)) { children = b; }
     // 如果 b 是字符串或者数字
     else if (is.primitive(b)) { text = b; }
@@ -396,7 +416,7 @@ export function h(sel: any, b?: any, c?: any): VNode {
     else { data = b; }
   }
   if (children !== undefined) {
-  	// 处理 children 中的原始值(string/number)
+   // 处理 children 中的原始值(string/number)
     for (i = 0; i < children.length; ++i) {
       // 如果 child 是 string/number，创建文本节点
       if (is.primitive(children[i])) children[i] = vnode(undefined, undefined, undefined, children[i], undefined);
@@ -417,6 +437,7 @@ export default h;
 ```
 
 ### VNode 函数
+
 - 一个 VNode 就是一个虚拟节点用来描述一个 DOM 元素，如果这个 VNode 有 children 就是 Virtual DOM
 - 源码位置：src/vnode.ts
 
@@ -449,6 +470,7 @@ export default vnode;
 ```
 
 ### Vnode 渲染成真实 DOM（Snabbdom核心）
+
 - patch(oldVnode, newVnode)
 - 打补丁，把新节点中变化的内容渲染到真实 DOM，最后返回新节点作为下一次处理的旧节点
 - 对比新旧 VNode 是否相同节点(节点的 key 和 sel 相同)
@@ -458,11 +480,13 @@ export default vnode;
 - diff 过程只进行同层级比较
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121230831510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
+
 ### init 函数
+
 - **功能**：init(modules, domApi)，返回 patch() 函数（高阶函数）
 - 为什么要使用高阶函数？
-	* 因为 patch() 函数再外部会调用多次，每次调用依赖一些参数，比如：modules/domApi/cbs
-	* 通过高阶函数让 init() 内部形成闭包，返回的 patch() 可以访问到 modules/domApi/cbs，而不需要重新创建
+  - 因为 patch() 函数再外部会调用多次，每次调用依赖一些参数，比如：modules/domApi/cbs
+  - 通过高阶函数让 init() 内部形成闭包，返回的 patch() 可以访问到 modules/domApi/cbs，而不需要重新创建
 - init() 在返回 patch() 之前，首先收集了所有模块中的钩子函数存储到 cbs 对象中
 - 源码位置：src/snabbdom.ts
 
@@ -496,19 +520,20 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
 ```
 
 ### patch 函数
+
 - **功能：**
-	* 传入新旧 VNode，对比差异，把差异渲染到 DOM
-	* 返回新的 VNode，作为下一次 patch() 的 oldVnode
+  - 传入新旧 VNode，对比差异，把差异渲染到 DOM
+  - 返回新的 VNode，作为下一次 patch() 的 oldVnode
 - **执行过程：**
-	* 首先执行**模块**中的**钩子**函数 `pre`
-	* 如果 oldVnode 和 vnode 相同（key 和 sel 相同）
-		+ 调用 patchVnode()，找节点的差异并更新 DOM
-	* 如果 oldVnode 是 DOM 元素
-		+ 把 DOM 元素转换成 oldVnode
-		+ 调用 createElm() 把 vnode 转换为真实 DOM，记录到 vnode.elm
-		+ 把刚创建的 DOM 元素插入到 parent 中
-		+ 移除老节点
-		+ 触发**用户**设置的 `insert` **钩子**函数
+  - 首先执行**模块**中的**钩子**函数 `pre`
+  - 如果 oldVnode 和 vnode 相同（key 和 sel 相同）
+    - 调用 patchVnode()，找节点的差异并更新 DOM
+  - 如果 oldVnode 是 DOM 元素
+    - 把 DOM 元素转换成 oldVnode
+    - 调用 createElm() 把 vnode 转换为真实 DOM，记录到 vnode.elm
+    - 把刚创建的 DOM 元素插入到 parent 中
+    - 移除老节点
+    - 触发**用户**设置的 `insert` **钩子**函数
 - 源码位置：src/snabbdom.ts
 
 ```js
@@ -530,7 +555,7 @@ return function patch(oldVnode: VNode | Element, vnode: VNode): VNode {
     patchVnode(oldVnode, vnode, insertedVnodeQueue);
   } else {
     // 如果新旧节点不同，vnode 创建对应的 DOM
-	// 获取当前的 DOM 元素
+ // 获取当前的 DOM 元素
     elm = oldVnode.elm as Node;
     parent = api.parentNode(elm);
     // 触发 init/create 钩子函数,创建 DOM
@@ -555,22 +580,23 @@ return function patch(oldVnode: VNode | Element, vnode: VNode): VNode {
 ```
 
 ### createElm 函数
+
 - **功能：**
-	* createElm(vnode, insertedVnodeQueue)，返回创建的 DOM 元素
-	* 创建 vnode 对应的 DOM 元素
+  - createElm(vnode, insertedVnodeQueue)，返回创建的 DOM 元素
+  - 创建 vnode 对应的 DOM 元素
 - **执行过程：**
-	* 首先触发**用户**设置的 `init` **钩子**函数
-	* 把 vnode 转换成 DOM 对象，存储到 vnode.elm 中
-	* 如果选择器是!，创建注释节点
-	* 如果选择器为空，创建文本节点
-	* 如果选择器不为空
-		+ 创建对应的 DOM 对象：解析选择器，设置标签的 id 和 class 属性
-		+ 执行**模块**的 `create` **钩子**函数
-		+ 如果 vnode 有 children，创建子 vnode 对应的 DOM，追加到 DOM 树
-		+ 如果 vnode 的 text 值是 string/number，创建文本节点并追击到 DOM 树
-		+ 执行**用户**设置的 `create` **钩子**函数
-		+ 如果有**用户**设置的 `insert` **钩子**函数，把 vnode 添加到队列中
-	* 返回 vnode.elm
+  - 首先触发**用户**设置的 `init` **钩子**函数
+  - 把 vnode 转换成 DOM 对象，存储到 vnode.elm 中
+  - 如果选择器是!，创建注释节点
+  - 如果选择器为空，创建文本节点
+  - 如果选择器不为空
+    - 创建对应的 DOM 对象：解析选择器，设置标签的 id 和 class 属性
+    - 执行**模块**的 `create` **钩子**函数
+    - 如果 vnode 有 children，创建子 vnode 对应的 DOM，追加到 DOM 树
+    - 如果 vnode 的 text 值是 string/number，创建文本节点并追击到 DOM 树
+    - 执行**用户**设置的 `create` **钩子**函数
+    - 如果有**用户**设置的 `insert` **钩子**函数，把 vnode 添加到队列中
+  - 返回 vnode.elm
 - 源码位置：src/snabbdom.ts
 
 ```js
@@ -593,8 +619,8 @@ function createElm(vnode: VNode, insertedVnodeQueue: VNodeQueue): Node {
     vnode.elm = api.createComment(vnode.text as string);
   } else if (sel !== undefined) {
     // 如果选择器不为空
-	// 解析选择器
-	// Parse selector
+ // 解析选择器
+ // Parse selector
     const hashIdx = sel.indexOf('#');
     const dotIdx = sel.indexOf('.', hashIdx);
     const hash = hashIdx > 0 ? hashIdx : sel.length;
@@ -635,6 +661,7 @@ function createElm(vnode: VNode, insertedVnodeQueue: VNodeQueue): Node {
 ```
 
 ### addVnodes 和 removeVnodes 函数
+
 ```js
 function addVnodes(parentElm: Node,
                    before: Node | null,
@@ -650,6 +677,7 @@ function addVnodes(parentElm: Node,
   }
 }
 ```
+
 ```js
 function removeVnodes(parentElm: Node,
                       vnodes: Array<VNode>,
@@ -712,29 +740,30 @@ function createRmCb(childElm: Node, listeners: number) {
 ```
 
 ### patchVnode 函数
+
 - **功能：**
-	* patchVnode(oldVnode, vnode, insertedVnodeQueue)
-	* 对比 oldVnode 和 vnode 的差异，把差异渲染到 DOM
+  - patchVnode(oldVnode, vnode, insertedVnodeQueue)
+  - 对比 oldVnode 和 vnode 的差异，把差异渲染到 DOM
 - **执行过程：**
-	* 首先执行**用户**设置的 `prepatch` **钩子**函数
-	* 执行 create 钩子函数
-		+ 首先执行**模块**的 `update` **钩子**函数
-		+ 然后执行**用户**设置的 `update` **钩子**函数
-	* 如果 **vnode.text** 未定义
-		+ 如果 `oldVnode.children` 和 `vnode.children` 都有值
-		+ 调用 `updateChildren()`
-		+ 使用 diff 算法对比子节点，更新子节点
-		+ 如果 `vnode.children` 有值， `oldVnode.children` 无值
-		+ 清空 DOM 元素
-		+ 调用 `addVnodes()` ，批量添加子节点
-		+ 如果 `oldVnode.children` 有值， `vnode.children` 无值
-		+ 调用 `removeVnodes()` ，批量移除子节点
-		+ 如果 **oldVnode.text** 有值
-		+ 清空 DOM 元素的内容
-	* 如果设置了 `vnode.text` 并且和 `oldVnode.text` 不等
-		+ 如果老节点有子节点，全部移除
-		+ 设置 DOM 元素的 `textContent` 为 `vnode.text`
-	* 最后执行**用户**设置的 `postpatch` **钩子**函数
+  - 首先执行**用户**设置的 `prepatch` **钩子**函数
+  - 执行 create 钩子函数
+    - 首先执行**模块**的 `update` **钩子**函数
+    - 然后执行**用户**设置的 `update` **钩子**函数
+  - 如果 **vnode.text** 未定义
+    - 如果 `oldVnode.children` 和 `vnode.children` 都有值
+    - 调用 `updateChildren()`
+    - 使用 diff 算法对比子节点，更新子节点
+    - 如果 `vnode.children` 有值， `oldVnode.children` 无值
+    - 清空 DOM 元素
+    - 调用 `addVnodes()` ，批量添加子节点
+    - 如果 `oldVnode.children` 有值， `vnode.children` 无值
+    - 调用 `removeVnodes()` ，批量移除子节点
+    - 如果 **oldVnode.text** 有值
+    - 清空 DOM 元素的内容
+  - 如果设置了 `vnode.text` 并且和 `oldVnode.text` 不等
+    - 如果老节点有子节点，全部移除
+    - 设置 DOM 元素的 `textContent` 为 `vnode.text`
+  - 最后执行**用户**设置的 `postpatch` **钩子**函数
 - 源码位置：src/snabbdom.ts
 
 ```js
@@ -764,13 +793,13 @@ function patchVnode(oldVnode: VNode, vnode: VNode, insertedVnodeQueue: VNodeQueu
       if (oldCh !== ch) updateChildren(elm, oldCh as Array<VNode>, ch as Array<VNode>, insertedVnodeQueue);
     } else if (isDef(ch)) {
       // 如果新节点有 children，老节点没有 children
-	  // 如果老节点有text，清空dom 元素的内容
+   // 如果老节点有text，清空dom 元素的内容
       if (isDef(oldVnode.text)) api.setTextContent(elm, '');
       // 批量添加子节点
       addVnodes(elm, null, ch as Array<VNode>, 0, (ch as Array<VNode>).length - 1, insertedVnodeQueue);
     } else if (isDef(oldCh)) {
       // 如果老节点有children，新节点没有children
-	  // 批量移除子节点
+   // 批量移除子节点
       removeVnodes(elm, oldCh as Array<VNode>, 0, (oldCh as Array<VNode>).length - 1);
     } else if (isDef(oldVnode.text)) {
       // 如果老节点有 text，清空 DOM 元素
@@ -793,54 +822,55 @@ function patchVnode(oldVnode: VNode, vnode: VNode, insertedVnodeQueue: VNodeQueu
 ```
 
 ### updateChildren 函数
-- **功能：**
-	* diff 算法的核心，对比新旧节点的 children，更新 DOM
-- **执行过程：**
-	* 要对比两棵树的差异，我们可以取第一棵树的每一个节点依次和第二课树的每一个节点比较，但是这样的时间复杂度为 O(n^3)
-	* 在DOM 操作的时候我们很少很少会把一个父节点移动/更新到某一个子节点
-	* 因此只需要找**同级别**的**子节点**依次**比较**，然后再找下一级别的节点比较，这样算法的时间复杂度为 O(n)
-	* ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201122154816893.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
-	* 在进行同级别节点比较的时候，首先会对新老节点数组的开始和结尾节点设置标记索引，遍历的过程中移动索引
-	* 在对**开始和结束节点**比较的时候，总共有四种情况
-		+ oldStartVnode / newStartVnode (旧开始节点 / 新开始节点)
-		+ oldEndVnode / newEndVnode (旧结束节点 / 新结束节点)
-		+ oldStartVnode / oldEndVnode (旧开始节点 / 新结束节点)
-		+ oldEndVnode / newStartVnode (旧结束节点 / 新开始节点)
+- **功能：**
+  - diff 算法的核心，对比新旧节点的 children，更新 DOM
+- **执行过程：**
+  - 要对比两棵树的差异，我们可以取第一棵树的每一个节点依次和第二课树的每一个节点比较，但是这样的时间复杂度为 O(n^3)
+  - 在DOM 操作的时候我们很少很少会把一个父节点移动/更新到某一个子节点
+  - 因此只需要找**同级别**的**子节点**依次**比较**，然后再找下一级别的节点比较，这样算法的时间复杂度为 O(n)
+  - ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201122154816893.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
+
+  - 在进行同级别节点比较的时候，首先会对新老节点数组的开始和结尾节点设置标记索引，遍历的过程中移动索引
+  - 在对**开始和结束节点**比较的时候，总共有四种情况
+    - oldStartVnode / newStartVnode (旧开始节点 / 新开始节点)
+    - oldEndVnode / newEndVnode (旧结束节点 / 新结束节点)
+    - oldStartVnode / oldEndVnode (旧开始节点 / 新结束节点)
+    - oldEndVnode / newStartVnode (旧结束节点 / 新开始节点)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201122155029478.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
-	* 开始节点和结束节点比较，这两种情况类似
-		+ oldStartVnode / newStartVnode (旧开始节点 / 新开始节点)
-		+ oldEndVnode / newEndVnode (旧结束节点 / 新结束节点)
-	* 如果 oldStartVnode 和 newStartVnode 是 sameVnode (key 和 sel 相同)
-		+ 调用 patchVnode() 对比和更新节点
-		+ 把旧开始和新开始索引往后移动 oldStartIdx++ / oldEndIdx++
+  - 开始节点和结束节点比较，这两种情况类似
+    - oldStartVnode / newStartVnode (旧开始节点 / 新开始节点)
+    - oldEndVnode / newEndVnode (旧结束节点 / 新结束节点)
+  - 如果 oldStartVnode 和 newStartVnode 是 sameVnode (key 和 sel 相同)
+    - 调用 patchVnode() 对比和更新节点
+    - 把旧开始和新开始索引往后移动 oldStartIdx++ / oldEndIdx++
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201122155124831.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
-	* oldStartVnode / newEndVnode (旧开始节点 / 新结束节点) 相同
-		+ 调用 patchVnode() 对比和更新节点
-		+ 把 oldStartVnode 对应的 DOM 元素，移动到右边
-		+ 更新索引
+  - oldStartVnode / newEndVnode (旧开始节点 / 新结束节点) 相同
+    - 调用 patchVnode() 对比和更新节点
+    - 把 oldStartVnode 对应的 DOM 元素，移动到右边
+    - 更新索引
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020112216064975.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
-	* oldEndVnode / newStartVnode (旧结束节点 / 新开始节点) 相同
-		+ 调用 patchVnode() 对比和更新节点
-		+ 把 oldEndVnode 对应的 DOM 元素，移动到左边
-		+ 更新索引
+  - oldEndVnode / newStartVnode (旧结束节点 / 新开始节点) 相同
+    - 调用 patchVnode() 对比和更新节点
+    - 把 oldEndVnode 对应的 DOM 元素，移动到左边
+    - 更新索引
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201122160852462.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
-	* 如果不是以上四种情况
-		+ 遍历新节点，使用 newStartNode 的 key 在老节点数组中找相同节点
-		+ 如果没有找到，说明 newStartNode 是新节点
-		+ 创建新节点对应的 DOM 元素，插入到 DOM 树中
-		+ 如果找到了
-		+ 判断新节点和找到的老节点的 sel 选择器是否相同
-		+ 如果不相同，说明节点被修改了
-		+ 重新创建对应的 DOM 元素，插入到 DOM 树中
-		+ 如果相同，把 elmToMove 对应的 DOM 元素，移动到左边
+  - 如果不是以上四种情况
+    - 遍历新节点，使用 newStartNode 的 key 在老节点数组中找相同节点
+    - 如果没有找到，说明 newStartNode 是新节点
+    - 创建新节点对应的 DOM 元素，插入到 DOM 树中
+    - 如果找到了
+    - 判断新节点和找到的老节点的 sel 选择器是否相同
+    - 如果不相同，说明节点被修改了
+    - 重新创建对应的 DOM 元素，插入到 DOM 树中
+    - 如果相同，把 elmToMove 对应的 DOM 元素，移动到左边
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201122161329309.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
-	* 循环结束
-		+ 当老节点的所有子节点先遍历完 (oldStartIdx > oldEndIdx)，循环结束
-		+ 新节点的所有子节点先遍历完 (newStartIdx > newEndIdx)，循环结束
-	* 如果老节点的数组先遍历完(oldStartIdx > oldEndIdx)，说明新节点有剩余，把剩余节点批量插入到右边
+  - 循环结束
+    - 当老节点的所有子节点先遍历完 (oldStartIdx > oldEndIdx)，循环结束
+    - 新节点的所有子节点先遍历完 (newStartIdx > newEndIdx)，循环结束
+  - 如果老节点的数组先遍历完(oldStartIdx > oldEndIdx)，说明新节点有剩余，把剩余节点批量插入到右边
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201122161603599.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
-	* 如果新节点的数组先遍历完(newStartIdx > newEndIdx)，说明老节点有剩余，把剩余节点批量删除
+  - 如果新节点的数组先遍历完(newStartIdx > newEndIdx)，说明老节点有剩余，把剩余节点批量删除
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201122161621240.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 - 源码位置：src/snabbdom.ts
 
@@ -907,7 +937,7 @@ function updateChildren(parentElm: Node,
       // 如果是新的vnode
       if (isUndef(idxInOld)) { // New element
         // 如果没找到，newStartNode 是新节点
-	    // 创建元素插入 DOM 树
+     // 创建元素插入 DOM 树
         api.insertBefore(parentElm, createElm(newStartVnode, insertedVnodeQueue), oldStartVnode.elm as Node);
         // 重新给 newStartVnode 赋值，指向下一个新节点
         newStartVnode = newCh[++newStartIdx];
@@ -916,11 +946,11 @@ function updateChildren(parentElm: Node,
         elmToMove = oldCh[idxInOld];
         if (elmToMove.sel !== newStartVnode.sel) {
           // 如果新旧节点的选择器不同
-		  // 创建新开始节点对应的 DOM 元素，插入到 DOM 树中
+    // 创建新开始节点对应的 DOM 元素，插入到 DOM 树中
           api.insertBefore(parentElm, createElm(newStartVnode, insertedVnodeQueue), oldStartVnode.elm as Node);
         } else {
           // 如果相同，patchVnode()
-		  // 把 elmToMove 对应的 DOM 元素，移动到左边
+    // 把 elmToMove 对应的 DOM 元素，移动到左边
           patchVnode(elmToMove, newStartVnode, insertedVnodeQueue);
           oldCh[idxInOld] = undefined as any;
           api.insertBefore(parentElm, (elmToMove.elm as Node), oldStartVnode.elm as Node);
@@ -934,12 +964,12 @@ function updateChildren(parentElm: Node,
   if (oldStartIdx <= oldEndIdx || newStartIdx <= newEndIdx) {
     if (oldStartIdx > oldEndIdx) {
       // 如果老节点数组先遍历完成，说明有新的节点剩余
-	  // 把剩余的新节点都插入到右边
+   // 把剩余的新节点都插入到右边
       before = newCh[newEndIdx+1] == null ? null : newCh[newEndIdx+1].elm;
       addVnodes(parentElm, before, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
     } else {
       // 如果新节点数组先遍历完成，说明老节点有剩余
-	  // 批量删除老节点
+   // 批量删除老节点
       removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
     }
   }
@@ -949,13 +979,14 @@ function updateChildren(parentElm: Node,
 这里有一个视频通过动画的形式讲解了Diff算法：[图解 Vue.js Virtual DOM 的 Diff 算法核心](https://www.bilibili.com/video/BV1b5411V7i3?t=479)
 
 ### Hooks 函数 和 模块 Modules
+
 - snabbdom核心： patch() -> patchVnode() -> updateChildren()
 - Snabbdom 为了保证核心库的精简，把处理元素的属性/事件/样式等工作，放置到模块中
 - 模块可以按照需要引入
 - 模块的使用可以查看[官方文档](https://github.com/snabbdom/snabbdom#modules-documentation)
 - 模块实现的核心是基于 Hooks
 
-**Hooks**
+**Hooks**.
 
 - 预定义的钩子函数的名称
 - 源码位置：src/hooks.ts
@@ -994,30 +1025,30 @@ export interface Hooks {
 }
 ```
 
-**Modules**
+**Modules**.
 
-**模块文件的定义**
+**模块文件的定义**:
 
 Snabbdom 提供的所有模块在：src/modules 文件夹下，主要模块有：
 
 - attributes.ts
-	* 使用 setAttribute/removeAttribute 操作属性
-	* 能够处理 boolean 类型的属性
+  - 使用 setAttribute/removeAttribute 操作属性
+  - 能够处理 boolean 类型的属性
 - class.ts
-	* 切换类样式
+  - 切换类样式
 - dataset.ts
-	* 操作元素的 `data-*` 属性
+  - 操作元素的 `data-*` 属性
 - eventlisteners.ts
-	* 注册和移除事件
+  - 注册和移除事件
 - module.ts
-	* 定义模块遵守的钩子函数
+  - 定义模块遵守的钩子函数
 - props.ts
-	* 和 `attributes.ts` 类似，但是是使用 elm[attrName] = value 的方式操作属性
+  - 和 `attributes.ts` 类似，但是是使用 elm[attrName] = value 的方式操作属性
 - style.ts
-	* 操作行内样式
-	* 可以使动画更平滑
+  - 操作行内样式
+  - 可以使动画更平滑
 - hero.ts
-	* 自定义的模块，examples/hero 示例中使用
+  - 自定义的模块，examples/hero 示例中使用
 
 **这里我们仅分析 attributes.ts** 其余类似
 
@@ -1032,9 +1063,9 @@ export default attributesModule;
 ```
 
 - updateAttrs 函数功能
-	* 更新节点属性
-	* 如果节点属性值是 true 设置空置
-	* 如果节点属性值是 false 移除属性
+  - 更新节点属性
+  - 如果节点属性值是 true 设置空置
+  - 如果节点属性值是 false 移除属性
 - updateAttrs 实现
 
 ```js
@@ -1063,12 +1094,12 @@ function updateAttrs(oldVnode: VNode, vnode: VNode): void {
         elm.removeAttribute(key);
       } else {
         // ascii 120 -> x
-		// <svg xmlns="http://www.w3.org/2000/svg">
+  // <svg xmlns="http://www.w3.org/2000/svg">
         if (key.charCodeAt(0) !== xChar) {
           elm.setAttribute(key, cur);
         } else if (key.charCodeAt(3) === colonChar) {
           // ascii 120 -> :
-		  // Assume xml namespace
+    // Assume xml namespace
           elm.setAttributeNS(xmlNS, key, cur);
         } else if (key.charCodeAt(5) === colonChar) {
           // Assume xlink namespace

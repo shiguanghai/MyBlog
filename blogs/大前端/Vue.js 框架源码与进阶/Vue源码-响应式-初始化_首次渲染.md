@@ -15,51 +15,56 @@ isShowComments: false
 
 
 ## 4.1 准备工作
+
 ### Vue 源码获取
 
 - 项目地址 [https://github.com/vuejs/vue](https://github.com/vuejs/vue)
 - Fork 一份到自己仓库，克隆到本地，可以自己写注释提交到 github
 - 为什么分析 Vue 2.6
-	* 到目前为止 Vue 3.0 的正式版还没有发布
-	* 新版本发布后，现有项目不会升级到 3.0，2.x 还有很长的一段过渡期
-	* 3.0 项目地址：[https://github.com/vuejs/vue-next](https://github.com/vuejs/vue-next)
+  - 到目前为止 Vue 3.0 的正式版还没有发布
+  - 新版本发布后，现有项目不会升级到 3.0，2.x 还有很长的一段过渡期
+  - 3.0 项目地址：[https://github.com/vuejs/vue-next](https://github.com/vuejs/vue-next)
 
 > **可以参考我 Fork 的[源码](https://github.com/shiguanghai/vue)**，相较官网增加了一些额外的代码批注以及部分官方注释的翻译，文章未展示到的代码可以自己深入来看，另外用到[案例](https://github.com/shiguanghai/vue/tree/dev/examples)也可以在其中获取
+
 ### 源码目录结构
+
 ```js
 src
-├─compiler 		编译相关	
-├─core 			Vue 核心库（与平台无关的代码）
-│	components	定义 vue 自带的 keep-alive 组件
-│	global-api	定义 vue 静态方法
-│	instance	创建 vue 实例（构造函数、初始化、生命周期函数）
-│	observer	响应式机制实现（本章重点）
-│	util		公共成员
-│	vdom		虚拟dom
-├─platforms 	平台相关代码
-│	web			
-│	weex		基于vue移动端框架
-├─server 		SSR，服务端渲染
-├─sfc 			单文件组件（.vue 文件编译为 js 对象）
-└─shared 		公共的代码
+├─compiler   编译相关 
+├─core    Vue 核心库（与平台无关的代码）
+│ components 定义 vue 自带的 keep-alive 组件
+│ global-api 定义 vue 静态方法
+│ instance 创建 vue 实例（构造函数、初始化、生命周期函数）
+│ observer 响应式机制实现（本章重点）
+│ util  公共成员
+│ vdom  虚拟dom
+├─platforms  平台相关代码
+│ web   
+│ weex  基于vue移动端框架
+├─server   SSR，服务端渲染
+├─sfc    单文件组件（.vue 文件编译为 js 对象）
+└─shared   公共的代码
 ```
 
 我们可以看到，Vue 在开发的时候首先会按照**功能**把代码拆分到**不同的文件夹**，然后再拆分成小的**模块**，这样的代码结构清楚，可以提高其**可读性**和**可维护性**。
 
-
 ### 调试设置
-**打包**
+
+**打包**.
 
 - 打包工具 Rollup
-	* Vue.js 源码的打包工具使用的是 Rollup，比 Webpack 轻量
-	* Webpack 把所有文件当做模块，Rollup 只处理 js 文件更适合在 Vue.js 这样的库中使用
-	* Rollup 打包不会生成冗余的代码
-	* 详细可见 [Rollup 打包](https://shiguanghai.top/blogs/%E5%A4%A7%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%AE%9E%E6%88%98/Rollup%E3%80%81Parcel%20%E6%89%93%E5%8C%85.html#_6-1-rollup-%E6%89%93%E5%8C%85)
+  - Vue.js 源码的打包工具使用的是 Rollup，比 Webpack 轻量
+  - Webpack 把所有文件当做模块，Rollup 只处理 js 文件更适合在 Vue.js 这样的库中使用
+  - Rollup 打包不会生成冗余的代码
+  - 详细可见 [Rollup 打包](https://shiguanghai.top/blogs/%E5%A4%A7%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%AE%9E%E6%88%98/Rollup%E3%80%81Parcel%20%E6%89%93%E5%8C%85.html#_6-1-rollup-%E6%89%93%E5%8C%85)
 
 安装依赖
+
 ```bash
  npm i
 ```
+
 设置 sourcemap
 
 - package.json 文件中的 dev 脚本中添加参数 --sourcemap 开启代码地图
@@ -69,9 +74,9 @@ src
 ```
 
 - 执行 dev
-	* 首先我们先将 `dist` 目录删除，以便看得更清楚
-	* `npm run dev` 执行打包，用的是 rollup，-w 参数是监听文件的变化，文件变化自动重新打包；-c 是设置配置文；最后一个参数是配置环境变量，从而来打包生成不同版本的 vue
-	* **注意**：Window 系统的朋友可能会遇到一个问题：
+  - 首先我们先将 `dist` 目录删除，以便看得更清楚
+  - `npm run dev` 执行打包，用的是 rollup，-w 参数是监听文件的变化，文件变化自动重新打包；-c 是设置配置文；最后一个参数是配置环境变量，从而来打包生成不同版本的 vue
+  - **注意**：Window 系统的朋友可能会遇到一个问题：
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201205154633545.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 在这里，我初次从 github 将 vue 源代码 clone 下来，`npm i` 安装依赖之后执行 `npm run dev` 打包报出如上错误，而当我们查看文件我们发现并没有创建 dist 目录，这个错误大致的意思是找不到你的某个文件（文件不一定，之前遇到过core/index文件找不到）
@@ -91,10 +96,9 @@ src
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201205160849737.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 至于其他版本的js文件我们后续可以通过调用 `npm run build` 得到
 
-**调试**
+**调试**.
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201208215140578.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
-
 
 - examples 的示例中引入的 vue.min.js 改为 vue.js
 - 打开 Chrome 的调试工具中的 source
@@ -118,7 +122,7 @@ src
 | **Full (production)** | vue.min.js | | |
 | **Runtime-only (production)** | vue.runtime.min.js | | |
 
-**术语**
+**术语**.
 
 - **完整版**：同时包含**编译器**和**运行时**的版本
 - **编译器**：用来将模板字符串编译成为 JavaScript 渲染函数的代码，体积大、效率低
@@ -126,10 +130,10 @@ src
 - [UMD](https://github.com/umdjs/umd)：UMD 版本通用的模块版本，支持多种模块方式。 vue.js 默认文件就是运行时 + 编译器的UMD 版本
 - [CommonJS](http://wiki.commonjs.org/wiki/Modules/1.1)(cjs)：CommonJS 版本用来配合老的打包工具比如 [Browserify](http://browserify.org/) 或 [webpack 1](https://webpack.github.io/)
 - [ES Module](http://exploringjs.com/es6/ch_modules.html)：从 2.6 开始 Vue 会提供两个 ES Modules (ESM) 构建文件，为现代打包工具提供的版本
-	* ESM 格式被设计为可以被静态分析，所以打包工具可以利用这一点来进行“tree-shaking”并将用不到的代码排除出最终的包
-	* [ES6 模块与 CommonJS 模块的差异](https://es6.ruanyifeng.com/#docs/module-loader#ES6-%E6%A8%A1%E5%9D%97%E4%B8%8E-CommonJS-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%B7%AE%E5%BC%82)
+  - ESM 格式被设计为可以被静态分析，所以打包工具可以利用这一点来进行“tree-shaking”并将用不到的代码排除出最终的包
+  - [ES6 模块与 CommonJS 模块的差异](https://es6.ruanyifeng.com/#docs/module-loader#ES6-%E6%A8%A1%E5%9D%97%E4%B8%8E-CommonJS-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%B7%AE%E5%BC%82)
 
-**Runtime + Compiler vs. Runtime-only**
+**Runtime + Compiler vs. Runtime-only**.
 
 ```js
 // <script src="../../dist/vue.js"></script>
@@ -143,6 +147,7 @@ const vm = new Vue({
   }
 })
 ```
+
 ```js
 // <script src="../../dist/vue.runtime.js"></script>
 // Runtime
@@ -168,25 +173,30 @@ import Vue from 'vue'
 ```
 
 - 通过查看 webpack 的配置文件
-	* 终端输入
+  - 终端输入
+
 ```bash
 vue inspect > output.js
 ```
+
 ```js
 // output.js
   resolve: {
     alias: {
-	  ...
-	  vue$: 'vue/dist/vue.runtime.esm.js'
-	}
+   ...
+   vue$: 'vue/dist/vue.runtime.esm.js'
+ }
   }
 ```
+
 - **注意**： `*.vue` 文件中的模板是在构建时预编译的，最终打包后的结果不需要编译器，只需要运行时版本即可
 
 ### 寻找入口文件
+
 - 查看 dist/vue.js 的构建过程
 
-**执行构建**
+**执行构建**.
+
 ```bash
 npm run dev
 # "dev": "rollup -w -c scripts/config.js --sourcemap --environment TARGET:web-full-dev"
@@ -194,8 +204,8 @@ npm run dev
 ```
 
 - `script/config.js` 的执行过程（文件末尾）
-	* 作用：生成 rollup 构建的配置文件
-	* 使用环境变量 TARGET = web-full-dev
+  - 作用：生成 rollup 构建的配置文件
+  - 使用环境变量 TARGET = web-full-dev
 
 ```js
 // 判断环境变量是否有 TARGET
@@ -210,9 +220,9 @@ if (process.env.TARGET) {
 ```
 
 - genConfig(name)
-	* 根据环境变量 TARGET 获取配置信息
-	* `const opts = builds[name]`
-	* builds[name] 获取生成配置的信息
+  - 根据环境变量 TARGET 获取配置信息
+  - `const opts = builds[name]`
+  - builds[name] 获取生成配置的信息
 
 ```js
 const builds = {
@@ -231,7 +241,7 @@ const builds = {
 ```
 
 - resolve()
-	* 获取入口和出口文件的绝对路径
+  - 获取入口和出口文件的绝对路径
 
 ```js
 const aliases = require('./alias')
@@ -245,6 +255,7 @@ const resolve = p => {
   }
 }
 ```
+
 ```js
 // scripts/alias
 const path = require('path')
@@ -257,12 +268,13 @@ module.exports = {
 }
 ```
 
-**结果**
+**结果**.
 
 - 把 src/platforms/web/entry-runtime-with-compiler.js 构建成 dist/vue.js，如果设置 --sourcemap 会生成 vue.js.map
 - src/platform 文件夹下是 Vue 可以构建成不同平台下使用的库，目前有 weex 和 web，还有服务器端渲染的库
 
 ### 从入口开始
+
 - [src/platforms/web/entry-runtime-with-compiler.js](https://github.com/shiguanghai/vue/blob/dev/src/platforms/web/entry-runtime-with-compiler.js)
 
 **观察[以下代码](https://github.com/shiguanghai/vue/blob/dev/examples/02-debug/index.html)，通过阅读源码，回答在页面上输出的结果**
@@ -278,9 +290,9 @@ const vm = new Vue({
 ```
 
 - 阅读源码记录
-	* el 不能是 body 或者 html 标签
-	* 如果没有 render，把 template 转换成 render 函数
-	* 如果有 render 方法，直接调用 mount 挂载 DOM
+  - el 不能是 body 或者 html 标签
+  - 如果没有 render，把 template 转换成 render 函数
+  - 如果有 render 方法，直接调用 mount 挂载 DOM
 
 ```js
 // 保留 Vue 实例的 $mount 方法
@@ -335,10 +347,11 @@ Vue 构造函数
 > Vue 的构造函数在哪？
 > Vue 实例的成员 / Vue 的静态成员 从哪里来的？
 
-
 ## 4.2 Vue初始化
+
 ### Vue 初始化过程
-**Vue 的构造函数在哪里**
+
+**Vue 的构造函数在哪里**:
 
 - src/platform/web/entry-runtime-with-compiler.js 中引用了  './runtime/index'
 
@@ -347,12 +360,12 @@ import Vue from './runtime/index'
 ```
 
 - [src/platform/web/runtime/index.js](https://github.com/shiguanghai/vue/blob/dev/src/platforms/web/runtime/index.js)
-	* 设置 Vue.config
-	* 设置平台相关的指令和组件
-		+ 指令 v-model、v-show
-		+ 组件 transition、transition-group
-	* 设置平台相关的 \_\_patch\_\_ 方法（打补丁方法，对比新旧的 VNode）
-	* **设置 $mount 方法，挂载 DOM**
+  - 设置 Vue.config
+  - 设置平台相关的指令和组件
+    - 指令 v-model、v-show
+    - 组件 transition、transition-group
+  - 设置平台相关的 \_\_patch\_\_ 方法（打补丁方法，对比新旧的 VNode）
+  - **设置 $mount 方法，挂载 DOM**
 
 ```js
 import config from 'core/config'
@@ -380,20 +393,25 @@ Vue.prototype.$mount = function (
   return mountComponent(this, el, hydrating)
 }
 ```
+
 - src/platform/web/runtime/index.js 中引用了  'core/index'
+
 ```js
 import Vue from 'core/index'
 ```
+
 - [src/core/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/index.js)
-	* 定义了 Vue 的静态方法
-	* `initGlobalAPI(Vue)`
+  - 定义了 Vue 的静态方法
+  - `initGlobalAPI(Vue)`
 - src/core/index.js 中引用了 './instance/index'
+
 ```js
 import Vue from './instance/index'
 ```
+
 - [src/core/instance/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/index.js)
-	* 定义了 Vue 的构造函数
-	* 设置 Vue 实例的成员
+  - 定义了 Vue 的构造函数
+  - 设置 Vue 实例的成员
 
 ```js
 // 此处不用 class 的原因是因为方便后续给 Vue 实例混入实例成员
@@ -424,43 +442,47 @@ export default Vue
 ```
 
 ### 整理四个导出 Vue 的模块
+
 - [src/platforms/web/entry-runtime-with-compiler.js](https://github.com/shiguanghai/vue/blob/dev/src/platforms/web/entry-runtime-with-compiler.js)
-	* web 平台相关的入口
-	* 重写了平台相关的 $mount()方法
-	* 注册了 Vue.compile() 方法，传递一个 HTML 字符串返回 render 函数
+  - web 平台相关的入口
+  - 重写了平台相关的 $mount()方法
+  - 注册了 Vue.compile() 方法，传递一个 HTML 字符串返回 render 函数
 - [src/platform/web/runtime/index.js](https://github.com/shiguanghai/vue/blob/dev/src/platforms/web/runtime/index.js)
-	* web 平台相关
-	* 注册和平台相关的全局指令：v-model、v-show
-	* 注册和平台相关的全局组件： v-transition、v-transition-group
-	* 全局方法：
-		+ \_\_patch\_\_：把虚拟 DOM 转换成真实 DOM
-		+ $mount：挂载方法
+  - web 平台相关
+  - 注册和平台相关的全局指令：v-model、v-show
+  - 注册和平台相关的全局组件： v-transition、v-transition-group
+  - 全局方法：
+    - \_\_patch\_\_：把虚拟 DOM 转换成真实 DOM
+    - $mount：挂载方法
 - [src/core/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/index.js)
-	* 与平台无关
-	* 设置了 Vue 的静态方法，initGlobalAPI(Vue)
+  - 与平台无关
+  - 设置了 Vue 的静态方法，initGlobalAPI(Vue)
 - [src/core/instance/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/index.js)
-	* 与平台无关
-	* 定义了构造函数，调用了 this._init(options) 方法
-	* 给 Vue 中混入了常用的实例成员
+  - 与平台无关
+  - 定义了构造函数，调用了 this._init(options) 方法
+  - 给 Vue 中混入了常用的实例成员
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020120518555115.png)
 
-
 ### Vue 静态成员初始化
+
 通过 [src/core/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/index.js) 的 `initGlobalAPI(Vue)` 来到 **初始化 Vue 的静态方法** 所在文件
+
 ```js
 import { initGlobalAPI } from './global-api/index'
 ...
 // 注册 Vue 的静态属性/方法
 initGlobalAPI(Vue)
 ```
+
 - [src/core/global-api/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/index.js)
-	* 初始化 Vue 的静态方法
-		+ initUse() : [src/core/global-api/use.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/use.js)
-		+ initMixin() : [src/core/global-api/mixin.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/mixin.js)
-		+ initExtend() : [src/core/global-api/extend.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/extend.js)
-		+ initAssetRegisters() : [src/core/global-api/assets.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/assets.js)
-	* 可参考 [Vue 全局 API 文档](https://cn.vuejs.org/v2/api/#%E5%85%A8%E5%B1%80-API)
+  - 初始化 Vue 的静态方法
+    - initUse() : [src/core/global-api/use.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/use.js)
+    - initMixin() : [src/core/global-api/mixin.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/mixin.js)
+    - initExtend() : [src/core/global-api/extend.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/extend.js)
+    - initAssetRegisters() : [src/core/global-api/assets.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/assets.js)
+  - 可参考 [Vue 全局 API 文档](https://cn.vuejs.org/v2/api/#%E5%85%A8%E5%B1%80-API)
+
 ```js
 export function initGlobalAPI (Vue: GlobalAPI) {
   ...
@@ -517,14 +539,15 @@ export function initGlobalAPI (Vue: GlobalAPI) {
 ### Vue 实例成员初始化
 
 - [src/core/instance/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/index.js)
-	* 定义 Vue 的构造函数
-	* 初始化 Vue 的实例成员
-		+ initMixin() : [src/core/instance/init.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/init.js)
-		+ stateMixin() : [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
-		+ eventsMixin() : [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
-		+ lifecycleMixin() : [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
-		+ renderMixin() : [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
-	* 可参考 [Vue 实例 文档](https://cn.vuejs.org/v2/api/#%E5%AE%9E%E4%BE%8B-property)
+  - 定义 Vue 的构造函数
+  - 初始化 Vue 的实例成员
+    - initMixin() : [src/core/instance/init.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/init.js)
+    - stateMixin() : [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
+    - eventsMixin() : [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
+    - lifecycleMixin() : [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
+    - renderMixin() : [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
+  - 可参考 [Vue 实例 文档](https://cn.vuejs.org/v2/api/#%E5%AE%9E%E4%BE%8B-property)
+
 ```js
 // 此处不用 class 的原因是因为方便后续给 Vue 实例混入实例成员
 function Vue (options) {
@@ -554,9 +577,9 @@ renderMixin(Vue)
 ### 实例成员 - init
 
 - initMixin(Vue)
-	* 注册 vm 的 _init() 方法，初始化 vm
-	* [src/core/instance/init.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/init.js)
-	* 可参考 [Vue 实例 文档](https://cn.vuejs.org/v2/api/#%E5%AE%9E%E4%BE%8B-property)
+  - 注册 vm 的 _init() 方法，初始化 vm
+  - [src/core/instance/init.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/init.js)
+  - 可参考 [Vue 实例 文档](https://cn.vuejs.org/v2/api/#%E5%AE%9E%E4%BE%8B-property)
 
 ```js
 export function initMixin (Vue: Class<Component>) {
@@ -637,9 +660,9 @@ export function initMixin (Vue: Class<Component>) {
 ### 实例成员 - initState
 
 - initState(vm)
-	* 初始化 vm 的 _props/methods/_data/computed/watch
-	* [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
-	* 可参考 [Vue 实例 文档](https://cn.vuejs.org/v2/api/#%E5%AE%9E%E4%BE%8B-property)
+  - 初始化 vm 的 _props/methods/_data/computed/watch
+  - [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
+  - 可参考 [Vue 实例 文档](https://cn.vuejs.org/v2/api/#%E5%AE%9E%E4%BE%8B-property)
 
 ```js
 export function initState (vm: Component) {
@@ -664,11 +687,11 @@ export function initState (vm: Component) {
 }
 ```
 
-
 ### 初始化过程调试
+
 - 初始化过程[调试代码](https://github.com/shiguanghai/vue/tree/dev/examples/03-initVue/index.html)
 
-**设置断点**
+**设置断点**:
 
 - 断点1：ssrc/core/instance/index.js
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/202012101712459.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
@@ -682,7 +705,7 @@ export function initState (vm: Component) {
 - 断点4：src/platforms/web/entry-runtime-with-compiler.js
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201210171842446.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
-**开始调试**
+**开始调试**:
 
 - F5 进入断点
 - 首先进入`core/instance/index.js`，它是与平台无关的，在这里调用了Mixin的一些函数，这些函数里面给Vue的原型上增加了一些实例成员
@@ -696,7 +719,7 @@ export function initState (vm: Component) {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201210174440813.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 - 再调用函数 lifecycleMixin()，它注册了根生命周期相关的方法 _update / \$forceUpdate / \$destroy。其中_updata内部调用了 patch 方法，把 VNode 渲染成真实的 DOM
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201210175020573.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
-- 最后调用函数renderMixin()，其执行过后，会给原型挂载一些 _ 开头的方法，这些方法的作用是当我们把模板转换成 render函数的时候，在render函数中调用，除此之外还注册了 \$nextTick / _render, _render的作用是调用用户定义 或 模板渲染的render函数
+- 最后调用函数renderMixin()，其执行过后，会给原型挂载一些 _开头的方法，这些方法的作用是当我们把模板转换成 render函数的时候，在render函数中调用，除此之外还注册了 \$nextTick /_render, _render的作用是调用用户定义 或 模板渲染的render函数
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201210175640380.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 - F8 跳转到下一个导出Vue的文件`core/index.js`，这个文件中执行了 initGlobalAPI()，给Vue的构造函数初始化了静态成员
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201210175848447.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
@@ -722,15 +745,18 @@ export function initState (vm: Component) {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201210185244457.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 - 在文件最后给Vue构造函数挂载了compile方法，这个方法的作用是让我们手共把模板转换成render函数
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020121018542615.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+
 ## 4.3 Vue首次渲染
+
 ### 首次渲染过程调试
+
 - Vue 初始化完毕，开始真正的执行
 - 调用 new Vue() 之前，已经初始化完毕
 - 通过调试[代码](https://github.com/shiguanghai/vue/blob/dev/examples/03-initVue/index.html)，记录首次渲染过程
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201210222319829.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
-**开始调试**
+**开始调试**:
 
 - F8 跳过初始化阶段，进入新增断点
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201210222517378.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
@@ -797,4 +823,5 @@ export function initState (vm: Component) {
 - 以上就是首次渲染的一个过程
 
 ### 首次渲染总结
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201205195820451.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)

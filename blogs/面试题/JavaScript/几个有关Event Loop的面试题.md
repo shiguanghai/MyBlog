@@ -61,7 +61,7 @@ DDDD
 
 第七行`new Promise`将执行promise函数，它参数是一个回调函数，这个回调函数内的代码是同步的，它的异步核心在于resolve和reject，同时这个异步任务在任务队列中属于微任务，是优先于宏任务执行的，(不管宏任务有多急，反正我是VIP)。所以先直接打印输出同步代码`EEEE`。第九行中的代码是个不存在的对象，这个错误要抛给reject这个状态，也就是catch去处理，但是它是异步的且是微任务，只有等到线程上的任务执行完毕，立马执行它，不管宏任务（计时器，ajax等）等待多久了。
 
-第十四行，这是线程上的最后一个任务，打印输出	`IIII`
+第十四行，这是线程上的最后一个任务，打印输出 `IIII`
 
 我们先找出线程上的同步代码，将结果依次排列出来：AAAA  CCCC  EEEE IIII
 
@@ -69,11 +69,11 @@ DDDD
 
 最后我们再找出异步中的所有宏任务，这里t1排在前面t2排在后面（这个原因是while造成的），输出结果顺序是 BBBB DDDD
 
-所以综上 结果是  AAAA  CCCC  EEEE  IIII  HHHH BBBB DDDD 
+所以综上 结果是  AAAA  CCCC  EEEE  IIII  HHHH BBBB DDDD
 
 ---
 
-```
+```js
 1 async function async1() {
 2 console.log("AAAA");
 3 async2();
@@ -84,11 +84,11 @@ DDDD
 8 }
 9  console.log("DDDD");
 10 setTimeout(function () {
-11 	console.log("FFFF");
+11  console.log("FFFF");
 12 }, 0);
 13 async1();
 14 new Promise(function (resolve) {
-15 	console.log("GGGG");
+15  console.log("GGGG");
 16  resolve();
 17 }).then(function () {
 18  console.log("HHHH");
@@ -129,7 +129,7 @@ FFFF
 
 第20行打印输出`IIII`,此时线程上的同步任务全部执行结束。
 
-在执行任务队列中的异步任务时，微任务优先于宏任务执行，所以先执行微任务 t2 打印输出 `	HHHH`,然后执行宏任务 t1 打印输出 `FFFF`
+在执行任务队列中的异步任务时，微任务优先于宏任务执行，所以先执行微任务 t2 打印输出 `HHHH`,然后执行宏任务 t1 打印输出 `FFFF`
 
 所以综上 结果输出是 DDDD AAAA CCCC BBBB  GGGG IIII HHHH FFFF
 
@@ -193,6 +193,7 @@ new Promise((resolve, reject) => {
 console.log("Q");
 
 ```
+
 **答案:**
 
 浏览器下 输出结果的先后顺序是

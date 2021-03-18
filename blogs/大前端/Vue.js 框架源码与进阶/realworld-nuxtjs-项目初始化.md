@@ -14,7 +14,9 @@ isShowComments: false
 
 
 ## 11.1 案例介绍
+
 ### 案例相关资源
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104225015863.png)
 
 - GitHub仓库：[https://github.com/gothinkster/realworld](https://github.com/gothinkster/realworld)
@@ -24,7 +26,9 @@ isShowComments: false
 TRUCTIONS.md](https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INSTRUCTIONS.md)
 
 ## 11.2 项目初始化
+
 ### 创建项目
+
 ```shell
 # 创建项目目录
 mkdir realworld-nuxtjs
@@ -40,13 +44,15 @@ npm install nuxt
 ```
 
 在 `package.json` 中添加启动脚本：
+
 ```js
 "scripts": {
 "dev": "nuxt"
 }
 ```
 
-创建 `pages/index.vue` 
+创建 `pages/index.vue`
+
 ```js
 <template>
   <div class="home">首页</div>
@@ -64,6 +70,7 @@ export default {
 ```
 
 启动服务：
+
 ```shell
 npm run dev
 ```
@@ -71,10 +78,12 @@ npm run dev
 在浏览器中访问 [http://localhost:3000/](http://localhost:3000/) 测试
 
 ### 导入样式资源
+
 - 页面模板：[https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INS
 TRUCTIONS.md](https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INSTRUCTIONS.md)
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104163041313.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+
 ```html
 <!-- Import Ionicon icons & Google Fonts our Bootstrap theme relies on -->
 <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
@@ -84,6 +93,7 @@ TRUCTIONS.md](https://github.com/gothinkster/realworld-starter-kit/blob/master/F
 ```
 
 需要三个样式资源，但这三个资源都在国外，建议将其本土化提高其加载速度：
+
 ```html
 <!-- Import Ionicon icons & Google Fonts our Bootstrap theme relies on -->
 <!-- 字体图标 样式文件 使用jsdelivr加速 -->
@@ -98,6 +108,7 @@ TRUCTIONS.md](https://github.com/gothinkster/realworld-starter-kit/blob/master/F
 ```
 
  Nuxt.js 默认的应用模板：
+
 ```js
 <!DOCTYPE html>
 <html {{ HTML_ATTRS }}>
@@ -111,6 +122,7 @@ TRUCTIONS.md](https://github.com/gothinkster/realworld-starter-kit/blob/master/F
 ```
 
 视图 - 模板：`app.html`
+
 ```js
 <!DOCTYPE html>
 <html {{ HTML_ATTRS }}>
@@ -127,6 +139,7 @@ TRUCTIONS.md](https://github.com/gothinkster/realworld-starter-kit/blob/master/F
 ```
 
 ### 配置布局组件
+
 - 页面模板：[https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INS
 TRUCTIONS.md](https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INSTRUCTIONS.md)
 
@@ -134,6 +147,7 @@ TRUCTIONS.md](https://github.com/gothinkster/realworld-starter-kit/blob/master/F
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104174019344.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 Header：
+
 ```html
 <nav class="navbar navbar-light">
  <div class="container">
@@ -160,7 +174,9 @@ Header：
  </div>
 </nav>
 ```
+
 Footer：
+
 ```html
 <footer>
   <div class="container">
@@ -173,6 +189,7 @@ Footer：
 ```
 
  Nuxt.js 默认布局的源码如下：
+
  ```js
  <template>
   <nuxt />
@@ -180,6 +197,7 @@ Footer：
 ```
 
 视图 - 布局：`pages/layout/index.vue`
+
 ```js
 <template>
   <div>
@@ -209,6 +227,7 @@ export default {
 ```
 
 自定义路由规则：`nuxt.config.js`
+
 ```js
 /**
  * Nuxt.js 配置文件
@@ -237,6 +256,7 @@ module.exports = {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104173052947.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 删除 `pages/index.vue` ，添加首页：`pages/home/index.vue`
+
 ```js
 <template>
   <div>Home</div>
@@ -254,6 +274,7 @@ export default {
 ```
 
 配置路由表：`nuxt.config.js`
+
 ```js
 routes.push(...[
   {
@@ -269,9 +290,11 @@ routes.push(...[
   }
 ])
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104173706201.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 Home：
+
 ```html
 <div class="home-page">
 
@@ -359,6 +382,7 @@ Home：
 ```
 
 替换首页：`pages/home/index.vue`
+
 ```js
 <template>
   <!-- 首页 -->
@@ -368,13 +392,16 @@ Home：
 ```
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104174722859.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+
 ### 导入登录注册页面
+
 - 页面模板：[https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INS
 TRUCTIONS.md](https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INSTRUCTIONS.md)
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104200229905.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 Login/Register：
+
 ```html
 <div class="auth-page">
   <div class="container page">
@@ -412,6 +439,7 @@ Login/Register：
 ```
 
 登录/注册：`pages/login/index.vue`
+
 ```js
 <template>
   <!-- 登录注册 -->
@@ -429,7 +457,9 @@ export default {
 
 </style>
 ```
+
 配置路由表：`nuxt.config.js`
+
 ```js
 routes.push(...[
   {
@@ -451,9 +481,11 @@ routes.push(...[
   }
 ])
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104201121770.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104201540602.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 定制登录/注册页：`pages/login/index.vue`
+
 ```js
 <template>
   <!-- 登录注册 -->
@@ -511,10 +543,12 @@ export default {
 
 </style>
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104202821520.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104202834553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 导入剩余页面
+
 - 页面模板：[https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INS
 TRUCTIONS.md](https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INSTRUCTIONS.md)
 
@@ -532,26 +566,28 @@ TRUCTIONS.md](https://github.com/gothinkster/realworld-starter-kit/blob/master/F
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104223541931.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
-**Routing Guidelines**
+**Routing Guidelines**:
+
 - Home page (URL: /#/ )
-	* List of tags
-	* List of articles pulled from either Feed, Global, or by Tag
-	* Pagination for list of articles
+  - List of tags
+  - List of articles pulled from either Feed, Global, or by Tag
+  - Pagination for list of articles
 - Sign in/Sign up pages (URL: /#/login, /#/register )
-	* Uses JWT (store the token in localStorage)
-	* Authentication can be easily switched to session/cookie based
+  - Uses JWT (store the token in localStorage)
+  - Authentication can be easily switched to session/cookie based
 - Settings page (URL: /#/settings )
 - Editor page to create/edit articles (URL: /#/editor, /#/editor/article-slug-here )
 - Article page (URL: /#/article/article-slug-here )
-	* Delete article button (only shown to article's author)
-	* Render markdown from server client side
-	* Comments section at bottom of page
-	* Delete comment button (only shown to comment's author)
+  - Delete article button (only shown to article's author)
+  - Render markdown from server client side
+  - Comments section at bottom of page
+  - Delete comment button (only shown to comment's author)
 - Profile page (URL: /#/profile/:username, /#/profile/:username/favorites )
-	* Show basic user info
-	* List of articles populated from author's created articles or author's favorited articles
+  - Show basic user info
+  - List of articles populated from author's created articles or author's favorited articles
 
 Profile:
+
 ```html
 <div class="profile-page">
 
@@ -641,6 +677,7 @@ Profile:
 ```
 
 用户页面：`pages/profile/index.vue`
+
 ```js
 <template>
   <!-- 用户页面-->
@@ -658,7 +695,9 @@ export default {
 
 </style>
 ```
+
 配置路由表：`nuxt.config.js`
+
 ```js
 routes.push(...[
   {
@@ -675,9 +714,11 @@ routes.push(...[
   }
 ])
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104205317397.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 Settings：
+
 ```html
 <div class="settings-page">
   <div class="container page">
@@ -716,6 +757,7 @@ Settings：
 ```
 
 设置：`pages/settings/index.vue`
+
 ```js
 <template>
   <!-- 设置 -->
@@ -735,6 +777,7 @@ export default {
 ```
 
 配置路由表：`nuxt.config.js`
+
 ```js
 routes.push(...[
   {
@@ -751,8 +794,10 @@ routes.push(...[
   }
 ])
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104210055867.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 Create/Edit Article：
+
 ```html
 <div class="editor-page">
   <div class="container page">
@@ -786,6 +831,7 @@ Create/Edit Article：
 ```
 
 创建/编辑文章：`pages/editor/index.vue`
+
 ```js
 <template>
   <!-- 创建编辑文章 -->
@@ -803,7 +849,9 @@ export default {
 
 </style>
 ```
+
 配置路由表：`nuxt.config.js`
+
 ```js
 routes.push(...[
   {
@@ -820,8 +868,10 @@ routes.push(...[
   }
 ])
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104211045639.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 Article：
+
 ```html
 <div class="article-page">
 
@@ -946,6 +996,7 @@ Article：
 ```
 
 文章详情：`pages/article/index.vue`
+
 ```js
 <template>
   <!-- 文章详情 -->
@@ -963,7 +1014,9 @@ export default {
 
 </style>
 ```
+
 配置路由表：`nuxt.config.js`
+
 ```js
 routes.push(...[
   {
@@ -980,11 +1033,15 @@ routes.push(...[
   }
 ])
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104212642510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+
 ### 处理顶部导航链接
+
 模板中的导航栏链接默认为`a`链接，需要替换并补全一些缺少的`li`标签：
 
 `pages/layout/index.vue`
+
 ```js
 <nav class="navbar navbar-light">
   <div class="container">
@@ -1027,25 +1084,32 @@ routes.push(...[
   </div>
 </nav>
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104221038449.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 处理导航链接高亮
+
 NuxtJS 匹配到路由以后，会给`nuxt-link`对应的导航链接添加一个`nuxt-link-active`的类名，我们可以将它修改为我们需要的
 
 Nuxt.js 配置文件：`nuxt.config.js`
+
 ```js
 router: {
   linkActiveClass: 'active',
   ...
 }
 ```
+
 此时匹配到路由后对应导航就是高亮显示了。然后我们将`Home`写死的`active`去掉，发现不论到那个页面，`Home`还是高亮
+
 ```js
 <nuxt-link class="nav-link" to="/">Home</nuxt-link>
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104222030952.png)
 
-这是由于路由的匹配关系，`'/' `被包含在了其他路由内，因此我们还需要将其精确匹配：
+这是由于路由的匹配关系，`'/'`被包含在了其他路由内，因此我们还需要将其精确匹配：
+
 ```js
 <!-- 精确匹配，只有路由等于'/'才会高亮 -->
 <nuxt-link class="nav-link" to="/" exact>Home</nuxt-link>
@@ -1054,6 +1118,7 @@ router: {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104222405965.png)
 
 ### 封装请求模块
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210104223618774.png)
 
 Using the hosted API：
@@ -1061,10 +1126,13 @@ Using the hosted API：
 Simply point your [API requests](https://github.com/gothinkster/realworld/tree/master/api) to `https://conduit.productionready.io/api` and you're good to go!
 
 安装 `axios`：
+
 ```shell
 npm i axios
 ```
+
 请求模块：`utils/request.js`
+
 ```js
 /**
  * 基于 axios 封装的请求模块

@@ -5,7 +5,7 @@ publish: false
 ---
 
 <corevideoplayer
-  src="https://media.vued.vanthink.cn/y2mate.com%20-%20Weathering%20With%20You%20%5BOfficial%20Subtitled%20Trailer,%20GKIDS%5D_Q6iK6DjV_iE_1080p.mp4" 
+  src="https://media.vued.vanthink.cn/y2mate.com%20-%20Weathering%20With%20You%20%5BOfficial%20Subtitled%20Trailer,%20GKIDS%5D_Q6iK6DjV_iE_1080p.mp4"
   logo="https://img1.wxzxzj.com/logo-white-mini.png"
   preload="metadata"
   title="vuepress-plugin-core-video-player"

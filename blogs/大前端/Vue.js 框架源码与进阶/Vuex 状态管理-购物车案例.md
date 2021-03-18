@@ -15,12 +15,14 @@ isShowComments: false
 
 ## 8.5 Vuex 购物车案例
 
-> 接下来我们通过一个购物车案例来演示 Vuex 在项目中的使用方式，首先把购物车的[ 项目模板 ](https://github.com/goddlts/vuex-cart-demo-template)下载下来。
+> 接下来我们通过一个购物车案例来演示 Vuex 在项目中的使用方式，首先把购物车的[项目模板](https://github.com/goddlts/vuex-cart-demo-template)下载下来。
 
 ### 案例演示
+
 - [完整案例代码仓库](https://github.com/shiguanghai/big-front-end/tree/master/fed-e-task-03-03/code/3-3-1-4-vuex/03-vuex-cart-demo)
 
 **运行项目**：
+
 ```shell
 # 第一个进程
 node server
@@ -28,6 +30,7 @@ node server
 # 第二个进程
 npm run serve
 ```
+
 **运行效果**：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201228192831340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201228192851984.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
@@ -35,14 +38,16 @@ npm run serve
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201228192931148.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 功能列表
+
 - 商品列表组件
-	* 展示商品列表
-	* 添加购物车
+  - 展示商品列表
+  - 添加购物车
 - 商品列表中弹出框组件
 - 购物车列表组件
 
 ### 商品列表
-**商品列表功能**
+
+**商品列表功能**:
 
 - Vuex 中创建两个模块，分别用来记录商品列表和购物车的状态，store 的结构：
 
@@ -85,11 +90,13 @@ export default {
 ```
 
 - store/index.js 中注册 products.js 模块
+
 ```js
 import products from './modules/products'
 ```
 
 - views/products.vue 中实现商品列表的功能
+
 ```js
 import { mapState, mapActions } from 'vuex'
 export default {
@@ -107,6 +114,7 @@ export default {
 ```
 
 ### 添加购物车
+
 - cart 模块实现添加购物车功能，store/modules/cart.js
 
 ```js
@@ -133,11 +141,13 @@ const mutations = {
 ```
 
 - store/index.js 中注册 cart 模块
+
 ```js
 import cart from './modules/cart'
 ```
 
 - view/products.vue 中实现添加购物车功能
+
 ```js
 <!-- 修改模板 -->
 <!-- <template slot-scope="scope"> -->
@@ -145,6 +155,7 @@ import cart from './modules/cart'
   <el-button @click="addToCart(scope.row)">加入购物车</el-button>
 </template>
 ```
+
 ```js
 <!-- 映射 cart 中的 mutations -->
 import { mapMutations } from 'vuex'
@@ -153,8 +164,11 @@ methods: {
   ...mapMutations('cart', ['addToCart'])
 }
 ```
+
 ### 我的购物车 - 列表
+
 - components/pop-cart.vue 中展示购物车列表
+
 ```js
 import { mapState } from 'vuex'
 
@@ -165,8 +179,11 @@ export default {
   }
 }
 ```
+
 ### 我的购物车 - 统计
+
 - cart 模块实现统计总数和总价，store/modules/cart.js
+
 ```js
 const state = {
   cartproducts: []
@@ -187,6 +204,7 @@ const getters = {
 ```
 
 - components/pop-cart.vue 中显示徽章和小计
+
 ```js
 <div>
   <p>共 {{ totalCount }} 件商品 共计¥{{ totalPrice }}</p>
@@ -197,6 +215,7 @@ const getters = {
   <el-button type="primary">我的购物车</el-button>
 </el-badge>
 ```
+
 ```js
 import { mapGetters } from 'vuex'
 
@@ -204,8 +223,11 @@ computed: {
   ...mapGetters('cart', ['totalCount', 'totalPrice'])
 }
 ```
+
 ### 我的购物车 - 删除
+
 - cart 模块实现从购物车删除的功能，store/modules/cart.js
+
 ```js
 // mutations 中添加
 
@@ -216,6 +238,7 @@ deleteFromCart (state, prodId) {
 ```
 
 - components/pop-cart.vue 中实现删除功能
+
 ```js
 <template slot-scope="scope">
   <el-button
@@ -224,6 +247,7 @@ deleteFromCart (state, prodId) {
   >删除</el-button>
 </template>
 ```
+
 ```js
 import { mapMutations } from 'vuex'
 
@@ -231,8 +255,11 @@ methods: {
   ...mapMutations('cart', ['deleteFromCart'])
 }
 ```
+
 ### 购物车组件 - 购物车列表
--  views/cart.vue 中展示购物车列表
+
+- views/cart.vue 中展示购物车列表
+
 ```js
 import { mapState } from 'vuex'
 
@@ -240,8 +267,11 @@ computed: {
   ...mapState('cart', ['cartProducts']),
 }
 ```
+
 ### 购物车组件 - 全选功能
+
 - cart 模块实现更新商品的选中状态，store/modules/cart.js
+
 ```js
 // 更新所有商品的选中状态（点击全选）
 updateAllProductChecked (state, checked) {
@@ -260,7 +290,7 @@ updateProductChecked (state, {
 ```
 
 - views/cart.vue，实现全选功能
-	* [使用事件抛出一个值](https://cn.vuejs.org/v2/guide/components.html#%E4%BD%BF%E7%94%A8%E4%BA%8B%E4%BB%B6%E6%8A%9B%E5%87%BA%E4%B8%80%E4%B8%AA%E5%80%BC)
+  - [使用事件抛出一个值](https://cn.vuejs.org/v2/guide/components.html#%E4%BD%BF%E7%94%A8%E4%BA%8B%E4%BB%B6%E6%8A%9B%E5%87%BA%E4%B8%80%E4%B8%AA%E5%80%BC)
 
 ```js
 <el-table-column width="55">
@@ -286,6 +316,7 @@ updateProductChecked (state, {
   </template>
 </el-table-column>
 ```
+
 ```js
 import { mapMutations } from 'vuex'
 
@@ -306,8 +337,11 @@ methods: {
   ])
 }
 ```
+
 ### 购物车组件 - 数字文本框
+
 - cart 模块实现更新商品数量，store/modules/cart.js
+
 ```js
 updateProduct (state, {
   prodId,
@@ -322,6 +356,7 @@ updateProduct (state, {
 ```
 
 - views/cart.vue，实现数字文本框功能
+
 ```js
 <el-table-column
   prop="count"
@@ -334,6 +369,7 @@ updateProduct (state, {
   </template>
 </el-table-column>
 ```
+
 ```js
 methods: {
   ...mapMutations('cart', [
@@ -341,8 +377,11 @@ methods: {
   ])
 }
 ```
+
 ### 购物车组件 - 统计
+
 - cart 模块实现统计选中商品价格和数量，store/modules/cart.js
+
 ```js
 checkedCount (state) {
   return state.cartProducts.reduce((sum, prod) => {
@@ -363,10 +402,12 @@ checkedPrice (state) {
 ```
 
 - views/cart.vue，实现小计
+
 ```js
 <p>已选 <span>{{ checkedCount }}</span> 件商品，总价：<span>{{ 
 checkedPrice }}</span></p>
 ```
+
 ```js
 import { mapGetters } from 'vuex'
 
@@ -374,13 +415,17 @@ computed: {
   ...mapGetters('cart', ['checkedCount', 'checkedPrice']),
 }
 ```
+
 ### 购物车组件 - 删除
+
 - views/cart.vue，实现删除功能
+
 ```js
 <template slot-scope="scope">
   <el-button @click="deleteFromCart(scope.row.id)" size="mini">删除</el-button>
 </template>
 ```
+
 ```js
 methods: {
   ...mapMutations('cart', [
@@ -388,8 +433,11 @@ methods: {
   ])
 }
 ```
+
 ### 本地存储
+
 - store/modules/cart.js，获取存储在本地的数据
+
 ```js
 const state = {
   // 把字符串转换为对象
@@ -398,11 +446,12 @@ const state = {
 ```
 
 - store/index.js，当购物车的数据更改，重新存储到localStorage
-	* Vuex 插件介绍
-		+ Vuex 的插件就是一个函数
-		+ 这个函数接收一个 store 的参数
+  - Vuex 插件介绍
+    - Vuex 的插件就是一个函数
+    - 这个函数接收一个 store 的参数
 
 因此我们可以注册一个函数让它可以在所有的mutation结束之后执行：
+
 ```js
 const myPlugin = store => {
   // 当 store 初始化后调用

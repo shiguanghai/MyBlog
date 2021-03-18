@@ -14,27 +14,30 @@ isShowComments: false
 
 
 ## 11.4 首页
+
 ### 公共文章列表
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210107161709319.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
-请求方法：`GET `
+请求方法：`GET`
 
 请求地址：`/api/articles`
 
 查询参数：
 
 - 按标签筛选
-	* `?tag=AngularJS`
+  - `?tag=AngularJS`
 - 按作者筛选
-	* `?author=jake`
+  - `?author=jake`
 - 按用户筛选
-	* `?favorited=jake`
+  - `?favorited=jake`
 - 文章分页数（默认20）
-	* `?limit=20`
+  - `?limit=20`
 - 文章偏移/跳跃数（默认0）
-	* `?offset=0`
+  - `?offset=0`
 
 `api/article.js`
+
 ```js
 import request from '@/utils/request'
 
@@ -49,6 +52,7 @@ export const getArticles = params => {
 ```
 
 `pages/home/index.vue`
+
 ```js
 import { getArticles } from '@/api/article'
 
@@ -60,6 +64,7 @@ export default {
   }
 }
 ```
+
 ![在 这里插入图片描述](https://img-blog.csdnimg.cn/20210107165413776.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210107165555802.png)
 
@@ -79,6 +84,7 @@ export default {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210107170044994.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 遍历数据：
+
 ```js
 <div
   class="article-preview"
@@ -132,7 +138,9 @@ export default {
 ```
 
 ### 列表分页-分页参数的使用
+
 `pages/home/index.vue`
+
 ```js
 export default {
   name: 'HomeIndex',
@@ -152,8 +160,11 @@ export default {
   }
 }
 ```
+
 ### 列表分页-页码处理
+
 添加页码，页码改变获取对应页码的数据：`pages/home/index.vue`
+
 ```js
 <!-- 分页列表 -->
 <nav>
@@ -167,6 +178,7 @@ export default {
   </ul>
 </nav>
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210107221633509.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ```js
@@ -196,6 +208,7 @@ export default {
   }
 }
 ```
+
 ```js
 <!-- 分页列表 -->
 <nav>
@@ -226,23 +239,27 @@ export default {
   </ul>
 </nav>
 ```
+
 ```js
 export default {
   ...
   watchQuery:['page']
 }
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210107223834814.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210107223854228.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 文章标签列表
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210107224221660.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
-请求方法：`GET `
+请求方法：`GET`
 
 请求地址：`/api/tags`
 
 `ap/tag.js`
+
 ```js
 import request from '@/utils/request'
 
@@ -256,6 +273,7 @@ export const getTags = () => {
 ```
 
 `pages/home/index.vue`
+
 ```js
 ...
 import { getTags } from '@/api/tag'
@@ -273,6 +291,7 @@ export default {
   ...
 }
 ```
+
 ```js
 <div class="col-md-3">
   <div class="sidebar">
@@ -293,6 +312,7 @@ export default {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210107225235340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 优化并行异步任务
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210107225358272.png)
 
 对于以上两个异步操作：获取文章列表和获取标签列表。它们的执行顺序是先拿到文章列表，再去请求获取标签列表，是串行的方式。
@@ -300,6 +320,7 @@ export default {
 对于多个异步任务，它们之间并没有依赖关系，因此我们可以将多个异步任务并发执行。通过并行来提高获取请求加载的速度。
 
 `pages/home/index.vue`
+
 ```js
 export default {
   name: 'HomeIndex',
@@ -341,7 +362,9 @@ export default {
 经过多次尝试后，发现优化后的代码整体比优化前要快一些（网络对速度有一定影响），甚至有时候不到两秒就可以完成。
 
 ### 标签列表链接和数据
+
 `pages/home/index.vue`
+
 ```js
 <div class="col-md-3">
   <div class="sidebar">
@@ -363,10 +386,13 @@ export default {
   </div>
 </div>
 ```
+
 ```js
 watchQuery:['page', 'tag'],
 ```
+
 对应数据：
+
 ```js
 getArticles({
   limit, // 文章分页数（默认20）
@@ -374,7 +400,9 @@ getArticles({
   tag: query.tag // 按标签筛选
 })
 ```
+
 解决标签和分页共存问题：
+
 ```js
 <!-- 分页列表 -->
 <nav>
@@ -407,13 +435,16 @@ getArticles({
 </nav>
 <!-- /分页列表 -->
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210107234104193.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 导航栏-展示状态处理
+
 补全三个导航栏，示例：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2021010815330948.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 `pages/home/index.vue`
+
 ```js
 <div class="feed-toggle">
   <ul class="nav nav-pills outline-active">
@@ -429,6 +460,7 @@ getArticles({
   </ul>
 </div>
 ```
+
 业务逻辑：
 
 - Your Feed：只有在登录状态下才被展示
@@ -464,6 +496,7 @@ export default {
   }
 }
 ```
+
 ```js
 <li v-if="user" class="nav-item">
   <a class="nav-link disabled" href="">Your Feed</a>
@@ -481,7 +514,9 @@ export default {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108155236843.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 导航栏-标签高亮及链接
+
 导航链接优化：`pages/home/index.vue`
+
 ```js
 async asyncData ({ query }) {
   ...
@@ -494,6 +529,7 @@ async asyncData ({ query }) {
 watchQuery:['page', 'tag', 'tab'],
 ...
 ```
+
 ```js
 <div class="feed-toggle">
   <ul class="nav nav-pills outline-active">
@@ -551,7 +587,9 @@ watchQuery:['page', 'tag', 'tab'],
   </ul>
 </div>
 ```
+
 修改分页列表，添加`tab: tab`
+
 ```js
 <nuxt-link 
   class="page-link" 
@@ -565,7 +603,9 @@ watchQuery:['page', 'tag', 'tab'],
   }"
 >{{ item }}</nuxt-link>
 ```
+
 修改标签列表，添加`tab: 'tag'`
+
 ```js
 <div class="col-md-3">
   <div class="sidebar">
@@ -590,15 +630,17 @@ watchQuery:['page', 'tag', 'tab'],
 ```
 
 ### 导航栏-用户关注的文章列表
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108170533552.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
-请求方法：`GET `
+请求方法：`GET`
 
 请求地址：`/api/articles/feed`
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108171603617.png)
 
 身份验证标头：
+
 ```js
 Authorization: Token jwt.token.here
 ```
@@ -608,6 +650,7 @@ Authorization: Token jwt.token.here
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108173609573.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 `api/article.js`
+
 ```js
 ...
 
@@ -628,7 +671,9 @@ export const getFeedArticles = params => {
   })
 }
 ```
+
 `pages/home/index.vue`
+
 ```js
 async asyncData ({ query, store }) {
   const page = Number.parseInt(query.page || 1)
@@ -662,16 +707,19 @@ async asyncData ({ query, store }) {
   }
 }
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108173444118.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2021010817343062.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 统一设置用户Token
+
 接下来把手动写死的接口中数据Token的方式变成自动的，让它通过Cookie来拿到用户的Token。
 
-我们可以使用[ axios 拦截器 ](https://github.com/axios/axios#interceptors)的方式来实现：
+我们可以使用[axios 拦截器](https://github.com/axios/axios#interceptors)的方式来实现：
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108174451179.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
+
 ```js
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
@@ -697,6 +745,7 @@ axios.interceptors.response.use(function (response) {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108171603617.png)
 
 `utils/request.js`
+
 ```js
 // 请求拦截器
 // Add a request interceptor
@@ -722,7 +771,8 @@ request.interceptors.request.use(function (config) {
 
 > Nuxt.js 允许您在运行Vue.js应用程序之前执行js插件。这在您需要使用自己的库或第三方模块时特别有用。
 
-我们可以通过[ 插件 ](https://www.nuxtjs.cn/guide/plugins)获取到处理之后的store上下文对象：`plugins/request.js`
+我们可以通过[插件](https://www.nuxtjs.cn/guide/plugins)获取到处理之后的store上下文对象：`plugins/request.js`
+
 ```js
 import axios from 'axios'
 
@@ -738,6 +788,7 @@ export default (context) => {
 ```
 
 注册插件：`nuxt.config.js`
+
 ```js
 module.exports = {
   ...
@@ -748,10 +799,11 @@ module.exports = {
   ]
 }
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108182048927.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
-
 `plugins/request.js`
+
 ```js
 /**
  * 基于 axios 封装的请求模块
@@ -792,11 +844,13 @@ export default ({ store }) => {
 ```
 
 更改请求地址：`api/[article.js, tag.js, user.js]`
+
 ```js
 import { request } from '@/plugins/request'
 ```
 
 `api/article.js`
+
 ```js
 // 获取关注的用户文章列表
 export const getFeedArticles = params => {
@@ -815,10 +869,12 @@ export const getFeedArticles = params => {
   })
 }
 ```
+
 最后删除`utils/request.js`文件，此时仍然可以访问Your Feed
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108183126205.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 文章发布时间格式化处理
+
 预期效果：
 
 **2021-01-08T09:43:43.952Z**  ->  **January 8, 2021**
@@ -826,11 +882,13 @@ export const getFeedArticles = params => {
 [dayjs](https://github.com/iamkun/dayjs)：是一个轻量的处理时间和日期的 JavaScript 库
 
 安装`Day.js`
+
 ```shell
 npm install dayjs --save
 ```
 
 通过插件来扩展Vue的资源，封装为全局过滤器来使用：`plugins/dayjs.js`
+
 ```js
 import Vue from 'vue'
 import dayjs from 'dayjs'
@@ -842,6 +900,7 @@ Vue.filter('date', (value, format = 'YYYY-MM-DD HH:mm:ss') => {
 ```
 
 注册插件：`nuxt.config.js`
+
 ```js
 plugins: [
   ...
@@ -850,13 +909,15 @@ plugins: [
 ```
 
 使用插件：`pages/home/index.vue`
+
 ```js
 <span class="date">{{ article.createdAt | date }}</span>
 ```
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108192559265.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
-参考[ 文档 ](https://dayjs.gitee.io/docs/zh-CN/display/format)修改为我们预期的格式：
+参考[文档](https://dayjs.gitee.io/docs/zh-CN/display/format)修改为我们预期的格式：
+
 ```js
 <span class="date">{{ article.createdAt | date('MMMM DD, YYYY') }}</span>
 ```
@@ -864,22 +925,24 @@ plugins: [
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108193126466.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 文章点赞
+
 最后我们来处理一下文章点赞的功能：
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108193402275.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
-添加点赞： 
+添加点赞：
 
-请求方法：`POST `
+请求方法：`POST`
 
 请求地址：`/api/articles/:slug/favorite`
 
 删除点赞：
 
-请求方法：`DELETE `
+请求方法：`DELETE`
 
 请求地址：`/api/articles/:slug/favorite`
 
 封装点赞功能：`api/article.js`
+
 ```js
 // 添加点赞
 export const addFavorite = slug => {
@@ -899,6 +962,7 @@ export const deleteFavorite = slug => {
 ```
 
 `pages/home/index.vue`
+
 ```js
 <button class="btn btn-outline-primary btn-sm pull-xs-right"
   :class="{
@@ -908,6 +972,7 @@ export const deleteFavorite = slug => {
   <i class="ion-heart"></i> {{ article.favoritesCount }}
 </button>
 ```
+
 ```js
 import { 
   ...
@@ -933,11 +998,13 @@ export default {
   }
 }
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108195215818.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 但是这里还有一个小问题：如果网络比较慢，用户频繁点击按钮，可能会导致期间来回处理导致出现错误。
 
 因此我们应该在请求期间禁用此按钮：
+
 ```js
 async asyncData ({ query, store }) {
   ...
@@ -964,6 +1031,7 @@ methods: {
   }
 }
 ```
+
 ```js
 <button class="btn btn-outline-primary btn-sm pull-xs-right"
   :class="{

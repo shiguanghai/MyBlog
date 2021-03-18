@@ -14,14 +14,17 @@ isShowComments: false
 
 
 ## 11.5 文章详情
+
 ### 展示基本信息
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210111163438711.png)
 
-请求方法：`GET `
+请求方法：`GET`
 
 请求地址：`/api/articles/:slug`
 
 `api/article.js`
+
 ```js
 // 获取文章详情
 export const getArticle = slug => {
@@ -31,7 +34,9 @@ export const getArticle = slug => {
   })
 }
 ```
+
 `pages/article/index.vue`
+
 ```js
 import { getArticles } from '@/api/article'
 
@@ -45,8 +50,6 @@ export default {
 ```
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210111170459261.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
-
-
 
 ```js
 export default {
@@ -68,9 +71,11 @@ export default {
   <div class="col-md-12">{{ article.body }}</div>
 </div>
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2021011117064323.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 把Markdown转为HTML
+
 `markdown-it`：将Markdown文档转换为Html
 
 ```shell
@@ -78,6 +83,7 @@ npm install markdown-it --save
 ```
 
 在文章的详情页面加载包`pages/article/index.vue`
+
 ```js
 import MarkdownIt from 'markdown-it'
 
@@ -106,11 +112,13 @@ export default {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210112210113851.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 展示文章作者相关信息
+
 效果图：
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2021011221061515.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 模板：
+
 ```js
 <div class="article-meta">
   <a href=""><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
@@ -131,12 +139,15 @@ export default {
   </button>
 </div>
 ```
+
 我们可以把它们封装为组件以便我们的重用：`pages/article/components/article-meta.vue`
+
 ```js
 <template>
 插入模板...
 </template>
 ```
+
 ```js
 export default {
   name: 'ArticleMeta'
@@ -144,6 +155,7 @@ export default {
 ```
 
 注册组件：`pages/article/index.vue`
+
 ```js
 import ArticleMeta from './components/article-meta.vue'
 
@@ -156,15 +168,19 @@ export default {
 ```
 
 加载组件：
+
 ```js
 <article-meta />
 ```
 
 数据展示：
+
 ```js
 <article-meta :article="article" />
 ```
+
 子组件声明接收：`pages/article/components/article-meta.vue`
+
 ```js
 export default {
   name: 'ArticleMeta',
@@ -174,6 +190,7 @@ export default {
   }
 }
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210112212615491.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ```js
@@ -224,20 +241,23 @@ export default {
   </div>
 </template>
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210112214345738.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 设置页面meta优化SEO
+
 除了根据正文内容来处理SEO，页面的标题以及跟meta标签相关的内容对于收录同样非常重要：
 
 [NuxtJS相关文档](https://www.nuxtjs.cn/guide/views#html-%E5%A4%B4%E9%83%A8)：
 
-> Nuxt.js 使用了 [vue-meta](https://github.com/nuxt/vue-meta) 更新应用的 `头部标签(Head) `and `html 属性`。
+> Nuxt.js 使用了 [vue-meta](https://github.com/nuxt/vue-meta) 更新应用的 `头部标签(Head)`and `html 属性`。
 
 Nuxt.js 允许你在 `nuxt.config.js` 里定义应用所需的所有默认 meta 标签，在 `head` 字段里配置就可以了。
 
 如果我们有针对某个特定的页面来定制：[页面头部配置API](https://www.nuxtjs.cn/api/pages-head)
 
 `pages/article/index.vue`
+
 ```js
 export default {
   ...
@@ -261,7 +281,9 @@ export default {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210112220241886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### 文章评论-通过客户端渲染展示评论列表
+
 将评论列表封装为组件：`pages/article/components/article-comments.vue`
+
 ```js
 <template>
   <div>
@@ -311,6 +333,7 @@ export default {
   </div>
 </template>
 ```
+
 ```js
 export default {
   name: 'ArticleComments'
@@ -318,9 +341,11 @@ export default {
 ```
 
 加载注册组件：`pages/article/index.vue`
+
 ```js
 <article-comments />
 ```
+
 ```js
 import ArticleComments from './components/article-comments.vue'
 
@@ -332,11 +357,12 @@ components: {
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210112221626929.png)
 
-请求方法：`GET `
+请求方法：`GET`
 
 请求地址：`/api/articles/:slug/comments`
 
 `api/article.js`
+
 ```js
 // 获取文章评论
 export const getComments = slug => {
@@ -348,16 +374,19 @@ export const getComments = slug => {
 ```
 
 加载请求方法：`pages/article/components/article-comments.vue`
+
 ```js
 import { getComments } from '@/api/article'
 ```
 
 在父组件传递文章对象给子组件：`pages/article/index.vue`
+
 ```js
 <article-comments :article="article" />
 ```
 
 评论并不需要SEO：`pages/article/components/article-comments.vue`
+
 ```js
 export default {
   name: 'ArticleComments',
@@ -380,7 +409,9 @@ export default {
   }
 }
 ```
+
 遍历数据：
+
 ```js
 <div 
   class="card" 
@@ -418,18 +449,22 @@ export default {
   </div>
 </div>
 ```
+
 ## 11.6 发布部署
+
 ### 打包
+
 - [https://www.nuxtjs.cn/guide/commands](https://www.nuxtjs.cn/guide/commands)
 
-|命令|	描述|
+|命令| 描述|
 |-|-|
-|nuxt|	启动一个热加载的 Web 服务器（开发模式） [localhost:3000](http://localhost:3000/)。
-nuxt build	|利用 webpack 编译应用，压缩 JS 和 CSS 资源（发布用）。
-nuxt start|	以生产模式启动一个 Web 服务器 (需要先执行`nuxt build`)。
-nuxt generate	|编译应用，并依据路由配置生成对应的 HTML 文件 (用于静态站点的部署)。
+|nuxt| 启动一个热加载的 Web 服务器（开发模式） [localhost:3000](http://localhost:3000/)。
+nuxt build |利用 webpack 编译应用，压缩 JS 和 CSS 资源（发布用）。
+nuxt start| 以生产模式启动一个 Web 服务器 (需要先执行`nuxt build`)。
+nuxt generate |编译应用，并依据路由配置生成对应的 HTML 文件 (用于静态站点的部署)。
 
 `package.json`：
+
 ```js
 {
   "scripts": {
@@ -449,10 +484,13 @@ npm run build
 ```shell
 npm run start
 ```
+
 ### 最简单的部署方式
+
 - 配置 Host + Post
 
 `nuxt.config.js`：
+
 ```js
 server: {
   host: '0.0.0.0', // 默认localhost
@@ -462,11 +500,11 @@ server: {
 
 - 压缩发布包
 
-	* `.nuxt`：Nuxt打包生成的资源文件
-	* `static`：项目静态资源
-	* `nuxt.config.js`：提供给Nuxt服务
-	* `package.json`：用于服务端第三方包的安装
-	* `package-lock.json`：用于服务端第三方包的安装
+  - `.nuxt`：Nuxt打包生成的资源文件
+  - `static`：项目静态资源
+  - `nuxt.config.js`：提供给Nuxt服务
+  - `package.json`：用于服务端第三方包的安装
+  - `package-lock.json`：用于服务端第三方包的安装
 
 - 把发布包传到服务端
 
@@ -481,7 +519,9 @@ cd realworld-nuxtjs/
 
 pwd
 ```
+
 复制路径`path`并`exit`退出服务
+
 ```shell
 scp .\realworld-nuxtjs.zip root@xxx.xxx.xxx.xxx:path
 ```
@@ -511,11 +551,12 @@ npm run start
 ```
 
 ### 使用PM2启动Node服务
+
 **PM2 是什么？**
 
 刚才我们在服务端是直接通过`npm run start`命令来启动了Web服务，如果我们通过这种方式启动起来以后，此时占用了命令行。我们希望它在后台运行这个应用，因此就需要用到pm2工具：
 
-**使用 PM2 启动服务**
+**使用 PM2 启动服务**:
 
 - GitHub 仓库地址：[https://github.com/Unitech/pm2](https://github.com/Unitech/pm2)
 - 官方文档：[https://pm2.io/](https://pm2.io/)
@@ -531,7 +572,7 @@ npm install --global pm2
 pm2 start npm -- start
 ```
 
-**PM2 常用命令**
+**PM2 常用命令**:
 
 |命令|说明|
 |:-|:-|
@@ -543,11 +584,12 @@ pm2 restart|重启应用
 pm2 delete|删除应用
 
 ### 自动化部署介绍
+
 传统的部署方式需要反复地更新、构建、发布，显得很麻烦。我们希望这件事情能够自动化，即使用现代化的部署方式（CI/CD）
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210113205229222.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
-**CI/CD 服务**
+**CI/CD 服务**.
 
 - Jenkins
 - Gitlab CI
@@ -555,15 +597,17 @@ pm2 delete|删除应用
 - Travis CI
 - Circle CI
 - ...
+
 ### GitHub Actions 自动部署
+
 这里我们使用 GitHub Actions 实现自动部署：
 
-**环境准备**
+**环境准备**.
 
 - Linux 服务器
 - 把代码提交到 GitHub 远程仓库
 
-**配置 GitHub Access Token**
+**配置 GitHub Access Token**.
 
 - 生成：[https://github.com/settings/tokens](https://github.com/settings/tokens)
 
@@ -572,7 +616,6 @@ pm2 delete|删除应用
 复制令牌（令牌只显示一次，请保管）
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2021011321251887.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
-
 - 配置到项目的 Secrets 中：[https://github.com/shiguanghai/realworld-nuxtjs/settings/secrets](https://github.com/shiguanghai/realworld-nuxtjs/settings/secrets)
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210113211854169.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
@@ -580,7 +623,7 @@ pm2 delete|删除应用
 新建`TOKEN`，将生成的token放入
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210113212438232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
-**配置 GitHub Actions 执行脚本**
+**配置 GitHub Actions 执行脚本**.
 
 - 在项目根目录创建 `.github/workflows` 目录
 - 下载 [main.yml](https://gist.github.com/lipengzhou/b92f80142afa37aea397da47366bd872) 到 workflows 目录中
@@ -598,12 +641,13 @@ pm2 delete|删除应用
 
 pm2 reload pm2.config.json
 ```
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210113221338956.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210113221338956.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 - 配置 PM2 配置文件
 
 `pm2.config.json`
+
 ```js
 {
   "apps": [

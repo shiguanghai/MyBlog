@@ -15,16 +15,19 @@ isShowComments: false
 
 
 ## 4.4 数据响应式核心
+
 ### 响应式处理入口
+
 整个响应式处理的过程是比较复杂的，下面我们先从
 
 - [src\core\instance\init.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/init.js)
-	* `initState(vm)`  vm 状态的初始化
-	* 初始化 vm 的 _props、methods、_data等
+  - `initState(vm)`  vm 状态的初始化
+  - 初始化 vm 的 _props、methods、_data等
 
 ```js
 import { initState } from './state'
 ```
+
 - [src\core\instance\state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
 
 ```js
@@ -41,7 +44,9 @@ export function initState (vm: Component) {
   ...
 }
 ```
+
 - `initData(vm)`  vm 数据的初始化
+
 ```js
 function initData (vm: Component) {
   let data = vm.$options.data
@@ -66,9 +71,10 @@ function initData (vm: Component) {
   observe(data, true /* asRootData */)
 }
 ```
+
 - [src\core\observer\index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/observer/index.js)
-	* observe(value, asRootData) 
-	* 负责为每一个 Object 类型的 value 创建一个 observer 实例
+  - observe(value, asRootData)
+  - 负责为每一个 Object 类型的 value 创建一个 observer 实例
 
 ```js
 /**
@@ -108,10 +114,12 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
   return ob
 }
 ```
+
 ### Observer
+
 - [src\core\observer\index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/observer/index.js)
-	* 对对象做响应化处理
-	* 对数组做响应化处理
+  - 对对象做响应化处理
+  - 对数组做响应化处理
 
 ```js
 /**
@@ -180,15 +188,18 @@ export class Observer {
   }
 }
 ```
-- walk(obj) 
-	* 遍历 obj 的所有属性，为每一个属性调用 `defineReactive()` 方法，设置 getter/setter
+
+- walk(obj)
+  - 遍历 obj 的所有属性，为每一个属性调用 `defineReactive()` 方法，设置 getter/setter
+
 ### 对象响应式处理 defineReactive
+
 - [src\core\observer\index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/observer/index.js)
 - defineReactive(obj, key, val, customSetter, shallow)
-	* 为一个对象定义一个响应式的属性，每一个属性对应一个 dep 对象
-	* 如果该属性的值是对象，继续调用 observe
-	* 如果给属性赋新值，继续调用 observe
-	* 如果数据更新发送通知
+  - 为一个对象定义一个响应式的属性，每一个属性对应一个 dep 对象
+  - 如果该属性的值是对象，继续调用 observe
+  - 如果给属性赋新值，继续调用 observe
+  - 如果数据更新发送通知
 
 ```js
 /**
@@ -265,7 +276,9 @@ export function defineReactive (
   })
 }
 ```
-### 数组响应式处理 
+
+### 数组响应式处理
+
 - [src\core\observer\index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/observer/index.js)
 - Observer 的构造函数中
 
@@ -317,10 +330,12 @@ export class Observer {
 }
 ```
 
-- 处理数组修改数据的方法 
+- 处理数组修改数据的方法
+
 ```js
 import { arrayMethods } from './array'
 ```
+
 - [src\core\observer\array.js](https://github.com/shiguanghai/vue/blob/dev/src/core/observer/array.js)
 
 ```js
@@ -372,11 +387,13 @@ methodsToPatch.forEach(function (method) {
   })
 })
 ```
+
 ### Dep
+
 1. 在 defineReactive() 的 getter 中创建 dep 对象，并判断 Dep.target 是否有值，如果有, 调用 dep.depend()
 2. dep.depend() 内部调用 Dep.target.addDep(this)，也就是 watcher 的 addDep() 方法，它内部最调用 dep.addSub(this)，把 watcher 对象，添加到 dep.subs.push(watcher) 中，也就是把订阅者添加到 dep 的 subs 数组中，当数据变化的时候调用 watcher 对象的 update() 方法
 3. 什么时候设置的 Dep.target? 通过[首次渲染的案例调试](https://shiguanghai.top/blogs/%E5%A4%A7%E5%89%8D%E7%AB%AF/Vue.js%20%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81%E4%B8%8E%E8%BF%9B%E9%98%B6/Vue%E6%BA%90%E7%A0%81-%E5%93%8D%E5%BA%94%E5%BC%8F-%E5%88%9D%E5%A7%8B%E5%8C%96_%E9%A6%96%E6%AC%A1%E6%B8%B2%E6%9F%93.html#%E9%A6%96%E6%AC%A1%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E8%B0%83%E8%AF%95)观察。调用 mountComponent() 方法的时候，创建了渲染 watcher 对象，执行 watcher 中的 get() 方法
-4.  get() 方法内部调用 pushTarget(this)，把当前 Dep.target = watcher，同时把当前 watcher 入栈，因为有父子组件嵌套的时候先把父组件对应的 watcher 入栈，再去处理子组件的 watcher，子组件的处理完毕后，再把父组件对应的 watcher 出栈，继续操作
+4. get() 方法内部调用 pushTarget(this)，把当前 Dep.target = watcher，同时把当前 watcher 入栈，因为有父子组件嵌套的时候先把父组件对应的 watcher 入栈，再去处理子组件的 watcher，子组件的处理完毕后，再把父组件对应的 watcher 出栈，继续操作
 5. Dep.target 用来存放目前正在使用的watcher。全局唯一，并且一次也只能有一个 watcher 被使用
 
 ```js
@@ -497,7 +514,7 @@ export function popTarget () {
 }
 ```
 
-**依赖收集 - 调试**
+**依赖收集 - 调试**:
 
 - [调试代码](https://github.com/shiguanghai/vue/blob/dev/examples/04-observe/index.html)
 - 设置断点：因为我们要去调试收集依赖的过程，而我们在Watcher的get方法中开始去收集依赖，所以断点设置在创建Watcher对象的位置`src/core/instance/lifecycle.js`
@@ -520,7 +537,7 @@ export function popTarget () {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201212210422230.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 - F11 进入render函数，在这个函数中调用了_c（creatElement生成虚拟DOM）、_v、_s等渲染相关的方法，当我们访问这些属性的时候就会触发它们的get方法，在get方法里面就会进行收集依赖
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201212210534330.png)
-- F11进入hasHandler的has方法，这个方法是用来判断当前Vue实例中是否有_c、_v、_s、msg等成员 
+- F11进入hasHandler的has方法，这个方法是用来判断当前Vue实例中是否有_c、_v、_s、msg等成员
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201212211013655.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 - F11当我们访问this.msg的时候会进入对应的get方法，这个方法中访问的其实就是this._data.msg
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201212211404594.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
@@ -552,9 +569,10 @@ export function popTarget () {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201212215711459.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ### Watcher
+
 - Watcher 分为三种，Computed Watcher、用户 Watcher (侦听器)、**渲染 Watcher**
 - 渲染 Watcher 的创建时机
-	* [/src/core/instance/lifecycle.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/lifecycle.js)
+  - [/src/core/instance/lifecycle.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/lifecycle.js)
 
 ```js
 export function mountComponent (
@@ -611,6 +629,7 @@ export function mountComponent (
 - 整个流程结束
 
 ### 调试响应式数据执行过程
+
 - 数组响应式处理的核心过程和数组收集依赖的过程
 - 当数组的数据改变的时候 watcher 的执行过程
 - [调试代码](https://github.com/shiguanghai/vue/blob/dev/examples/05-observe-arr/index.html)
@@ -705,6 +724,7 @@ export function mountComponent (
 - 到此，数组中的数据改变，watcher中执行的过程就调试结束了
 
 ### 响应式处理过程总结
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213142853671.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213142313121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201213143030628.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)

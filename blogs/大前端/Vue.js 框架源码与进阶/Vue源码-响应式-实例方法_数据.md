@@ -15,7 +15,9 @@ isShowComments: false
 
 
 ## 4.5 实例方法/数据
+
 ### vm.$set
+
 - 功能
 
 向响应式对象中添加一个属性，并确保这个新属性同样是响应式的，且触发视图更新。它必须用于向响应式对象上添加新属性，因为 Vue 无法探测普通的新增属性 (比如 `this.myObject.newProperty = 'hi'`)
@@ -28,10 +30,10 @@ isShowComments: false
  vm.$set(obj, 'foo', 'test')
 ```
 
-**定义位置**
+**定义位置**.
 
 - Vue.set()
-	* [src/core/global-api/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/index.js)
+  - [src/core/global-api/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/index.js)
 
 ```js
   // 静态方法 set/delete/nextTick
@@ -41,8 +43,8 @@ isShowComments: false
 ```
 
 - vm.$set()
-	* [src/core/instance/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/index.js)
-	* [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
+  - [src/core/instance/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/index.js)
+  - [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
 
 ```js
 // instance/index.js
@@ -54,10 +56,10 @@ Vue.prototype.$set = set
 Vue.prototype.$delete = del
 ```
 
-**源码**
+**源码**.
 
 - set()方法
-	* [src/core/observer/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/observer/index.js)
+  - [src/core/observer/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/observer/index.js)
 
 ```js
 /**
@@ -129,9 +131,8 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
 - 在notify中最终调用每一个watcher的update方法，不再演示
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020121319015878.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
-
-
 ### vm.$delete
+
 - 功能
 
 删除对象的属性。如果对象是响应式的，确保删除能触发更新视图。这个方法主要用于避开 Vue 不能检测到属性被删除的限制，但是你应该很少会使用它。
@@ -144,10 +145,10 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
  vm.$delete(vm.obj, 'msg')
 ```
 
-**定义位置**
+**定义位置**.
 
 - Vue.delete()
-	* [src/core/global-api/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/index.js)
+  - [src/core/global-api/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/global-api/index.js)
 
 ```js
   // 静态方法 set/delete/nextTick
@@ -157,8 +158,8 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
 ```
 
 - vm.$delete()
-	* [src/core/instance/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/index.js)
-	* [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
+  - [src/core/instance/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/index.js)
+  - [src/core/instance/state.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/state.js)
 
 ```js
 // instance/index.js
@@ -170,11 +171,10 @@ Vue.prototype.$set = set
 Vue.prototype.$delete = del
 ```
 
-**源码**
-
+**源码**.
 
 - delete()方法
-	* [src/core/observer/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/observer/index.js)
+  - [src/core/observer/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/observer/index.js)
 
 ```js
 /**
@@ -218,7 +218,9 @@ export function del (target: Array<any> | Object, key: any) {
   ob.dep.notify()
 }
 ```
+
 ### vm.$watch
+
 vm.$watch( expOrFn, callback, [options] )
 
 - 功能
@@ -226,13 +228,13 @@ vm.$watch( expOrFn, callback, [options] )
 观察 Vue 实例变化的一个表达式或计算属性函数。回调函数得到的参数为新值和旧值。表达式只接受监督的键路径。对于更复杂的表达式，用一个函数取代。
 
 - 参数
-	* expOrFn：要监视的 $data 中的属性，可以是表达式或函数
-	* callback：数据变化后执行的函数
-		+ 函数：回调函数
-		+ 对象：具有 handler 属性(字符串或者函数)，如果该属性为字符串则 methods 中相应的定义
-	* options：可选的选项
-		+ deep：布尔类型，深度监听
-		+ immediate：布尔类型，是否立即执行一次回调函数
+  - expOrFn：要监视的 $data 中的属性，可以是表达式或函数
+  - callback：数据变化后执行的函数
+    - 函数：回调函数
+    - 对象：具有 handler 属性(字符串或者函数)，如果该属性为字符串则 methods 中相应的定义
+  - options：可选的选项
+    - deep：布尔类型，深度监听
+    - immediate：布尔类型，是否立即执行一次回调函数
 
 - 示例
 
@@ -240,9 +242,9 @@ vm.$watch( expOrFn, callback, [options] )
 const vm = new Vue({
   el: '#app',
   data: {
-  	a: '1',
-  	b: '2',
-  	msg: 'Hello vue',
+   a: '1',
+   b: '2',
+   msg: 'Hello vue',
     user: {
       firstName: '诸葛',
       lastName: '亮'
@@ -277,14 +279,14 @@ vm.$watch('msg', function (newVal, oldVal) {
 })
 ```
 
-**三种类型的 Watcher 对象**
+**三种类型的 Watcher 对象**:
 
 - 没有静态方法，因为 $watch 方法中要使用 Vue 的实例
 - Watcher 分三种：计算属性 Watcher、用户 Watcher (侦听器)、渲染 Watcher
 - [创建顺序](https://github.com/shiguanghai/vue/blob/dev/examples/08-watch/index.html)：计算属性 Watcher(`id:1`)、用户 Watcher (侦听器 `id:2`)、渲染 Watcher(`id:3`)
 - 执行顺序：按照 id 从小到大排序，与创建顺序相同
 - vm.$watch()
-	* src\core\instance\state.js
+  - src\core\instance\state.js
 
 ```js
 Vue.prototype.$watch = function (
@@ -318,13 +320,14 @@ Vue.prototype.$watch = function (
   }
 }
 ```
+
 ### 异步更新队列 nextTick()
 
 - Vue 更新 DOM 是异步执行的([示例代码](https://github.com/shiguanghai/vue/blob/dev/examples/09-nextTick/index.html))，批量的
-	* 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM
+  - 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM
 - `vm.$nextTick(function () { /* 操作 DOM */ }) / Vue.nextTick(function () {})`
 
-**定义位置**
+**定义位置**:
 
 - [src\core\instance\render.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/render.js)
 
@@ -334,7 +337,7 @@ Vue.prototype.$watch = function (
   }
 ```
 
-**源码**
+**源码**.
 
 - 手动调用 vm.$nextTick()
 - 在 Watcher 的 queueWatcher 中执行 nextTick()

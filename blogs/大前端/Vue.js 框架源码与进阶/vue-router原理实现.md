@@ -16,7 +16,7 @@ isShowComments: false
 
 ## 1.1 Vue-Router 使用步骤
 
-```
+```shell
 yarn add vue-router --dev
 ```
 
@@ -45,6 +45,7 @@ export default {
 }
 </script>
 ```
+
 ```js
 // router/index.js 模块
 
@@ -93,6 +94,7 @@ var router = new VueRouter ({
 
 export default router // 导出路由对象
 ```
+
 ```js
 // main.js
 
@@ -109,6 +111,7 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 ```
+
 ```js
 // App.vue
 
@@ -129,7 +132,7 @@ new Vue({
 </template>
 ```
 
-```
+```shell
 npm run serve
 ```
 
@@ -137,6 +140,7 @@ npm run serve
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201115213144106.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
 ## 1.2 动态路由
+
 ```js
 // router/index.js
 
@@ -162,7 +166,8 @@ const routes = [
 
 当地址为动态路由时，在组件中获取传入id的两种方式：
 
-1. 通过当前路由规则，获取数据
+1.) 通过当前路由规则，获取数据
+
 ```js
 <template>
   <div>
@@ -171,7 +176,8 @@ const routes = [
   </div>
 </template>
 ```
-2. 路由规则中开启 props 传参（推荐）
+
+2.) 路由规则中开启 props 传参（推荐）
 
 ```js
 // router/index.js
@@ -188,6 +194,7 @@ const routes = [
 ]
 ...
 ```
+
 ```js
 <template>
   <div>
@@ -203,11 +210,13 @@ export default {
 }
 </script>
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201115220906282.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
-
 ## 1.3 嵌套路由
+
 当多个路由的组件都有相同的内容，可以将这些相同内容提取到公共的组件当中
+
 ```js
 // components/Layout.vue
 
@@ -225,6 +234,7 @@ export default {
   </div>
 </template>
 ```
+
 ```js
 // router/index.js
 
@@ -261,6 +271,7 @@ const routes = [
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201115220718619.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
 ## 1.4 编程式导航
+
 之前我们在页面之间的跳转使用的是 router-link 生成超链接，但是做登陆页面需要点击按钮跳转到首页，此时就需要使用编程式导航调用 $router.push() 方法
 
 ```js
@@ -287,6 +298,7 @@ export default {
 }
 </script>
 ```
+
 ```js
 // views/Index.vue
 
@@ -315,6 +327,7 @@ export default {
 }
 </script>
 ```
+
 ```js
 // views/Detail.vue
 
@@ -344,30 +357,29 @@ export default {
 - go 方法 会以0为基准跳转到相对页面
 
 ## 1.5 Hash 和 History 模式区别
+
 两种方式均为客户端路由的实现方式：当路径法发生变化，不会向服务器发送请求，使用js监视路径的变化根据不同的地址渲染不同的内容，如果需要服务器端的内容会发送Ajax请求来获取。
 
-**表现形式的区别**
+**表现形式的区别**:
 
 - Hash 模式
-	* https://music.163.com/#/playlist?id=3102961863
+  - <https://music.163.com/#/playlist?id=3102961863>
 - Histort 模式
-	* https://music.163.com/playlist/3102961863
+  - <https://music.163.com/playlist/3102961863>
 
-**原理的区别**
+**原理的区别**:
 
 - Hash 模式是基于锚点，以及 onhashchange 事件
 - History 模式 是基于 HTML5 中的 History API
-	* history.pushState() IE10 以后才支持
-	* history.replaceState() 
-
-
+  - history.pushState() IE10 以后才支持
+  - history.replaceState()
 
 ### History 模式
 
-**History 模式的使用**
+**History 模式的使用**:
 
 - History 需要服务器的支持
-- 单页应用中，服务器不存在 http://www.testurl.com/login 这样的地址会返回找不到该页面
+- 单页应用中，服务器不存在 <http://www.testurl.com/login> 这样的地址会返回找不到该页面
 - 在服务端应该除了静态资源外都返回单页应用的 index.html
 
 ```js
@@ -379,6 +391,7 @@ export default {
   </div>
 </template>
 ```
+
 ```js
 // App.vue
 
@@ -394,6 +407,7 @@ export default {
   </div>
 </template>
 ```
+
 ```js
 // router/index.js
 
@@ -426,6 +440,7 @@ const router = new VueRouter({
 
 export default router
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201115230548741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
 当我们刷新 /video 地址回想服务器发送请求，请求/video页面，服务器如果不存在这个页面应该返回404页面，但是vue-cli自带的服务器已经配置好了。
@@ -436,14 +451,12 @@ export default router
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201117221604226.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
-
 ```js
 // 注册处理 history 模式的中间件
 app.use(history())
 ```
 
 但因为我们开启了对histort模式的支持，因此会将单页应用默认的首页返回给浏览器，浏览器接收到此页面再去判断路由地址并加载对应组件内容并渲染到浏览器。
-
 
 ### History 模式 - nginx
 
@@ -469,6 +482,7 @@ http {
 ```
 
 ## 1.6 Vue Router 实现原理
+
 Hash 模式
 
 - URL 中 # 后面的内容作为路径地址
@@ -482,9 +496,11 @@ History 模式
 - 根据当前路由地址找到对应组件重新渲染
 
 ### Vue Router 模拟实现 ( History模式 )
+
 **前置的知识**：插件、slot 插槽、混入、render 函数、运行时和完整版的 Vue
 
-**Vue Router 的核心代码**
+**Vue Router 的核心代码**.
+
 ```js
 // 注册插件
 // Vue.use() 内部调用传入对象的 install 方法
@@ -507,23 +523,23 @@ new Vue({
 这个类图由三部分：类名、 类的属性、 类的方法
 
 属性：
-> **options** 对象： 记录构造函数中传入的对象 
-
+> **options** 对象： 记录构造函数中传入的对象
+>
 > **data** 对象：有一个属性current记录当前路由地址 该对象是响应式的(调用vue.observe方法)
-
+>
 > **routeMap** 对象：记录路由地址和组件的对应关系
 
 方法：
 > **Coustructor(Options)**：构造函数，初始化属性
-
+>
 > **install(Vue)**：静态方法，实现vue的插件机制
-
+>
 > **init()**：调用下面三个方法，将不同代码分隔到不同方法实现
-
+>
 > **initEvent()**：注册popstate事件，监听浏览器历史的变化
-
+>
 > **creatRouteMap()**：初始化routeMap属性，把构造函数中传入的路由规则转换成键值对的形式存储到RouterMap对象。（路由地址：对应组件）
-
+>
 > **initComponents(Vue)**：创建router-link和router-vue两个组件
 
 **完整代码：**
@@ -630,8 +646,8 @@ export default class VueRouter {
 
 [代码仓库](https://gitee.com/shiguanghaitop/big-front-end-phase-5/tree/master/fed-e-task-03-01/code/03-01-02-05-vue-router/01-vue-router-basic-usage)
 
-
 ### Vue Router - Constructor
+
 ```js
 constructor (options) {
  this.options = options
@@ -645,6 +661,7 @@ constructor (options) {
 ```
 
 ### Vue Router - install
+
 ```js
 let _Vue = null
 
@@ -673,10 +690,10 @@ export default class VueRouter {
 }
 ```
 
-
 ### Vue Router - init
 
 使用 init 包装 createRouteMap () 和 initComponents (Vue) 以及 initEvent
+
 ```js
 init () {
   this.createRouteMap()
@@ -686,6 +703,7 @@ init () {
 ```
 
 回到 install() 方法来调用初始化方法
+
 ```js
 static install (Vue) {
     ...
@@ -694,7 +712,7 @@ static install (Vue) {
         if (this.$options.router) {
           _Vue.prototype.$router = this.$options.router
 
-		  this.$options.router.init()
+    this.$options.router.init()
         }
       }
     })
@@ -702,6 +720,7 @@ static install (Vue) {
 ```
 
 ### Vue Router - createRouteMap
+
 将构造函数中选项传过来的路由规则 routes 转换成键值对的形式存储到RouteMap对象，其存储的键就是路由的地址，它的值就是这个地址所对应的组件。将来在路由地址发生变化时，可以根据这个地址来RouteMap对象找到组件并渲染到视图中。
 
 ```js
@@ -716,11 +735,12 @@ createRouteMap () {
 ```
 
 ### Vue Router - initComponents - router-link
-- Vue 的构建版本
-	* 运行时版：不支持 template 模板，需要打包的时候提前编译（render函数）
-	* 完整版：包含运行时和编译器，体机比运行时版大 10K 左右，程序运行的时候把模板转换成 render 函数
 
-**完整版本 Vue**
+- Vue 的构建版本
+  - 运行时版：不支持 template 模板，需要打包的时候提前编译（render函数）
+  - 完整版：包含运行时和编译器，体机比运行时版大 10K 左右，程序运行的时候把模板转换成 render 函数
+
+**完整版本 Vue**:
 
 vue-cli 创建的项目默认使用的是 [运行时版本的 Vue](https://cn.vuejs.org/v2/guide/installation.html#%E8%BF%90%E8%A1%8C%E6%97%B6-%E7%BC%96%E8%AF%91%E5%99%A8-vs-%E5%8F%AA%E5%8C%85%E5%90%AB%E8%BF%90%E8%A1%8C%E6%97%B6)
 
@@ -734,6 +754,7 @@ module.exports = {
   runtimeCompiler: true // 此时会加载带编译器版本的vue 默认为false
 }
 ```
+
 ```js
 initComponents (Vue) {
   _Vue.component('router-link', {
@@ -746,7 +767,9 @@ initComponents (Vue) {
     template: '<a :href="to"><slot></slot></a>'
 }
 ```
-**运行时版本 Vue**
+
+**运行时版本 Vue**:
+
 ```js
 initComponents (Vue) {
 _Vue.component('router-link', {
@@ -781,7 +804,8 @@ _Vue.component('router-link', {
 }
 ```
 
-###  Vue Router - initComponents - router-view
+### Vue Router - initComponents - router-view
+
 ```js
 initComponents (Vue) {
     _Vue.component('router-link', {
@@ -800,6 +824,7 @@ initComponents (Vue) {
 ```
 
 ### Vue Router - initEvent
+
 ```js
 initEvent(){
   window.addEventListener("popstate", () => {
@@ -808,8 +833,7 @@ initEvent(){
 }
 ```
 
-
-**附录**
+**附录**:
 
 [浅谈vue-router原理](https://www.jianshu.com/p/4295aec31302)
 

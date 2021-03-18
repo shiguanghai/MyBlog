@@ -15,45 +15,49 @@ isShowComments: false
 
 
 ## 5.1 虚拟 DOM
+
 ### 什么是虚拟 DOM
+
 **虚拟 DOM(Virtual DOM)** 是使用 JavaScript 对象来描述 DOM，虚拟 DOM 的本质就是 JavaScript 对象，使用 JavaScript 对象来描述 DOM 的结构。应用的各种状态变化首先作用于虚拟 DOM，最终映射到 DOM。
 
 Vue.js 中的虚拟 DOM 借鉴了 Snabbdom，并添加了一些 Vue.js 中的特性，例如：指令和组件机制。
 
 > Vue 1.x 中细粒度监测数据的变化，每一个属性对应一个 watcher，开销太大Vue 2.x 中每个组件对应一个 watcher，状态变化通知到组件，再引入虚拟 DOM 进行比对和渲染
 
-**为什么要使用虚拟 DOM**
+**为什么要使用虚拟 DOM**:
 
 - 使用虚拟 DOM，可以避免用户直接操作 DOM，开发过程关注在业务代码的实现，不需要关注如何操作 DOM，从而提高开发效率
 - 作为一个中间层可以跨平台，除了 Web 平台外，还支持 SSR、Weex。
 - 关于性能方面，在首次渲染的时候肯定不如直接操作 DOM，因为要维护一层额外的虚拟 DOM，如果后续有频繁操作 DOM 的操作，这个时候可能会有性能的提升，虚拟 DOM 在更新真实 DOM 之前会通过 Diff 算法对比新旧两个虚拟 DOM 树的差异，最终把差异更新到真实 DOM
 
 ### Vue.js 中的虚拟 DOM
--  h 函数就是 [createElement()](https://cn.vuejs.org/v2/guide/render-function.html#createElement-%E5%8F%82%E6%95%B0)
+
+- h 函数就是 [createElement()](https://cn.vuejs.org/v2/guide/render-function.html#createElement-%E5%8F%82%E6%95%B0)
 - vm.\$createElement(tag,data,children,normalizeChildren)
 - 参数
-	* tag
-		+ 标签名称或者组件对象
-	* data
-		+ 描述 tag，可以设置 DOM 的属性或者标签的属性
-	* children
-		+ tag 中的文本内容或者子节点
+  - tag
+    - 标签名称或者组件对象
+  - data
+    - 描述 tag，可以设置 DOM 的属性或者标签的属性
+  - children
+    - tag 中的文本内容或者子节点
 - 返回结果
-	* VNode 对象
-	* 核心属性
-		+ tag
-		+ data
-		+ children
-		+ text
-		+ elm
-		+ key
+  - VNode 对象
+  - 核心属性
+    - tag
+    - data
+    - children
+    - text
+    - elm
+    - key
 
 ### 整体过程分析
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020121322403445.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 ## 5.2 createElement
-**功能**
+
+**功能**.
 
 createElement() 函数，用来创建虚拟节点 (VNode)，我们的 render 函数中的参数 h，就是createElement()
 
@@ -64,7 +68,7 @@ render(h) {
 }
 ```
 
-**定义**
+**定义**.
 
 在 vm._render() 中调用了，用户传递的或者编译生成的 render 函数，这个时候传递了 createElement
 
@@ -223,11 +227,12 @@ export function _createElement (
 ```
 
 ## 5.3 update
-**功能**
+
+**功能**:
 
 内部调用 vm.\_\_patch\_\_() 把虚拟 DOM 转换成真实 DOM
 
-**定义**
+**定义**:
 
 - [src/core/instance/lifecycle.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/lifecycle.js)
 
@@ -236,6 +241,7 @@ updateComponent = () => {
   vm._update(vm._render(), hydrating)
 }
 ```
+
 ```js
 // _update 方法的作用是把 VNode 渲染成真实的 DOM
 // 首次渲染会调用，数据更新会调用
@@ -275,12 +281,14 @@ Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
 ```
 
 ## 5.4 patch
+
 ### patch 函数初始化
-**功能**
+
+**功能**:
 
 对比两个 VNode 的差异，把差异更新到真实 DOM。如果是首次渲染的话，会把 虚拟DOM 先转换成 真实DOM 挂载到页面
 
-**Snabbdom0.7.4 中 patch 函数的初始化**
+**Snabbdom0.7.4 中 patch 函数的初始化**:
 
 - [src/snabbdom.ts](https://github.com/snabbdom/snabbdom/blob/v0.7.4/src/snabbdom.ts)
 
@@ -305,7 +313,7 @@ export function vnode(sel: string | undefined,
 }
 ```
 
-**Vue.js 中 patch 函数的初始化**
+**Vue.js 中 patch 函数的初始化**:
 
 - [src/platforms/web/runtime/index.js](https://github.com/shiguanghai/vue/blob/dev/src/platforms/web/runtime/index.js)
 
@@ -373,6 +381,7 @@ export function createPatchFunction (backend) {
 ```
 
 ### patch 函数执行过程
+
 ```js
 return function patch (oldVnode, vnode, hydrating, removeOnly) {
     // 新的 VNode 不存在
@@ -456,7 +465,8 @@ return function patch (oldVnode, vnode, hydrating, removeOnly) {
 ```
 
 ## 5.5 createElm
-**功能**
+
+**功能**:
 
 把 VNode 转换成真实 DOM，挂载到 DOM 树上
 
@@ -545,7 +555,7 @@ return function patch (oldVnode, vnode, hydrating, removeOnly) {
 
 ## 5.6 patchVnode
 
-**功能**
+**功能**:
 
 对比新旧VNode，找到差异更新DOM，diff 算法
 
@@ -631,7 +641,8 @@ function patchVnode (
 ```
 
 ## 5.7 updateChildren
-**功能**
+
+**功能**:
 
 对比新老子节点，找到差异更新到DOM树
 
@@ -672,4 +683,3 @@ updateChildren 和 [Snabbdom 中的 updateChildren](https://shiguanghai.top/blog
 - 当设置 key 的时候
 
 在 updateChildren 中比较子节点的时候，因为 oldVnode 的子节点的 b,c,d 和 newVnode 的 x,b,c 的 key 相同，所以只做比较，没有更新 DOM 的操作，当遍历完毕后，会再把 x 插入到 DOM 上DOM 操作只有一次插入操作。
-

@@ -15,6 +15,7 @@ isShowComments: false
 
 
 ## 6.1 模板编译
+
 ### 模板编译简介
 
 - 模板编译的主要目的是将模板 (template) 转换为渲染函数 (render)
@@ -38,11 +39,12 @@ render (h) {
 ```
 
 - 模板编译的作用
-	* Vue 2.x 使用 VNode 描述视图以及各种交互，用户自己编写 VNode 比较复杂
-	* 用户只需要编写类似 HTML 的代码 - Vue 模板，通过编译器将模板转换为返回 VNode 的 render 函数
-	* .vue 文件会被 webpack 在构建的过程中转换成 render 函数
+  - Vue 2.x 使用 VNode 描述视图以及各种交互，用户自己编写 VNode 比较复杂
+  - 用户只需要编写类似 HTML 的代码 - Vue 模板，通过编译器将模板转换为返回 VNode 的 render 函数
+  - .vue 文件会被 webpack 在构建的过程中转换成 render 函数
 
 ### 模板编译结果
+
 - [代码](https://github.com/shiguanghai/vue/blob/dev/examples/12-compile/index.html)
 - 带编译器版本的 Vue.js 中，使用 template 或 el 的方式设置模板
 
@@ -75,6 +77,7 @@ render (h) {
 - 编译后 render 输出的结果
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201217162003708.png)
 - 整理格式后
+
 ```js
 (function anonymous() {
   with (this) {
@@ -96,14 +99,14 @@ render (h) {
 
 > 我们想要分析这段代码，就要找到 _开头 方法的定义
 
-**编译生成的函数的位置**
+**编译生成的函数的位置**:
 
 - _c()
-	* _c就是createElement() 方法
-	* [src/core/instance/render.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/render.js)
-- _m() / _v() / _s()
-	* 相关的渲染函数(_开头的方法定义)
-	* [src/core/instance/render-helpers/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/render-helpers/index.js)
+  - _c就是createElement() 方法
+  - [src/core/instance/render.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/render.js)
+- _m() /_v() / _s()
+  - 相关的渲染函数(_开头的方法定义)
+  - [src/core/instance/render-helpers/index.js](https://github.com/shiguanghai/vue/blob/dev/src/core/instance/render-helpers/index.js)
 
 ```js
 // instance/render-helps/index.js
@@ -164,6 +167,7 @@ export function renderStatic (
   <comp @myclick="handler"></comp>
 </div>
 ```
+
 ```js
 (function anonymous() {
   // 匿名函数调用with 代码块使用this对象的成员可省略this
@@ -186,6 +190,7 @@ export function renderStatic (
 ```
 
 ### Vue Template Explorer
+
 ```js
 <div id="app">
   <select>
@@ -198,8 +203,10 @@ export function renderStatic (
   </div>
 </div>
 ```
+
 - [vue-template-explorer](http://suo.im/6agQFQ)
-	* Vue 2.6 把模板编译成 render 函数的工具
+  - Vue 2.6 把模板编译成 render 函数的工具
+
 ```js
 function render() {
   with(this) {
@@ -213,8 +220,10 @@ function render() {
   }
 }
 ```
+
 - [vue-next-template-explorer](http://suo.im/5VeqVC)
-	* Vue 3.0 beta 把模板编译成 render 函数的工具
+  - Vue 3.0 beta 把模板编译成 render 函数的工具
+
 ```js
 import { toDisplayString as _toDisplayString, createVNode as _createVNode, openBlock as _openBlock, createBlock as _createBlock } from "vue"
 
@@ -229,13 +238,14 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 // Check the console for the AST
 ```
+
 - 通过观察编译生成的render函数，总结
-	* 在使用vue2.x的模板时，标签内的文本内容尽量不要添加多余的空白
-	* vue3编译后的render函数已经去除了标签内多余的空白
+  - 在使用vue2.x的模板时，标签内的文本内容尽量不要添加多余的空白
+  - vue3编译后的render函数已经去除了标签内多余的空白
 
 ### 模板编译的入口
 
-**编译入口**
+**编译入口**.
 
 - [src/platforms/web/entry-runtime-with-compiler.js](https://github.com/shiguanghai/vue/blob/dev/src/platforms/web/entry-runtime-with-compiler.js)
 
@@ -255,7 +265,9 @@ Vue.prototype.$mount = function (
   ...
 )
 ```
+
 - [src/platforms/web/compiler/index.js](https://github.com/shiguanghai/vue/blob/dev/src/platforms/web/compiler/index.js)
+
 ```js
 import { baseOptions } from './options'
 import { createCompiler } from 'compiler/index'
@@ -264,8 +276,10 @@ const { compile, compileToFunctions } = createCompiler(baseOptions)
 
 export { compile, compileToFunctions }
 ```
+
 - [src/compiler/index.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/index.js)
-	* baseCompile(template.trim(), finalOptions)
+  - baseCompile(template.trim(), finalOptions)
+
 ```js
 // `createCompilerCreator`允许创建使用替代解析器/优化器/代码生成的编译器，
 // 例如SSR优化编译器。在这里，我们只是使用默认的部分导出一个默认的编译器。
@@ -276,10 +290,12 @@ export const createCompiler = createCompilerCreator(function baseCompile (
   ...
 })
 ```
+
 - [src/compiler/create-compiler.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/create-compiler.js)
-	* complie(template, options)
-	* 内部把 createCompiler() 中和平台相关的选项参数和用户传入的参数进行合并
-	* 调用 baseCompile 把合并后的选项参数传递给它
+  - complie(template, options)
+  - 内部把 createCompiler() 中和平台相关的选项参数和用户传入的参数进行合并
+  - 调用 baseCompile 把合并后的选项参数传递给它
+
 ```js
 export function createCompilerCreator (baseCompile: Function): Function {
   // baseOptions 平台相关的options
@@ -301,7 +317,8 @@ export function createCompilerCreator (baseCompile: Function): Function {
 ```
 
 - [src/compiler/to-function.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/to-function.js)
-	* compileToFunctions
+  - compileToFunctions
+
 ```js
 export function createCompileToFunctionFn (compile: Function): Function {
   const cache = Object.create(null)
@@ -317,9 +334,9 @@ export function createCompileToFunctionFn (compile: Function): Function {
 ```
 
 - 调试 `compileToFunctions()` 执行过程，生成渲染函数的过程
-	* compileToFunctions: [src/compiler/to-function.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/to-function.js)
-	* complie(template, options)：[src/compiler/create-compiler.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/create-compiler.js)
-	* baseCompile(template.trim(), finalOptions)：[src/compiler/index.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/index.js)
+  - compileToFunctions: [src/compiler/to-function.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/to-function.js)
+  - complie(template, options)：[src/compiler/create-compiler.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/create-compiler.js)
+  - baseCompile(template.trim(), finalOptions)：[src/compiler/index.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/index.js)
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201216220254762.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 **模板编译过程**
@@ -327,7 +344,9 @@ export function createCompileToFunctionFn (compile: Function): Function {
 - 解析、优化、生成
 
 ## 6.2 模板编译过程
+
 ### compileToFunctions
+
 - [src/compiler/to-function.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/to-function.js)
 
 ```js
@@ -371,7 +390,9 @@ export function createCompileToFunctionFn (compile: Function): Function {
   }
 }
 ```
+
 ### compile
+
 - [src/compiler/create-compiler.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/create-compiler.js)
 
 ```js
@@ -418,7 +439,9 @@ export function createCompilerCreator (baseCompile: Function): Function {
 ```
 
 ### baseCompile
+
 - [src/compiler/index.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/index.js)
+
 ```js
 // `createCompilerCreator` allows creating compilers that use alternative
 // parser/optimizer/codegen, e.g the SSR optimizing compiler.
@@ -447,38 +470,46 @@ export const createCompiler = createCompilerCreator(function baseCompile (
   }
 })
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020121622092287.png)
 整个过程分为三个阶段：
 
 1. parse，将templat模板字符串转成AST抽象语法树
 2. optimize，标注静态节点，优化抽象语法树
 3. generate，把抽象语法树转换成字符串形式的js代码，生成render表达式
+
 ### baseCompile-AST
-**什么是抽象语法树**
+
+**什么是抽象语法树**:
 
 - 抽象语法树简称 AST (Abstract Syntax Tree)
 - 使用对象的形式描述树形的代码结构
 - 此处的抽象语法树是用来描述树形结构的 HTML 字符串
 
-**为什么要使用抽象语法树**
+**为什么要使用抽象语法树**:
 
 - 模板字符串转换成 AST 后，可以通过 AST 对模板做优化处理
 - 标记模板中的静态内容，在 patch 的时候直接跳过静态内容
 - 在 patch 的过程中静态内容不需要对比和重新渲染
 
-**获取 AST**
+**获取 AST**:
 
 - 查看得到的 AST tree
-	* [astexplorer](https://astexplorer.net/#/gist/30f2bd28c9bbe0d37c2408e87cabdfcc/1cd0d49beed22d3fc8e2ade0177bb22bbe4b907c)
+  - [astexplorer](https://astexplorer.net/#/gist/30f2bd28c9bbe0d37c2408e87cabdfcc/1cd0d49beed22d3fc8e2ade0177bb22bbe4b907c)
+
 ### baseCompile-parse
+
 - 解析器将templat模板解析为抽象语树 AST，只有将模板解析成 AST 后，才能基于它做优化或者生成代码字符串
 - [src/compiler/index.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/index.js)
+
 ```js
 // 把模板转换成 ast 抽象语法树
 // 抽象语法树，用来以树形的方式描述代码结构
 const ast = parse(template.trim(), options)
 ```
+
 - [src/compiler/parser/index.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/parser/index.js)
+
 ```js
 export function parse (
   template: string,
@@ -529,8 +560,8 @@ export function parseHTML (html, options) {
           if (commentEnd >= 0) {
             if (options.shouldKeepComment) {
               // 如果当前找到注释标签 并且调用 options.comment方法后
-  			  // 会把处理完的文本截取掉 继续去处理剩余的部分
- 			  // 这个 comment 是调用 parseHTML 的时候传递进来的方法
+       // 会把处理完的文本截取掉 继续去处理剩余的部分
+      // 这个 comment 是调用 parseHTML 的时候传递进来的方法
               options.comment(html.substring(4, commentEnd), index, index + commentEnd + 3)
             }
             advance(commentEnd + 3)
@@ -580,13 +611,15 @@ export function parseHTML (html, options) {
   }
 }
 ```
+
 > **这里仅来演示 start 方法，其他几个方法类似**，当 parseHTML 处理完毕就把 模板字符串 转化成了 AST对象 最后返回
 
 - options.start是在调用parseHTML的时候传递进来的
-	* **start** end chars comment 都是处理完对应的内容之后调用的
+  - **start** end chars comment 都是处理完对应的内容之后调用的
 - **start** 方法是在解析到 **开始标签** 的时候调用的
 
-1. 方法中首先调用了createASTElement `let element: ASTElement = createASTElement(tag, attrs, currentParent)`
+1.) 方法中首先调用了createASTElement `let element: ASTElement = createASTElement(tag, attrs, currentParent)`
+
 ```js
 export function createASTElement (
   tag: string,
@@ -604,10 +637,12 @@ export function createASTElement (
   }
 }
 ```
+
 > 这个函数就是返回了一个AST对象
 
-2. 当生成 ASTElement 之后开始给AST的各种属性赋值
-3. 开始处理指令 `processPre(element)` 用来处理 v-pre 指令
+2.) 当生成 ASTElement 之后开始给AST的各种属性赋值
+3.) 开始处理指令 `processPre(element)` 用来处理 v-pre 指令
+
 ```js
 function processPre (el) {
   // 调用getAndRemoveAttr获取v-pre指令 再从AST移除对应属性
@@ -617,7 +652,9 @@ function processPre (el) {
   }
 }
 ```
-4. 处理结构化指令 v-for v-if v-once
+
+4.) 处理结构化指令 v-for v-if v-once
+
 ```js
 processFor(element)
 processIf(element)
@@ -625,19 +662,24 @@ processOnce(element)
 ```
 
 > parse 函数内部处理过程中会依次去遍历html模板字符串，把其转换成AST对象，html中的属性和指令都会记录在AST对象的相应属性上
+
 ### baseCompile-optimize
+
 - 优化抽象语法树，检测子节点中是否是纯静态节点
 - 一旦检测到纯静态节点（对应的DOM子树永远不会发生变化）
-	* 提升为常量，重新渲染的时候不在重新创建节点
-	* 在 patch 的时候直接跳过静态子树
+  - 提升为常量，重新渲染的时候不在重新创建节点
+  - 在 patch 的时候直接跳过静态子树
 - [src/compiler/index.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/index.js)
+
 ```js
 if (options.optimize !== false) {
   // 优化抽象语法树
   optimize(ast, options)
 }
 ```
+
 - [src/compiler/optimizer.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/optimizer.js)
+
 ```js
 /**
  * Goal of the optimizer: walk the generated template AST tree
@@ -670,6 +712,7 @@ export function optimize (root: ?ASTElement, options: CompilerOptions) {
 ```
 
 - markStatic
+
 ```js
 function markStatic (node: ASTNode) {
   // 判断当前 astNode 是否是静态的
@@ -712,7 +755,9 @@ function markStatic (node: ASTNode) {
   }
 }
 ```
+
 - markStaticRoots
+
 ```js
 function markStaticRoots (node: ASTNode, isInFor: boolean) {
   if (node.type === 1) {
@@ -747,7 +792,9 @@ function markStaticRoots (node: ASTNode, isInFor: boolean) {
   }
 }
 ```
+
 ### baseCompile-generate
+
 - 把抽象语法树转换成字符串形式的js代码，生成render表达式
 - [src/compiler/index.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/index.js)
 
@@ -755,7 +802,9 @@ function markStaticRoots (node: ASTNode, isInFor: boolean) {
 // 把抽象语法树生成字符串形式的 js 代码
 const code = generate(ast, options)
 ```
+
 - [src/compiler/codegen/index.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/codegen/index.js)
+
 ```js
 export function generate (
   ast: ASTElement | void,
@@ -771,7 +820,9 @@ export function generate (
   }
 }
 ```
+
 - CodegenState
+
 ```js
 export class CodegenState {
   options: CompilerOptions;
@@ -798,7 +849,9 @@ export class CodegenState {
   }
 }
 ```
+
 - genElement
+
 ```js
 export function genElement (el: ASTElement, state: CodegenState): string {
   if (el.parent) {
@@ -848,7 +901,9 @@ export function genElement (el: ASTElement, state: CodegenState): string {
   }
 }
 ```
+
 - genChildren
+
 ```js
 // 首先会判断AST对象是否有子节点
 
@@ -861,7 +916,9 @@ return `[${children.map(c => gen(c, state)).join(',')}]${
   normalizationType ? `,${normalizationType}` : ''
 }`
 ```
+
 - genNode
+
 ```js
 function genNode (node: ASTNode, state: CodegenState): string {
   // 判断当前AST对象类型
@@ -882,6 +939,7 @@ function genNode (node: ASTNode, state: CodegenState): string {
 **接下来来看`staticRenderFns`是在什么位置添加元素的，以及添加的元素是什么**
 
 - 在 genElement 中，如果el是静态根节点且没有被处理过的话，调用了genStatic
+
 ```js
 // 处理静态根节点，如果已经被处理过则不再处理
 // staticProcessed 标记当前节点是否已经处理，genElement会被递归调用，防止重复处理节点
@@ -889,7 +947,9 @@ if (el.staticRoot && !el.staticProcessed) {
   return genStatic(el, state)
 }
 ```
+
 - genStatic
+
 ```js
 // hoist static sub-trees out
 function genStatic (el: ASTElement, state: CodegenState): string {
@@ -922,7 +982,9 @@ function genStatic (el: ASTElement, state: CodegenState): string {
   })`
 }
 ```
+
 - _m:（renderStatic）部分回顾
+
 ```js
   // if has already-rendered static tree and not inside v-for,
   // we can reuse the same tree.
@@ -947,6 +1009,7 @@ function genStatic (el: ASTElement, state: CodegenState): string {
 > 到这里，静态根节点的处理过程就解释完毕。但是我们只看到了把静态根节点转换成字符串形式的代码，接下来我们再来看一下把字符串转换成函数的过程
 
 - [src/compiler/to-function.js](https://github.com/shiguanghai/vue/blob/dev/src/compiler/to-function.js)
+
 ```js
 // 3. 把字符串形式的js代码转换成js方法
 res.render = createFunction(compiled.render, fnGenErrors)
@@ -954,6 +1017,7 @@ res.staticRenderFns = compiled.staticRenderFns.map(code => {
   return createFunction(code, fnGenErrors)
 })
 ```
+
 ```js
 function createFunction (code, errors) {
   try {
@@ -966,7 +1030,9 @@ function createFunction (code, errors) {
 ```
 
 ## 6.3 模板编译过程调试
+
 - [调试代码](https://github.com/shiguanghai/vue/blob/dev/examples/13-ast/index.html)
+
 ```js
 <div id="app">
   <h1>Vue<span>模板编译过程</span></h1>
@@ -989,6 +1055,7 @@ function createFunction (code, errors) {
   })
 </script>
 ```
+
 - 设置断点
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201218224529632.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 - 刷新并F11进入
@@ -1030,4 +1097,5 @@ function createFunction (code, errors) {
 > 到此，整个模板编译的过程就调试完了
 
 ## 6.4 模板编译过程总结
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201218234256724.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)

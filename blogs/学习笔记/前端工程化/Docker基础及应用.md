@@ -13,7 +13,8 @@ isShowComments: false
 ---
 
 
-## CentOS 8 
+## CentOS 8
+
 ### CentOS 8 下载镜像
 
 - [https://mirrors.aliyun.com/centos/8/isos/x86_64/](https://mirrors.aliyun.com/centos/8/isos/x86_64/)
@@ -26,9 +27,11 @@ ip addr
 ```
 
 C:\Windows\System32\drivers\etc\hosts
+
 ```bash
 192.168.137.129 lfz.com
 ```
+
 ### 无法上网
 
 ```bash
@@ -73,34 +76,37 @@ docker run --rm -d -p 40001:3000 jayfong/yapi:play
 
 - Docker 是一个集打包、运行、测试、发布于一体的开放式平台
 - 我们可以把开发过程中的基础设施分离出来部署到 Docker
-   * DevOps：开发、构建、自动化部署、测试、文档
-   * GitLib、Jenkins
-   * Nginx、Apache
-   * MySQL、MongoDb
-   * 文档管理工具
+  - DevOps：开发、构建、自动化部署、测试、文档
+  - GitLib、Jenkins
+  - Nginx、Apache
+  - MySQL、MongoDb
+  - 文档管理工具
 - 使用 Docker 可以避免复杂的应用环境配置，并以秒级的速度开启
 - 支持绝大多数平台，容器的性能开销极低
+
 ### Docker 应用场景
 
 - Web 应用的自动化打包和发布
 - 自动化测试和持续集成、发布
 - 在服务型环境中部署和调整数据库或其他的后台应用
+
 ### Docker 核心概念
 
 - Docker Daemon 守护进程
-   - Docker Daemon 是 Docker 的守护进程
-   - Docker Client 通过命令行与 Docker Daemon 通信完成 Docker 相关操作
+  - Docker Daemon 是 Docker 的守护进程
+  - Docker Client 通过命令行与 Docker Daemon 通信完成 Docker 相关操作
 - Docker Client 客户端
-   - 通过终端和用户交互
-   - 终端中输入指令，Docker 客户端把指令传递给 Docker Daemon
+  - 通过终端和用户交互
+  - 终端中输入指令，Docker 客户端把指令传递给 Docker Daemon
 - Docker Image 镜像
-   - 可以认为是一个最小版本的 Linux 系统的镜像，包含了所需的文件系统和一些配置好的应用
-   - 需要通过容器来加载镜像
-   - 是静态的，可以和面向对象中类对比
+  - 可以认为是一个最小版本的 Linux 系统的镜像，包含了所需的文件系统和一些配置好的应用
+  - 需要通过容器来加载镜像
+  - 是静态的，可以和面向对象中类对比
 - Docker Container 容器
-   - 通过镜像创建一个容器
-   - 可以创建多个容器，每一个容器都会开启一个进程，多个容器之间是相互隔离的
-   - 是动态的，可以和面向对象的实例对比
+  - 通过镜像创建一个容器
+  - 可以创建多个容器，每一个容器都会开启一个进程，多个容器之间是相互隔离的
+  - 是动态的，可以和面向对象的实例对比
+
 ### Docker 体系结构
 
 - Docker 使用客户端-服务器 (C/S) 架构模式，使用远程 API 来管理和创建 Docker 容器
@@ -115,12 +121,13 @@ docker run --rm -d -p 40001:3000 jayfong/yapi:play
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020122913262022.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
 - 官网的说明
-  * [https://www.docker.com/resources/what-container](https://www.docker.com/resources/what-container)
+  - [https://www.docker.com/resources/what-container](https://www.docker.com/resources/what-container)
 - 容器技术和虚拟机区别
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201229132807990.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
 ## 安装 Docker
+
 ### 参考文档
 
 - [https://docs.docker.com/install/](https://docs.docker.com/install/)
@@ -152,7 +159,7 @@ dnf config-manager --add-repo=http://mirrors.aliyun.com/docker-ce/linux/centos/d
 ```
 
 - 安装 Docker 社区版
-  * CentOS 8
+  - CentOS 8
 
 ```bash
 yum install https://download.docker.com/linux/centos/8/x86_64/stable/Packages/containerd.io-1.4.3-3.1.el8.x86_64.rpm
@@ -160,8 +167,8 @@ yum install https://download.docker.com/linux/centos/8/x86_64/stable/Packages/co
 yum install docker-ce docker-ce-cli
 ```
 
-- CentOS 7 
-  * 安装依赖项
+- CentOS 7
+  - 安装依赖项
 
 ```bash
 yum install -y yum-utils \
@@ -194,16 +201,19 @@ docker run hello-world
 # 3. Docker daemon 基于拉取的镜像创建一个容器
 # 4. Docker daemon 将容器中的应用执行的结果发送给 Docker client，并打印到终端
 ```
+
 ### 镜像加速
+
 Docker 获取镜像的时候，默认从 Docker hub 获取，服务器在国外所以国内下载会很慢，我们可以设置成国内的镜像地址，类似于 npm
 
 - 参考文档
-   * [https://www.runoob.com/docker/docker-mirror-acceleration.html](https://www.runoob.com/docker/docker-mirror-acceleration.html)
+  - [https://www.runoob.com/docker/docker-mirror-acceleration.html](https://www.runoob.com/docker/docker-mirror-acceleration.html)
 - 常用的国内镜像地址
-   * [https://docker.mirrors.ustc.edu.cn](https://docker.mirrors.ustc.edu.cn)
-   * [https://almtd3fa.mirror.aliyuncs.com](https://almtd3fa.mirror.aliyuncs.com)
-   * [https://registry.docker-cn.com](https://registry.docker-cn.com)
+  - [https://docker.mirrors.ustc.edu.cn](https://docker.mirrors.ustc.edu.cn)
+  - [https://almtd3fa.mirror.aliyuncs.com](https://almtd3fa.mirror.aliyuncs.com)
+  - [https://registry.docker-cn.com](https://registry.docker-cn.com)
 - 获取镜像的时候，指定地址
+
 ```bash
 docker run hello-world --registry-mirror=https://docker.mirrors.ustc.edu.cn
 
@@ -211,23 +221,26 @@ docker run hello-world --registry-mirror=https://almtd3fa.mirror.aliyuncs.com
 ```
 
 - 配置中设置镜像地址
-   * 在 /etc/docker/daemon.json 文件中设置以下内容
-```
+  - 在 /etc/docker/daemon.json 文件中设置以下内容
+
+```json
 {"registry-mirrors":["https://almtd3fa.mirror.aliyuncs.com", "https://registry.docker-cn.com"]}
 ```
 
 - 重启服务
+
 ```bash
 systemctl daemon-reload
 systemctl restart docker
 ```
 
 ## Docker 基本使用
+
 ### Docker 镜像使用
 
 - [https://www.runoob.com/docker/docker-repository.html](https://www.runoob.com/docker/docker-repository.html)
 - 通过 Docker Hub 网站查找镜像
-   * [https://hub.docker.com/](https://hub.docker.com/)
+  - [https://hub.docker.com/](https://hub.docker.com/)
 - 常用命令
 
 ```bash
@@ -303,13 +316,16 @@ cat docker/nginx-server.tar | docker import - mynginx:v1
 ```
 
 ## 安装 yapi
+
 [https://hub.docker.com/r/jayfong/yapi](https://hub.docker.com/r/jayfong/yapi)
 
 ```bash
 docker run --rm -d -p 40001:3000 jayfong/yapi:play
 # 默认的管理员账号：admin@docker.yapi，管理员密码：adm1n。
 ```
+
 ## 安装 nginx 镜像
+
 [https://www.runoob.com/docker/docker-install-nginx.html](https://www.runoob.com/docker/docker-install-nginx.html)
 
 ## 常用 Docker 命令
@@ -372,6 +388,7 @@ CMD ["nginx", "-g", "daemon off;"]
 ```
 
 - 使用 Dockerfile
+
 ```bash
 docker build --rm -t deploy-web:v1.0 .
 # 编译过程中如果遇到 npm install 的时候无法解析 npm 的地址，可以使用宿主机的 network
@@ -382,11 +399,13 @@ docker run -itd --name web -p 88:80 deploy-web:v1.0
 ```
 
 - 在浏览器中测试
+
 ### Docker Hub
 
 - 私有仓库 Harbor
 - 公共仓库 [https://hub.docker.com/](https://hub.docker.com/)
-   * 首先登陆到 Docker Hub
+  - 首先登陆到 Docker Hub
+
 ```bash
 docker login
 # 从容器创建一个新的镜像
@@ -394,13 +413,16 @@ docker commit a6a685eb4ba1 goddlts/web:v1.1
 # 镜像上传到 hub
 docker push goddlts/web
 ```
+
 ### 映射配置目录和网站根目录
 
 - 映射配置目录和网站根目录
+
 ```bash
 # 复制之前容器中的 nginx 配置文件，把容器中的配置目录nginx拷贝到当前目录下
 docker cp web:/etc/nginx .
 ```
+
 ```bash
 docker run -itd \
   --name web-web \
@@ -409,12 +431,14 @@ docker run -itd \
   -p 89:80 \
   deploy-web:v1.0
 ```
+
 ```bash
 # 更改权限
 chmod -R 777 .
 ```
 
 ## Gitlab
+
 ### 安装
 
 - [https://about.gitlab.com/install](https://about.gitlab.com/install/)
@@ -423,7 +447,7 @@ chmod -R 777 .
 
 ```bash
 docker run --detach \
-	--hostname 192.168.137.129 \
+ --hostname 192.168.137.129 \
   --publish 13880:80 --publish 13822:22 \
   --name gitlab \
   --restart always \
@@ -446,21 +470,25 @@ docker logs -f gitlab
 ```
 
 - 通过浏览器访问，修改中文界面
-  * http://192.168.137.129:13880/
-  * 点击右上角头像 - Settings - Preferences - Localization - Language - Save Changes - 刷新浏览器
+  - <http://192.168.137.129:13880/>
+  - 点击右上角头像 - Settings - Preferences - Localization - Language - Save Changes - 刷新浏览器
 
 - 修改 gitlab 显示的端口
+
 ```bash
 vi /home/gitlab/config/gitlab.rb
 ```
+
 ```bash
 external_url 'http://192.168.137.129:13880'
 nginx['listen_port'] = 80
 gitlab_rails['gitlab_shell_ssh_port'] = 13822
 ```
+
 ```bash
 docker restart gitlab
 ```
+
 ### 关闭防火墙（解决容器内无法解析DNS）
 
 - 关闭容器防火墙

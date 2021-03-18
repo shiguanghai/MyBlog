@@ -13,17 +13,19 @@ isShowComments: false
 ---
 
 ## 2.1 数据驱动
+
 > 在学习 Vue 的过程中，经常会看到三个词：数据响应式、双向绑定、数据驱动
 
 - 数据响应式
-	* 数据（即数据模型）仅仅是普通的 JavaScript 对象，而当我们修改数据时，视图会进行更新，避免了繁琐的 DOM 操作，提高开发效率
+  - 数据（即数据模型）仅仅是普通的 JavaScript 对象，而当我们修改数据时，视图会进行更新，避免了繁琐的 DOM 操作，提高开发效率
 - 双向绑定
-	* 数据改变，视图改变；视图改变，数据也随之改变
-	* 我们可以使用 v-model 在表单元素上创建双向数据绑定
+  - 数据改变，视图改变；视图改变，数据也随之改变
+  - 我们可以使用 v-model 在表单元素上创建双向数据绑定
 - 数据驱动是 Vue 最独特的特性之一
-	* 开发过程中仅需要关注数据本身，不需要关心数据是如何渲染到视图
+  - 开发过程中仅需要关注数据本身，不需要关心数据是如何渲染到视图
 
 ## 2.2 数据响应式的核心原理
+
 ### Vue 2.x - defineProperty
 
 - [Vue 2.x深入响应式原理](https://cn.vuejs.org/v2/guide/reactivity.html)
@@ -111,7 +113,9 @@ function proxyData(data) {
 vm.msg = 'Hello World'
 console.log(vm.msg)
 ```
+
 ### Vue 3.x - Proxy
+
 - [MDN - Proxy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
 - 直接监听对象，而非属性。
 - ES 6中新增，IE 不支持，性能由浏览器优化
@@ -146,6 +150,7 @@ console.log(vm.msg)
  vm.msg = 'Hello World'
  console.log(vm.msg)
 ```
+
 我们可以发现 使用 Proxy 比使用 defineProperty 的代码简洁的多。
 
 使用 Proxy 是代理的整个对象，也就是这个对象的所有属性在访问或者设置的时候都会去触发 vm 中的 get和set。
@@ -155,11 +160,13 @@ console.log(vm.msg)
 另外，Proxy 会进行浏览器性能优化，其性能也要比 defineProperty 要好。
 
 ## 2.3 发布订阅模式和观察者模式
+
 ### 发布/订阅模式
+
 - 发布/订阅模式
-	* 订阅者
-	* 发布者
-	* 信号中心
+  - 订阅者
+  - 发布者
+  - 信号中心
 
 > 我们假定，存在一个"信号中心"，某个任务执行完成，就向信号中心"发布"（publish）一个信号，其他任务可以向信号中心"订阅"（subscribe）这个信号，从而知道什么时候自己可以开始执行。**这就叫做"发布/订阅模式"（publish-subscribe pattern）**
 
@@ -243,12 +250,13 @@ em.$emit('click')
 ```
 
 ### 观察者模式
+
 - 观察者（订阅者）- Watcher
-	* update()：当事件发生时，具体要做的事情
+  - update()：当事件发生时，具体要做的事情
 - 目标（发布者）- Dep
-	* subs 数组：存储所有的观察者
-	* addSub()：添加观察者
-	* notify()：当事件发生，调用所有观察者的updata() 方法
+  - subs 数组：存储所有的观察者
+  - addSub()：添加观察者
+  - notify()：当事件发生，调用所有观察者的updata() 方法
 - 没有事件中心
 
 ```js
@@ -288,12 +296,14 @@ dep.notify()
 ```
 
 ### 发布订阅/观察者模式 总结
+
 - **观察者模式**是由具体目标调度，比如当事件触发，Dep 就会去调用观察者的方法，所以观察者模式的订阅者与发布者之间是存在依赖的。
 - **发布/订阅模式**由统一调度中心调用，因此发布者和订阅者不需要知道对方的存在。
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201120213942247.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
 ## 2.4 模拟Vue响应式原理
+
 ### 整体分析
 
 - Vue 基本结构
@@ -337,6 +347,7 @@ dep.notify()
 - 打印 Vue 实例观察
 
 我们只关注需要模拟的成员：
+
 ```js
 count: (...)
 msg: (...)
@@ -346,26 +357,31 @@ msg: (...)
 > get msg
 > set msg
 ```
+
 > Vue 构造函数内部需要把 data 中的成员转换成 getter 和 setter 注入到 Vue实例，这样可以直接通过 this.msg, this.count 使用
 
 ```js
 $data: (...)
 ```
+
 > data 选项中的成员被记录到 \$data 中并且转换成 getter 和 setter，\$data 中的 setter 是真正监视数据变化的地方
 
 ```js
 $options: {...}
 ```
+
 > \$options 我们可以简单认为把构造函数的参数记录到 \$options 当中
 
 ```js
 _data: {...}
 ```
+
 > _data 和 \$data 指向的是同一个对象，\_ 开头的是私有成员，\$ 开头的是公共成员，我们只需要模拟 \$data 就可以了
 
 ```js
 $el: div#app
 ```
+
 > \$el 对应选项中的 el， 我们设置 el 选项时，可以是选择器，也可以是一个DOM对象。如果是选择器，vue 构造函数内部需要把这个选择器转换成对应的DOM对象。
 
 我们最小版本的 Vue 中要模拟 vm 中的 \$data，\$el，\$options，还要把 data 中的成员注入到 Vue 实例中
@@ -374,18 +390,18 @@ $el: div#app
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201120220441926.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 > Vue: 把 data 中的成员注入到 Vue 实例，并且把 data 中的成员转成 getter/setter
-
+>
 > Observer: 能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知 Dep
-
+>
 > Compiler: 解析每个元素中的指令/插值表达式，并替换成相应的数据
-
+>
 > Dep: 添加观察者(watcher)，当数据变化通知所有观察者
-
+>
 > Watcher: 数据变化更新视图
 
-
 [项目完整代码](https://gitee.com/shiguanghaitop/big-front-end-phase-5/tree/master/fed-e-task-03-01/code/03-01-03-06-vue-reactivity/minivue)
-```js
+
+```html
 <!DOCTYPE html>
 <html lang="cn">
 <head>
@@ -428,11 +444,12 @@ $el: div#app
 ```
 
 ### Vue
+
 - 功能
-	* 负责接收初始化的参数(选项)
-	* 负责把 data 中的属性注入到 Vue 实例，转换成 getter/setter
-	* 负责调用 observer 监听 data 中所有属性的变化
-	* 负责调用 compiler 解析指令/插值表达式
+  - 负责接收初始化的参数(选项)
+  - 负责把 data 中的属性注入到 Vue 实例，转换成 getter/setter
+  - 负责调用 observer 监听 data 中所有属性的变化
+  - 负责调用 compiler 解析指令/插值表达式
 - 结构
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201120223858730.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
@@ -476,11 +493,13 @@ class Vue {
   }
 }
 ```
+
 ### Observer
+
 - 功能
-	* 负责把 data 选项中的属性转换成响应式数据
-	* data 中的某个属性也是对象，把该属性转换成响应式数据
-	* 数据变化发送通知
+  - 负责把 data 选项中的属性转换成响应式数据
+  - data 中的某个属性也是对象，把该属性转换成响应式数据
+  - 数据变化发送通知
 - 结构
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201120225500339.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
@@ -506,7 +525,7 @@ class Observer {
   }
   defineReactive (obj, key, val) { // 传 val 防止 get 出现死递归访问 obj[key]
     let that = this
-	...    
+ ...    
     // 如果val是对象，把val内部的属性转换成响应式数据
     this.walk(val)
     Object.defineProperty(obj, key, {
@@ -532,10 +551,11 @@ class Observer {
 ```
 
 ### Compiler
+
 - 功能
-	* 负责编译模板，解析指令/插值表达式
-	* 负责页面的首次渲染
-	* 当数据变化后重新渲染视图
+  - 负责编译模板，解析指令/插值表达式
+  - 负责页面的首次渲染
+  - 当数据变化后重新渲染视图
 - 结构
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201120232138566.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
@@ -579,6 +599,7 @@ class Compiler {
 ```
 
 ### Compiler - compile
+
 ```js
 // 编译模板，处理文本节点和元素节点
 compile (el) {
@@ -602,7 +623,9 @@ compile (el) {
 ```
 
 ### Compiler - compileText
+
 - 负责编译插值表达式
+
 ```js
 // 编译文本节点，处理差值表达式
 compileText (node) {
@@ -624,7 +647,9 @@ compileText (node) {
   }
 }
 ```
+
 ### Compiler - compileElement
+
 - 负责编译元素的指令
 - 处理 v-text 的首次渲染
 - 处理 v-model 的首次渲染
@@ -666,12 +691,14 @@ modelUpdater (node, value) {
   ...
 }
 ```
+
 ### Dep (Dependency)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121164045831.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
 - 功能
-	* 收集依赖，添加观察者(Watcher)
-	* 通知所有观察者
+  - 收集依赖，添加观察者(Watcher)
+  - 通知所有观察者
 - 结构
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121164354330.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
@@ -700,9 +727,11 @@ class Dep {
   }
 }
 ```
+
 接下来我们需要使用这个类，这个类的作用是 收集依赖 和 发送通知，我们需要为每一个响应式数据创建一个Dep对象，在使用响应式数据的时候收集依赖（创建观察者对象），当数据变化的时候通知所有的观察者，调用观察者的 updata 方法来更新视图。
 
 我们需要在 Observer 中来创建 Dep 对象
+
 ```js
 // js/observer.js
 
@@ -734,11 +763,12 @@ class Observer {
 ```
 
 ### Watcher
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121165955637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
 - 功能
-	* 当数据变化触发依赖， dep 通知所有的 Watcher 实例更新视图
-	* 自身实例化的时候往 dep 对象中添加自己
+  - 当数据变化触发依赖， dep 通知所有的 Watcher 实例更新视图
+  - 自身实例化的时候往 dep 对象中添加自己
 - 结构
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121170249276.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
@@ -781,6 +811,7 @@ class Watcher {
 接下来我们要在 Compile 中创建 watcher 对象
 
 我们要找到把数据渲染到 DOM 的位置，也就是处理指令和插值表达式的位置
+
 ```js
 class Compiler {
   ...
@@ -823,19 +854,20 @@ class Compiler {
   ...
 }
 ```
+
 上面三个方法都是在操作 DOM，最终都是把数据渲染到 DOM 元素上，这三个方法都是在页面首次加载的时候执行的。
 
 指令和插值表达式都是依赖于数据的，而所有视图中依赖数据的位置都要创建一个 Watcher 对象，当数据改变的时候，Dep 对象会通知所有的 Watcher 对象重新渲染视图。
 
-**以上，我们模拟 Vue响应式 的代码就结束了**
-
+**以上，我们模拟 Vue响应式 的代码就结束了**.
 
 ### 总结
+
 - 问题
-	* 给属性重新赋值成对象，是否是响应式的？ 
-		+ **是的** 重新赋值会触发 set 方法 记录新的值 调用 walk 方法，其中会遍历这个对象的所有属性重新把它定义成响应式数据
-	* 给 Vue 实例新增一个成员是否是响应式的？
-		+ **不是** 当创建好 Vue 实例后，新增一个成员，此时data并没有定义该成员，data中的成员是在创建 Vue 对象的时候 new Observer 来将其设置成响应式数据，当 Vue 实例化完成之后，再添加一个成员，此时仅仅是给vm上增加了一个js属性而已，因此并不是响应式的
+  - 给属性重新赋值成对象，是否是响应式的？
+    - **是的** 重新赋值会触发 set 方法 记录新的值 调用 walk 方法，其中会遍历这个对象的所有属性重新把它定义成响应式数据
+  - 给 Vue 实例新增一个成员是否是响应式的？
+    - **不是** 当创建好 Vue 实例后，新增一个成员，此时data并没有定义该成员，data中的成员是在创建 Vue 对象的时候 new Observer 来将其设置成响应式数据，当 Vue 实例化完成之后，再添加一个成员，此时仅仅是给vm上增加了一个js属性而已，因此并不是响应式的
 
 Vue 文档中给出了解决方案 当新增一个属性时，如何将其转化为响应式数据
 
@@ -845,8 +877,7 @@ Vue 文档中给出了解决方案 当新增一个属性时，如何将其转化
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121182336826.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70#pic_center)
 
-
-**参考**
+**参考**:
 
 [深入响应式原理](https://cn.vuejs.org/v2/guide/reactivity.html)
 

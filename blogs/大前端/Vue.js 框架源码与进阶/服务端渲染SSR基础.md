@@ -16,6 +16,7 @@ isShowComments: false
 
 
 ## 9.1 概述
+
 随着前端技术栈和工具链的迭代成熟，前端工程化、模块化也已成为了当下的主流技术方案。在这波技术浪潮当中，涌现了诸如Angular、React、Vue等基于客户端渲染的前端框架
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210102140231857.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
@@ -38,6 +39,7 @@ isShowComments: false
 - 这种方式我们通常称之为现代化的服务端渲染，也叫同构渲染，所谓的同构指的就是服务端构建渲染 + 客户端构建渲染。同理，这种方式构建的应用称之为服务端渲染应用或者是同构应用。
 
 ## 9.2 什么是渲染
+
 渲染指的是**把（数据 + 模板）拼接到一起**的这个事儿。
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210102140907673.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
@@ -47,6 +49,7 @@ isShowComments: false
 渲染本质其实就是字符串的解析替换，实现方式有很多种；但是我们这里要关注的并不是如何渲染，而是在哪里渲染的问题。
 
 ## 9.3 传统的服务端渲染
+
 最早期，Web 页面渲染都是在服务端完成的，即服务端运行过程中将所需的数据结合页面模板渲染为HTML，响应给客户端浏览器。所以浏览器呈现出来的是直接包含内容的页面。
 
 工作流程：
@@ -66,6 +69,7 @@ isShowComments: false
 - [index.html](https://github.com/shiguanghai/big-front-end/blob/master/fed-e-task-03-03/code/3-3-2-4-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93/%E4%BC%A0%E7%BB%9F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93/index.html)，接下来会在服务端获取数据，将其渲染到此网页展示给用户
 
 安装依赖：
+
 ```shell
 # 创建 http 服务
 npm i express
@@ -139,8 +143,8 @@ app.listen(3000, () => console.log('running...'))
 ```shell
 node .\index.js
 ```
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210102144936256.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210102144936256.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 我们可以看到：客户端此时收到的直接就是结果，是不包含大括号内的内容的，客户端也不需要执行任何 js 代码，拿到的就是结果，直接负责展示就可以了。
 
@@ -156,7 +160,9 @@ node .\index.js
 但是不得不说，在网页应用并不复杂的情况下，这种方式也是可取的。
 
 ## 9.4 客户端渲染
+
 ### 客户端渲染 概述
+
 传统的服务端渲染有很多问题，但是这些问题随着客户端 Ajax 技术的普及得到了有效的解决，Ajax 技术可以使得客户端动态获取数据变为可能，也就是说原本服务端渲染这件事儿也可以拿到客户端做了。
 
 下面是基于客户端渲染的 SPA 应用的基本工作流程。
@@ -177,12 +183,15 @@ node .\index.js
 - 不利于 SEO
 
 ### 为什么客户端渲染 首屏渲染慢
+
 - 因为 HTML 中没有内容，必须等到 JavaScript 加载并执行完成才能呈现页面内容。
 
 传统的服务端渲染是页面直出，不用再去执行 js ，也不用再去发请求。
 
 而客户端渲染最起码要经历三次 http 请求周期：第一次是页面的请求，第二次是 js 对应的请求，第三次是动态数据请求。
+
 ### 为什么客户端渲染 不利于 SEO
+
 ```js
 // 搜索引擎是怎么获取网页内容的？
 const http = require('http')
@@ -201,16 +210,21 @@ http.get('http://localhost:8080/', res => {
   })
 })
 ```
+
 ```shell
 node .\index.js
 ```
+
 拿到数据后，对于搜索引擎就要去分析：根据权重进行收录，如果发现新的链接就会进入另一个页面再去收录，才有可能通过打开搜索引擎搜索到你的页面。
 
 相较于服务端，客户端需要经过解析执行js才能渲染出来所谓的网页内容。而搜索引擎的程序不是浏览器，而是一个普通的程序，它拿到的都是网页的html字符串，不会像浏览器一样再去加载解析js、发请求拿数据、再来渲染页面，它分析body发现没有内容。
 
 - 因为 HTML 中没有内容，所以对于目前的搜索引擎爬虫来说，页面中没有任何有用的信息，自然无法提取关键词，进行索引了。
+
 ## 9.5 现代化的服务端渲染（同构渲染）
+
 ### 现代化的服务端渲染 概述
+
 我们在上一小节了解到 SPA 应用有两个非常明显的问题：
 
 - 首屏渲染慢
@@ -227,8 +241,8 @@ node .\index.js
 **基本流程：**
 
 - isomorphic web apps（同构应用）：isomorphic/universal，基于 React、Vue 等框架，客户端渲染和服务端渲染的结合
-	* 在服务器端执行一次，用于实现服务器端渲染（首屏直出）
-	* 在客户端再执行一次，用于接管页面交互
+  - 在服务器端执行一次，用于实现服务器端渲染（首屏直出）
+  - 在客户端再执行一次，用于接管页面交互
 - 核心解决 SEO 和首屏渲染慢的问题
 - 拥有传统服务端渲染的优点，也有客户端渲染的优点
 
@@ -246,14 +260,15 @@ node .\index.js
 **如何实现同构渲染？**
 
 - 使用 Vue、React 等框架的官方解决方案
-	* 优点：有助于理解原理
-	* 缺点：需要搭建环境，比较麻烦
+  - 优点：有助于理解原理
+  - 缺点：需要搭建环境，比较麻烦
 - 使用第三方解决方案
-	* React 生态中的 Next.js
-	* Vue 生态中的 Nuxt.js
-	* Angular 生态中的 Angular Universal
+  - React 生态中的 Next.js
+  - Vue 生态中的 Nuxt.js
+  - Angular 生态中的 Angular Universal
 
 ### 通过 Nuxt 体验 同构渲染
+
 Nuxt.js 是一个基于 Vue.js 生态开发的一个第三方服务端渲染框架，通过它我们可以轻松构建现代化的服务端渲染应用。
 
 ```shell
@@ -274,6 +289,7 @@ npm i nuxt
   "dev": "nuxt"
 }
 ```
+
 ```js
 // ssr/pages/index.vue
 
@@ -293,9 +309,11 @@ export default {
 
 </style>
 ```
+
 ```shell
 npm run dev
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210102161251982.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 对于第一次接触 Nuxt 的小伙伴可能会感觉很神奇：并没有配置路由，页面就渲染出来了。原因是 Nuxt 会根据 pages 目录来自动生成路由配置。
@@ -305,6 +323,7 @@ npm run dev
 ```shell
 npm i axios
 ```
+
 ```js
 // ssr/pages/index.vue
 
@@ -348,6 +367,7 @@ export default {
 
 </style>
 ```
+
 ```js
 // ssr/static/data.json
 
@@ -382,6 +402,7 @@ export default {
   "title": "拉勾教育"
 }
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210102163558459.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2021010216423364.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
@@ -390,9 +411,11 @@ export default {
 [项目源码](https://github.com/shiguanghai/big-front-end/tree/master/fed-e-task-03-03/code/3-3-2-4-服务端渲染/现代化的服务端渲染/ssr)
 
 ### 同构渲染的 SPA 应用
+
 接下来还有一个问题：这个内容是服务端渲染出来的，它还是以前那个单页面应用程序（SPA）吗？
 
 依然是，首屏渲染是通过服务端渲染出来的，之后的交互都是客户端渲染。还是刚刚的项目，来加两个链接看看是客户端渲染还是服务端渲染：
+
 ```js
 // ssr/pages/about.vue
 
@@ -412,6 +435,7 @@ export default {
 
 </style>
 ```
+
 ```js
 // ssr/layouts/default.vue
 // 这个模板会作为所有页面的父模板
@@ -443,32 +467,36 @@ export default {
 
 </style>
 ```
+
 重启服务
+
 ```shell
 npm run dev
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210102165303974.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210102165449361.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1MTQ5MjU2,size_16,color_FFFFFF,t_70)
 
 此时通过链接跳转页面并不会引起页面刷新，因此可以整明其还是单页面程序，即客户端渲染。
 
 ### 同构渲染问题
+
 分析优缺点：
 
 - 优点：首屏渲染速度快、有利于 SEO
 - 缺点：
-	* 开发成本高
-		+ 浏览器特定的代码，只能在某些生命周期钩子函数 (lifecycle hook) 中使用；一些
+  - 开发成本高
+    - 浏览器特定的代码，只能在某些生命周期钩子函数 (lifecycle hook) 中使用；一些
 外部扩展库 (external library) 可能需要特殊处理，才能在服务器渲染应用程序中运行。
-		+ 涉及构建设置和部署的更多要求。与可以部署在任何静态文件服务器上的完全静态单页面应用程序(SPA) 不同，服务器渲染应用程序，需要处于 Node.js server 运行环境。
-		+ 更多的服务器端负载。在 Node.js 中渲染完整的应用程序，显然会比仅仅提供静态文件的 server。
-		+ 更加大量占用 CPU 资源 (CPU-intensive - CPU 密集)，因此如果你预料在高流量环境 (high traffic)下使用，请准备相应的服务器负载，并明智地采用缓存策略。
-	* 涉及构建设置和部署的更多要求
-		+ 与可以部署在任何静态文件服务器上的完全静态单页面应用程序 (SPA) 不同，服务器渲染应用程序，需要处于 Node.js server 运行环境。
-	* 更多的服务器端负载
-		+ 在 Node.js 中渲染完整的应用程序，显然会比仅仅提供静态文件的 server 更加大量占用 CPU 资源 (CPU-intensive - CPU 密集)。
-		+ 因此如果你预料在高流量环境(high traffic) 下使用，请准备相应的服务器负载，并明智地采用缓存策略。
-		+ 需要更多的服务端渲染优化工作处理。
+    - 涉及构建设置和部署的更多要求。与可以部署在任何静态文件服务器上的完全静态单页面应用程序(SPA) 不同，服务器渲染应用程序，需要处于 Node.js server 运行环境。
+    - 更多的服务器端负载。在 Node.js 中渲染完整的应用程序，显然会比仅仅提供静态文件的 server。
+    - 更加大量占用 CPU 资源 (CPU-intensive - CPU 密集)，因此如果你预料在高流量环境 (high traffic)下使用，请准备相应的服务器负载，并明智地采用缓存策略。
+  - 涉及构建设置和部署的更多要求
+    - 与可以部署在任何静态文件服务器上的完全静态单页面应用程序 (SPA) 不同，服务器渲染应用程序，需要处于 Node.js server 运行环境。
+  - 更多的服务器端负载
+    - 在 Node.js 中渲染完整的应用程序，显然会比仅仅提供静态文件的 server 更加大量占用 CPU 资源 (CPU-intensive - CPU 密集)。
+    - 因此如果你预料在高流量环境(high traffic) 下使用，请准备相应的服务器负载，并明智地采用缓存策略。
+    - 需要更多的服务端渲染优化工作处理。
 
 在对你的应用程序使用服务器端渲染 (SSR) 之前，你应该问的第一个问题是，是否真的需要它。这主要取决于内容到达时间 (time-to-content) 对应用程序的重要程度。例如，如果你正在构建一个内部仪表盘，初始加载时的额外几百毫秒并不重要，这种情况下去使用服务器端渲染 (SSR) 将是一个小题大作之举。然而，内容到达时间 (time-to-content) 要求是绝对关键的指标，在这种情况下，服务器端渲染(SSR) 可以帮助你实现最佳的初始加载性能。
 

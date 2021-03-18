@@ -75,6 +75,7 @@ fn() // 浏览器：Window；Node.js：global
 是不是觉得 this 的用法很简单？别着急，我们再来看看其他例子以加深理解。
 
 （1）如果在函数 fn2() 中调用函数 fn()，那么当调用函数 fn2() 的时候，函数 fn() 的 this 指向哪里呢？
+
 ```js
 function fn() {console.log(this)}
 
@@ -82,9 +83,11 @@ function fn2() {fn()}
 
 fn2() // ?
 ```
+
 **由于没有找到调用 fn 的对象，所以 this 会指向全局对象**，答案就是 window（Node.js 下是 global）。
 
 （2）再把这段代码稍稍改变一下，让函数 fn2() 作为对象 obj 的属性，通过 obj 属性来调用 fn2，此时函数 fn() 的 this 指向哪里呢？
+
 ```js
 function fn() {console.log(this)}
 
@@ -94,9 +97,11 @@ var obj = {fn2}
 
 obj.fn2() // ?
 ```
+
 这里需要注意，调用函数 fn() 的是函数 fn2() 而不是 obj。虽然 fn2() 作为 obj 的属性调用，但 **fn2()中的 this 指向并不会传递给函数 fn()**， 所以答案也是 window（Node.js 下是 global）。
 
 （3）对象 dx 拥有数组属性 arr，在属性 arr 的 forEach 回调函数中输出 this，指向的是什么呢？
+
 ```js
 var dx = {
 
@@ -114,6 +119,7 @@ dx.arr.forEach(function() {console.log(this)}) // ?
 类似的，需要传入 this 指向的函数还有：every()、find()、findIndex()、map()、some()，在使用的时候需要特别注意。
 
 （4）前面提到通过类实例来调用函数时，this 会指向实例。那么如果像下面的代码，创建一个 fun 变量来引用实例 b 的 fn() 函数，当调用 fun() 的时候 this 会指向什么呢？
+
 ```js
 class B {
 
@@ -131,7 +137,9 @@ var fun = b.fn
 
 fun() // ?
 ```
+
 这道题你可能会很容易回答出来：fun 是在全局下调用的，所以 this 应该指向的是全局对象。这个思路没有没问题，但是这里有个隐藏的知识点。那就是 ES6 下的 class 内部默认采用的是严格模式，实际上面代码的类定义部分可以理解为下面的形式。
+
 ```js
 class B {
 
@@ -145,9 +153,11 @@ class B {
 
 }
 ```
+
 而严格模式下不会指定全局对象为默认调用对象，所以答案是 undefined。
 
 （5）ES6 新加入的箭头函数不会创建自己的 this，它只会从自己的作用域链的上一层继承 this。可以简单地理解为**箭头函数的 this 继承自上层的 this**，但在全局环境下定义仍会指向全局对象。
+
 ```js
 var arrow = {fn: () => {
 
@@ -157,7 +167,9 @@ var arrow = {fn: () => {
 
 arrow.fn() // ?
 ```
+
 所以虽然通过对象 arrow 来调用箭头函数 fn()，那么 this 指向不是 arrow 对象，而是全局对象。如果要让 fn() 箭头函数指向 arrow 对象，我们还需要再加一层函数，让箭头函数的上层 this 指向 arrow 对象。
+
 ```js
 var arrow = {
 
@@ -177,12 +189,15 @@ arrow.fn()  // arrow
 （6）前面提到 this 指向的要么是调用它的对象，要么是 undefined，那么如果将 this 指向一个基础类型的数据会发生什么呢？
 
 比如下面的代码将 this 指向数字 0，打印出的 this 是什么呢？
+
 ```js
 [0].forEach(function() {console.log(this)}, 0) // ?
 ```
+
 我们知道基础类型也可以转换成对应的引用对象。所以这里 this 指向的是一个值为 0 的 Number 类型对象。
 
 （7）改变 this 指向的常见 3 种方式有 bind、call 和 apply。call 和 apply 用法功能基本类似，都是通过传入 this 指向的对象以及参数来调用函数。区别在于传参方式，前者为逐个参数传递，后者将参数放入一个数组，以数组的形式传递。bind 有些特殊，它不但可以绑定 this 指向也可以绑定函数参数并返回一个新的函数，当调用新的函数时，绑定之后的 this 或参数将无法再被改变。
+
 ```js
 function getName() {console.log(this.name)}
 
@@ -194,6 +209,7 @@ getName.call({name: 'call'})
 
 getName.apply({name: 'apply'})
 ```
+
 由于 this 指向的不确定性，所以很容易在调用时发生意想不到的情况。在编写代码时，应尽量避免使用 this，比如可以写成纯函数的形式，也可以通过参数来传递上下文对象。实在要使用 this 的话，可以考虑使用 bind 等方式将其绑定。
 
 ## 补充 1：箭头函数
@@ -211,6 +227,7 @@ getName.apply({name: 'apply'})
 ## 函数的转换
 
 在讲函数转化之前，先来看一道题：编写一个 add() 函数，支持对多个参数求和以及多次调用求和。示例如下：
+
 ```js
 add(1) // 1
 
@@ -218,11 +235,13 @@ add(1)(2)// 3
 
 add(1, 2)(3, 4, 5)(6) // 21
 ```
+
 对于不定参数的求和处理比较简单，很容易想到通过 arguments 或者扩展符的方式获取数组形式的参数，然后通过 reduce 累加求和。但如果直接返回结果那么后面的调用肯定会报错，所以每次返回的必须是函数，才能保证可以连续调用。也就是说 add 返回值既是一个可调用的函数又是求和的数值结果。
 
 要实现这个要求，我们必须知道函数相关的两个隐式转换函数 toString() 和 valueOf()。toString() 函数会在打印函数的时候调用，比如 console.log、valueOf 会在获取函数原始值时调用，比如加法操作。
 
 具体代码实现如下，在 add() 函数内部定义一个 fn() 函数并返回。fn() 函数的主要职能就是拼接参数并返回自身，当调用 toString() 和 valueOf() 函数时对拼接好的参数进行累加求和并返回。
+
 ```js
 function add(...args) {
 
@@ -379,7 +398,7 @@ c.a() // 'a'
 
 ## 补充2：typeof 和 instanceof
 
-**typeof**
+**typeof**:
 
 用来获取一个值的类型，可能的结果有下面几种：
 
@@ -394,7 +413,7 @@ c.a() // 'a'
 |函数对象|"function"|
 |其他对象及 null|"object"|
 
-**instanceof**
+**instanceof**:
 
 用于检测构造函数的 prototype 属性是否出现在某个实例对象的原型链上。例如，在表达式 left instanceof right 中，会沿着 left 的原型链查找，看看是否存在 right 的 prototype 对象。
 
@@ -422,6 +441,7 @@ let b = 2
 ```
 
 函数的命名提升则意味着可以在同级作用域或者子级作用域里，在函数定义之前进行调用。
+
 ```js
 fn() // 2
 
@@ -429,7 +449,9 @@ function fn() {
   return 2
 }
 ```
+
 结合以上两点我们再来看看下面两种函数定义的区别，方式 1 将函数赋值给变量 f；方式 2 定义了一个函数 f()。
+
 ```js
 // 方式1
 var f = function() {...}
@@ -437,6 +459,7 @@ var f = function() {...}
 // 方式2
 function f() {...}
 ```
+
 两种方式对于调用函数方式以及返回结果而言是没有区别的，但根据命名提升的规则，我们可以得知方式 1 创建了一个匿名函数，让变量 f 指向它，这里会发生变量的命名提升；如果我们在定义函数之前调用会报错，因为f并不是一个函数，而是undefined，而方式 2 则不会。
 
 ## 闭包
@@ -444,6 +467,7 @@ function f() {...}
 在函数内部访问外部函数作用域时就会产生闭包。闭包很有用，因为它允许将函数与其所操作的某些数据（环境）关联起来。这种关联不只是跨作用域引用，也可以实现数据与函数的隔离。
 
 比如下面的代码就通过闭包来实现单例模式。
+
 ```js
 var SingleStudent = (function () { 
     function Student() {}
@@ -465,11 +489,12 @@ s === s2 // true
 
 ```js
 for( var i = 0; i < 5; i++ ) {
-	setTimeout(() => {
-		console.log( i );
-	}, 1000 * i)
+ setTimeout(() => {
+  console.log( i );
+ }, 1000 * i)
 }
 ```
+
 这是一道作用域相关的经典笔试题，需要实现的功能是每隔 1 秒控制台打印数字 0 到 4。但实际执行效果是每隔一秒打印的数字都是 5，为什么会这样呢？
 
 如果把这段代码转换一下，手动对变量 i 进行命名提升，你就会发现 for 循环和打印函数共享了同一个变量 i，这就是问题所在。
@@ -477,9 +502,9 @@ for( var i = 0; i < 5; i++ ) {
 ```js
 var i;
 for(i = 0; i < 5; i++ ) {
-	setTimeout(() => {
-		console.log(i);
-	}, 1000 * i)
+ setTimeout(() => {
+  console.log(i);
+ }, 1000 * i)
 }
 ```
 
@@ -487,17 +512,17 @@ for(i = 0; i < 5; i++ ) {
 
 ```js
 for(let i = 0; i < 5; i++ ) {
-	setTimeout(() => {
-		console.log(i);
-	}, 1000 * i)
+ setTimeout(() => {
+  console.log(i);
+ }, 1000 * i)
 }
 /**
 等价于
 for(var i = 0; i < 5; i++ ) {
     let _i = i
-	setTimeout(() => {
-		console.log(_i);
-	}, 1000 * i)
+ setTimeout(() => {
+  console.log(_i);
+ }, 1000 * i)
 }
  */
 ```
