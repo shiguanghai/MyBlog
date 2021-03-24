@@ -10,7 +10,7 @@ module.exports = {
       "link", //网站图标
       {
         "rel": "icon",
-        "href": "/favicon.ico"
+        "href": "https://public.shiguanghai.top/public/favicon.ico"
       }
     ],
     [
@@ -30,15 +30,8 @@ module.exports = {
       owner: 'shiguanghaitop',
       repo: 'myBlog-comments',
       clientId: '05eae62eb485a1d298af7ce15ffa44f5491b61c8cb02145cc95909efc49f4d19',
-      clientSecret: 'd5d02299c9ad653e06c59d85ade659efc7d181cab81901802d002242014e9efc',
-      // showComment: false
+      clientSecret: 'd5d02299c9ad653e06c59d85ade659efc7d181cab81901802d002242014e9efc'
     },
-    // "valineConfig": { // 浏览量
-    //   el:'#comment',
-    //   appId: 'cdfpTeN71obVeTAvdlGgcD47-gzGzoHsz',
-    //   appKey: 'KDxIzye4rxtvOggI4Dkgnhsa',
-    //   visitor: true,
-    // },
     "nav": [ //导航栏配置
       {
         "text": "主页",
@@ -160,20 +153,15 @@ module.exports = {
         "link": "https://vuepress-theme-reco.recoluan.com"
       }
     ],
-    "logo": "/logo.png",
+    "logo": "https://public.shiguanghai.top/public/logo.png",
     "search": true, // 当前项目是否开启搜索栏
     "searchMaxSuggestions": 10,
     "lastUpdated": "Last Updated",
     "author": "Shiguanghai",
-    "authorAvatar": "/avatar.png",
+    "authorAvatar": "https://public.shiguanghai.top/public/avatar.png",
     "record": "豫ICP备19026848号",
     "recordLink": "https://beian.miit.gov.cn/",
-    "startYear": "2019",
-    // "algolia": { // Algolia 搜索
-    //   // "applicationID": '8JDFTW75T7', // Application ID
-    //   "apiKey": '8577610c9b0b470adec8f9b37fa72276', // Search-Only API key
-    //   "indexName": 'MyBlog' // 创建的 index name
-    // }
+    "startYear": "2019"
   },
   "markdown": {
     // 代码行数是否显示
@@ -218,9 +206,9 @@ module.exports = {
     [
       "dynamic-title",
       {
-        showIcon: "/favicon.ico",
+        showIcon: "https://public.shiguanghai.top/public/favicon.ico",
         showText: "(/≧▽≦/)欢迎回来！",
-        hideIcon: "/favicon.ico",
+        hideIcon: "https://public.shiguanghai.top/public/favicon.ico",
         hideText: "(๑•́ ₃ •̀๑)等你哟~",
         recoverTime: 2000
       }
@@ -251,25 +239,25 @@ module.exports = {
           {
             name: '源星球，远星球',
             artist: '别方',
-            url: '/源星球，远星球.m4a',
+            url: 'https://public.shiguanghai.top/public/源星球，远星球.m4a',
             cover: 'https://p2.music.126.net/8PepgHt0XXmxcZe5TcVedw==/17702137207431786.jpg?param=130y130'
           },
           {
             name: '单向箭头',
             artist: '双笙',
-            url: '/单向箭头.mp3',
+            url: 'https://public.shiguanghai.top/public/单向箭头.mp3',
             cover: 'https://p2.music.126.net/4Gw5vGfeZ_7OZDiMmpvV9Q==/109951163860099587.jpg?param=130y130'
           },
           {
             name: '愿你有故乡 - (Homeland)',
             artist: '房东的猫',
-            url: '/愿你有故乡 - (Homeland).m4a',
+            url: 'https://public.shiguanghai.top/public/愿你有故乡 - (Homeland).m4a',
             cover: 'https://p1.music.126.net/KYb3H33YZxDWO8pm4EcIFQ==/109951164915642694.jpg'
           },
           {
             name: '123木头人',
             artist: 'SING女团',
-            url: '/123木头人.m4a',
+            url: 'https://public.shiguanghai.top/public/123木头人.m4a',
             cover: 'https://y.gtimg.cn/music/photo_new/T002R300x300M000004PDknO0kg9Qk_1.jpg'
           }  
         ],

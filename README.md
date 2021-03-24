@@ -2,7 +2,7 @@
 home: true
 heroText: 时光海小屋
 tagline: 今天也要努力啊.
-heroImage: /hero.png
+heroImage: https://public.shiguanghai.top/public/hero.png
 heroImageStyle: {
   maxWidth: '150px',
   width: '100%',
@@ -11,7 +11,7 @@ heroImageStyle: {
   background: '#fff',
   borderRadius: '5rem',
 }
-bgImage: '/background.png'
+bgImage: 'https://public.shiguanghai.top/public/background.png'
 bgImageStyle: {
   height: '730px'
 }
