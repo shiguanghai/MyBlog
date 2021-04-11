@@ -682,4 +682,4 @@ git push origin v0.1.0
 
 项目仓库地址：[https://github.com/shiguanghai/realworld-nuxtjs](https://github.com/shiguanghai/realworld-nuxtjs)
 
-项目展示地址：[http://demo.shiguanghai.top:3000](http://demo.shiguanghai.top:3000/)
+项目展示地址：[https://rw.shiguanghai.top](https://rw.shiguanghai.top)
