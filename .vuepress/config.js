@@ -275,11 +275,12 @@ module.exports = {
     [
       'vuepress-plugin-comment',
       {
-        solution: 'valine',
+        choosen: 'valine', // gitalk valine
         options: {
           el: '#valine-vuepress-comment',
           appId: 'cdfpTeN71obVeTAvdlGgcD47-gzGzoHsz',// your appId
           appKey: 'KDxIzye4rxtvOggI4Dkgnhsa', // your appKey
+          // lang: 'en',
           visitor: true // 阅读量统计
         }
       }
