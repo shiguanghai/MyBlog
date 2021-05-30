@@ -25,7 +25,9 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "vue-class-component": "^7.2.3"
+    "valine": "^1.4.14",
+    "vue-class-component": "^7.2.3",
+    "vuepress-plugin-comment": "^0.7.3"
   },
   "description": ""
 }

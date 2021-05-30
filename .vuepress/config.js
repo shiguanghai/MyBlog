@@ -25,13 +25,13 @@ module.exports = {
   "themeConfig": { // 博客配置
     "mode": 'auto', // 默认 auto，auto 跟随系统，dark 暗色模式，light 亮色模式
     "modePicker": true, // 默认 true，false 不显示模式调节按钮，true 则显示
-    "vssueConfig": { // 评论
-      platform: 'gitee',
-      owner: 'shiguanghaitop',
-      repo: 'myBlog-comments',
-      clientId: '05eae62eb485a1d298af7ce15ffa44f5491b61c8cb02145cc95909efc49f4d19',
-      clientSecret: 'd5d02299c9ad653e06c59d85ade659efc7d181cab81901802d002242014e9efc'
-    },
+    // "vssueConfig": { // 评论
+    //   platform: 'gitee',
+    //   owner: 'shiguanghaitop',
+    //   repo: 'myBlog-comments',
+    //   clientId: '05eae62eb485a1d298af7ce15ffa44f5491b61c8cb02145cc95909efc49f4d19',
+    //   clientSecret: 'd5d02299c9ad653e06c59d85ade659efc7d181cab81901802d002242014e9efc'
+    // },
     "nav": [ //导航栏配置
       {
         "text": "主页",
@@ -106,9 +106,12 @@ module.exports = {
             "icon": "reco-bilibili"
           },
           {
-            "text": "Twitter",
-            "link": "https://twitter.com/wang8852165",
-            "icon": "reco-twitter"
+            "text": "EduBossFed",
+            "link": "https://eduboss.shiguanghai.top"
+          },
+          {
+            "text": "RealWorld",
+            "link": "https://rw.shiguanghai.top"
           }
         ]
       }
@@ -268,19 +271,19 @@ module.exports = {
       }
     ],
     // '@vuepress-something/vuepress-plugin-dplayer'
-    //#region 
-    // [
-    //   '@vuepress-reco/vuepress-plugin-comments',
-    //   {
-    //     solution: 'valine',
-    //     options: {
-    //       el:'#vcomments',
-    //       appId: 'cdfpTeN71obVeTAvdlGgcD47-gzGzoHsz',// your appId
-    //       appKey: 'KDxIzye4rxtvOggI4Dkgnhsa', // your appKey
-    //       visitor: true // 阅读量统计
-    //     }
-    //   }
-    // ]
-    //#endregion
+    // #region 
+    [
+      'vuepress-plugin-comment',
+      {
+        solution: 'valine',
+        options: {
+          el: '#valine-vuepress-comment',
+          appId: 'cdfpTeN71obVeTAvdlGgcD47-gzGzoHsz',// your appId
+          appKey: 'KDxIzye4rxtvOggI4Dkgnhsa', // your appKey
+          visitor: true // 阅读量统计
+        }
+      }
+    ]
+    // #endregion
   ]
 }
