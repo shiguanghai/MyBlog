@@ -48,14 +48,14 @@ module.exports = {
         "link": "/blogs/other/messageBoard",
         "icon": "reco-suggestion"
       },
-      // {
-      //   "text": "插件",
-      //   "link": "/blogs/other/coreplayer",
-      //   "icon": "reco-message"
-      // },
+      {
+        "text": "插件",
+        "link": "/blogs/other/coreplayer",
+        "icon": "reco-api"
+      },
       {
         "text": "工具",
-        "icon": "reco-message",
+        "icon": "reco-other",
         "items": [
           {
             "text": "壁纸网站",
@@ -171,12 +171,12 @@ module.exports = {
     "lineNumbers": true
   },
   plugins: [  // 插件
-    // [
-    //   'vuepress-plugin-core-video-player',
-    //   {
-    //     lang: 'zh-CN', // zh-CN/en/jp/other language json
-    //   }
-    // ],
+    [
+      'vuepress-plugin-core-video-player',
+      {
+        lang: 'zh-CN', // zh-CN/en/jp/other language json
+      }
+    ],
     [
       "@vuepress-reco/vuepress-plugin-kan-ban-niang",
       {
@@ -281,10 +281,24 @@ module.exports = {
           appId: 'cdfpTeN71obVeTAvdlGgcD47-gzGzoHsz',// your appId
           appKey: 'KDxIzye4rxtvOggI4Dkgnhsa', // your appKey
           // lang: 'en',
+          // path: 'window.location.pathname',
+          avatar: 'retro', // 头像展示方式
           visitor: true // 阅读量统计
         }
       }
     ]
     // #endregion
+    // [
+    //   '@vuepress-reco/vuepress-plugin-comments',
+    //   {
+    //     solution: 'valine',
+    //     options: {
+    //       el:'#vcomments',
+    //       appId: 'cdfpTeN71obVeTAvdlGgcD47-gzGzoHsz',// your appId
+    //       appKey: 'KDxIzye4rxtvOggI4Dkgnhsa', // your appKey
+    //       visitor: true // 阅读量统计
+    //     }
+    //   }
+    // ]
   ]
 }
