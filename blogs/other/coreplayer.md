@@ -11,11 +11,11 @@ publish: false
   preload="metadata"
   title="vuepress-plugin-core-video-player"
   controls="auto"
-  :autoplay=true
+  :autoplay=false
   :muted=false
   :loop=true>
 </corevideoplayer>
 
-> **注： 视频如未渲染出来，请尝试切换到其他页面再点击导航栏 插件 跳转到此页面**
+> **注： 视频如未渲染出来，请尝试切换到其他页面 并刷新 再点击导航栏 插件 跳转到此页面**
 
 [GitHub](https://github.com/shiguanghai/vuepress-plugin-core-video-player/tree/master)
